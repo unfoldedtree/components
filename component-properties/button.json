@@ -1,0 +1,31 @@
+{
+    "name": "Button",
+    "path": "/button",
+    "description": "A button component that triggers an action when clicked.",
+    "props": [
+        {
+            "name": "size",
+            "type": "string",
+            "default": "md",
+            "description": "The size of the button. Can be 'xs', 'sm', 'md', 'lg', or 'xl'."
+        },
+        {
+            "name": "variant",
+            "type": "string",
+            "default": "primary",
+            "description": "The variant of the button. Can be 'primary', 'secondary', or 'soft'."
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false,
+            "description": "If true, the button will be disabled and not clickable."
+        },
+        {
+            "name": "loading",
+            "type": "boolean",
+            "default": false,
+            "description": "If true, a loading spinner will be shown inside the button."
+        }
+    ]
+}

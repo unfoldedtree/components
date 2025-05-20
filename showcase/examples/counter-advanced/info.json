@@ -1,0 +1,9 @@
+{
+    "entry": "counters",
+    "name": "Counter Example - Advanced",
+    "description": "This is an example of a counter component. It allows you to increment and decrement a value.",
+    "path": "counter-advanced",
+    "excludedDirectories": [],
+    "tabId": "counter-advanced",
+    "componentPath": "/counter"
+}

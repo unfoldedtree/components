@@ -1,0 +1,29 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="alert" class="p-2 flex gap-2 flex-col items-start justify-start">
+    <div>
+        <p>Alert Example</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-alert :type="'info'" :message="'This is an info alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
+            <foui-alert :type="'success'" :message="'This is a success alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
+            <foui-alert :type="'warning'" :message="'This is a warning alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
+            <foui-alert :type="'error'" :message="'This is an error alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
+        </div>
+    </div>
+</body>

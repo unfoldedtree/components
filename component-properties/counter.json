@@ -1,0 +1,23 @@
+{
+    "name": "Counter",
+    "path": "/counter",
+    "description": "A simple counter component that allows you to increment and decrement a value.",
+    "props": [
+        {
+            "name": "primary",
+            "type": "boolean",
+            "description": "If true, the counter will be primary color.",
+            "default": "false"
+        },
+        {
+            "name": "owner",
+            "type": "string",
+            "description": "The owner of the counter."
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "description": "The title of the counter."
+        }
+    ]
+}

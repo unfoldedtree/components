@@ -1,0 +1,7 @@
+{
+  "name": "Examples",
+  "path": "/examples",
+  "description": "A collection of examples demonstrating the usage of First Orion UI components.",
+  "tabId": "examples",
+  "order": 2
+}

@@ -1,0 +1,22 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="counter;counter-trigger" class="p-2" >   
+     <foui-counter x-data="{step: 10, value: 1000}">
+        <foui-counter-trigger></foui-counter-trigger>
+     </foui-counter>
+</body>

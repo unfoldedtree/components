@@ -1,0 +1,13 @@
+{
+    "name": "Accordion",
+    "path": "/accordian",
+    "description": "An accordion component that allows for expandable and collapsible sections.",
+    "props": [
+        {
+            "name": "primary",
+            "type": "boolean",
+            "description": "If true, the accordion will be primary color.",
+            "default": "false"
+        }
+    ]
+}

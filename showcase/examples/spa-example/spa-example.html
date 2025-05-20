@@ -1,0 +1,69 @@
+<head>
+    <title>Welcome</title>
+    
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/universal-router"></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../components/${path}${component}.html',
+            "page": '../../examples/spa-pages/${component}.html'
+        }
+        let data = {
+            $route: {},
+            routes: [
+                { path: '/welcome', component: 'page-welcome' },
+                { path: '/blog/:id', component: 'page-blog' },
+                { path: '(.*)', component: 'page-welcome' }
+            ]
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="accordian" x-data="data">
+    <foui-accordian></foui-accordian>
+    <foui-router-view></foui-router-view>
+    <template x-component="router-view" x-shtml="$api && $api.pageContent || ''"
+        x-import:dynamic="$api && $api.pageToImport">
+        <script>
+            return {
+                router: null,
+                pageContent: '',
+                pageToImport: null,
+                onUrlChange() {
+                    let match = window.location.href.match(/#(.*)$/)
+                    let fragment = match ? match[1] : ''
+                    this.router.resolve({ pathname: fragment }).then(component => {
+                        if (component) {
+                            let pos = component.indexOf('@')
+                            let from = pos !== -1 ? component.substring(pos + 1) : component.replace('-', ':').replace('-', '/')
+                            if (pos !== -1) component = component.substring(0, pos)
+                            this.pageToImport = from
+                            this.pageContent = `<${component}></${component}>`
+                        }
+                    })
+                },
+                onMounted() {
+                    this.router = new UniversalRouter(this.routes, {
+                        context: { self: this },
+                        resolveRoute(context, params) {
+                            context.self.$route = { params, path: context.pathname }
+                            if (typeof context.route.action === 'function') {
+                                return context.route.action(context, params)
+                            }
+                            return context.route.component
+                        }
+                    })
+                    this.onUrlChange()
+                    window.addEventListener('popstate', e => this.onUrlChange())
+                }
+            }
+        </script>
+    </template>
+</body>

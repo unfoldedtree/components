@@ -1,0 +1,9 @@
+{
+    "entry": "alert-example",
+    "name": "Alert Example",
+    "description": "Alert example demonstrates the usage of the alert component. It showcases how to create alerts with different types, such as success, error, and warning.",
+    "path": "alert-example",
+    "excludedDirectories": [],
+    "tabId": "alert-example",
+    "componentPath": "/alert"
+}

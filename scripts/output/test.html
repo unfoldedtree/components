@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js and Tailwind Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/felipec.min.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800 min-h-screen">
+    <div class="mx-auto min-h-screen flex flex-col" x-data="dataHandler()">
+        <div class="p-6 border-b border-gray-300 bg-indigo-600 text-white">
+            <h1 class="text-2xl font-bold mb-4" x-text="documentTitle"></h1>
+            <p x-text="documentDescription"></p>
+        </div>
+
+        <!-- Create a sidebar with the sideBarTabs -->
+        <div class="flex flex-1">
+            <div class="w-1/4 bg-gray-200 p-4 border-r border-gray-300">
+                <h2 class="text-xl font-semibold mb-2">Navigation</h2>
+                <ul>
+                    <template x-for="tab in sideBarTabs" :key="tab.tabId">
+                        <li class="mb-2">
+                            <!-- If the tab doesn't have a children property, just do a li, it if does have them then a drop down of the child elements -->
+                            <template x-if="tab.children">
+                                <div 
+                                    x-data="{ isOpen: false }"
+                                >
+                                    <div class="flex items-center">
+                                        <span class="font-semibold" x-text="tab.name"></span>
+                                        <button
+                                            @click="isOpen = !isOpen" 
+                                            class="ml-2 text-blue-500 hover:underline"
+                                        >
+                                            Toggle
+                                        </button>
+                                    </div>
+
+                                    <template x-if="isOpen">
+                                        <ul class="ml-4 flex flex-col gap-y-1 my-1">
+                                            <template x-for="subTab in tab.children" :key="subTab.tabId">
+                                                <li class="">
+                                                    <a 
+                                                        :href="'#' + subTab.tabId" 
+                                                        class="text-blue-500 hover:underline" 
+                                                        x-text="subTab.name"
+                                                        @click="selectTab(subTab)"
+                                                    ></a>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <template x-if="!tab.children">
+                                <ul>
+                                    <li class="mb-2">
+                                        <a 
+                                            :href="'#' + tab.tabId" 
+                                            class="text-blue-500 hover:underline" 
+                                            x-text="tab.name"
+                                            @click="selectTab(tab)"
+                                        ></a>
+                                    </li>
+                                </ul>
+                            </template>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+            <!-- Main content area -->
+            <div class="w-3/4 p-4 h-100 flex flex-col">
+                <h2 id="content-heading" class="text-xl font-semibold mb-2" x-text="contentHeading"></h2>
+                <p x-text="contentDescription"></p>
+                <div id="content" class="flex flex-col flex-1 my-2">
+                    <!-- Example content goes here -->
+                </div>
+            </div>
+    </div>
+
+    <script>
+        function dataHandler() {
+            return {
+                data: null,
+                documentTitle: '',
+                documentDescription: '',
+                contentHeading: '',
+                contentDescription: '',
+                sideBarTabs: [],
+                buildContent: '',
+
+                async init() {
+                    try {
+                        const response = await fetch('output.json');
+                        if (!response.ok) throw new Error('Failed to fetch data');
+                        this.data = await response.json();
+
+                        if (this.data) {
+                            console.log('Data loaded successfully: ', this.data);
+
+                            this.$nextTick(() => {
+                                // change page title to data.page.title
+                                document.title = this.data.page.title;
+
+                                this.documentTitle = this.data.page.title;
+                                this.documentDescription = this.data.page.description;
+                                this.sideBarTabs = this.data.page.tabs
+
+                                this.selectTab(this.data.page.tabs[0]); // Select the first tab by default
+                            });
+                        } else {
+                            console.error('No data found');
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
+                },
+
+                async selectTab(tab) {
+                    this.contentHeading = tab.name;
+                    this.contentDescription = tab.description;
+
+                    // Logic to select a tab and display its content
+                    // get the content from the tab and put it in the content div
+                    const contentDiv = document.getElementById('content');
+                    contentDiv.innerHTML = ''; // Clear previous content
+
+                    // if componentPath is defined, fetch the component from the path and append it to the content div
+                    if (tab.entry) {
+                        // Create a tabbed div for "Preview" and "Code" sections
+                        const tabbedDiv = document.createElement('div');
+                        tabbedDiv.className = 'flex flex-1 flex-col gap-y-2';
+                        const tabButtons = document.createElement('div');
+                        tabButtons.className = 'flex gap-x-2 mb-2';
+                        const previewButton = document.createElement('button');
+
+                        const buttonClass = 'px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md';
+
+                        previewButton.className = buttonClass;
+                        previewButton.innerText = 'Preview';
+                        previewButton.onclick = () => {
+                            console.log('Preview clicked');
+                            const previewDiv = document.getElementById('preview');
+                            const codeDiv = document.getElementById('code');
+
+                            previewDiv.classList.add('flex');
+                            previewDiv.classList.remove('hidden');
+
+                            codeDiv.classList.add('hidden');
+                            codeDiv.classList.remove('flex');
+                        };
+                        const codeButton = document.createElement('button');
+                        codeButton.className = buttonClass;
+                        codeButton.innerText = 'Code';
+                        codeButton.onclick = () => {
+                            console.log('Code clicked');
+
+                            const previewDiv = document.getElementById('preview');
+                            const codeDiv = document.getElementById('code');
+
+                            previewDiv.classList.add('hidden');
+                            previewDiv.classList.remove('flex');
+
+                            codeDiv.classList.add('flex');
+                            codeDiv.classList.remove('hidden');
+                        };
+
+                        tabButtons.appendChild(previewButton);
+                        tabButtons.appendChild(codeButton);
+                        contentDiv.appendChild(tabButtons);
+
+                        const previewDiv = document.createElement('div');
+                        previewDiv.className = 'flex-1 bg-white p-4 rounded-md border border-gray-300';
+                        previewDiv.id = 'preview';
+                        const codeDiv = document.createElement('div');
+                        codeDiv.className = 'flex-1 flex-col hidden w-full';
+                        codeDiv.id = 'code';
+
+                        tabbedDiv.appendChild(previewDiv);
+                        tabbedDiv.appendChild(codeDiv);
+                        contentDiv.appendChild(tabbedDiv);
+
+                        this.buildContentAndPreview(tab);
+                    } else if (tab.tabId && tab.path) {
+                        // If the tab has a path, fetch the content from the path and append it to the content div
+                        const response = await fetch(`../../showcase/${tab.path}/${tab.tabId}.html`);
+                        if (!response.ok) throw new Error('Failed to fetch content');
+
+                        const text = await response.text();
+                        const div = document.createElement('div');
+                        div.innerHTML = text;
+                        contentDiv.appendChild(div);
+                    } else {
+                        console.error('No entry or path found for tab');
+                    }
+                },
+
+                async buildContentAndPreview(tab) {
+                    const codeDiv = document.getElementById('code');
+                    const previewDiv = document.getElementById('preview');
+
+                    const componentDiv = document.createElement('div');
+
+                    // Fetch the component from the path at the root of the project
+                    const componentResponse = await fetch(`../../showcase/examples/${tab.path}/${tab.entry}.html`);
+                    if (!componentResponse.ok) throw new Error('Failed to fetch component');
+
+                    const componentText = await componentResponse.text();
+
+                    // Generate a code snippet from the html
+                    const codeSnippet = document.createElement('pre');
+                    codeSnippet.className = 'overflow-auto w-full';
+
+                    const codeElement = document.createElement('code');
+                    codeElement.className = 'p-4 rounded-md border border-gray-300 overflow-auto';
+
+                    // look for a "<!-- Code injected by live-server -->" comment, remove the script tags that follow it and the comment itself
+                    let code = componentText.split('<!-- Code injected by live-server -->');
+
+                    if (code) {
+                        let seg1 = code[0];
+                        // remove the first script tag
+                        let seg2 = code[1].replace(/<script\b[^>]*>[\s\S]*?<\/script>/, '');
+
+                        code = seg1.trim() + '\n' + seg2.trim();
+                    } else {
+                        code = componentText;
+                    }
+
+                    code = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+                    codeElement.innerHTML = code;
+
+                    codeSnippet.appendChild(codeElement);
+                    codeDiv.appendChild(codeSnippet);
+
+                    // Generate a preview of the component
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `../../showcase/examples/${tab.path}/${tab.entry}.html`;
+                    iframe.setAttribute('seamless', '');
+                    iframe.width = '100%';
+                    iframe.height = '100%';
+                    previewDiv.appendChild(iframe);
+
+                    // if has compoenetData, print it in a div
+                    if (tab.componentData) {
+                        const dataDiv = document.createElement('div');
+                        dataDiv.className = 'mt-4';
+                        dataDiv.innerHTML = `<h4 class="text-xl font-semibold mb-2">${tab.componentData.name} Component</h4>`;
+                        dataDiv.innerHTML += `<p class="mb-2">${tab.componentData.description}</h5>`;
+
+                        if (tab.componentData.props) {
+                            dataDiv.innerHTML += `<h3 class="text-lg font-semibold">Props</h3>`;
+
+                            const propParentDiv = document.createElement('div');
+                            propParentDiv.className = 'flex flex-col';
+
+                            tab.componentData.props.forEach(prop => {
+                                const propDiv = document.createElement('div');
+                                propDiv.className = 'my-2 border border-gray-300 p-2 rounded-md';
+                                propDiv.innerHTML = `<p class="font-semibold">${prop.name}</p>`;
+                                propDiv.innerHTML += `<p class="text-sm text-gray-600">${prop.description}</p>`;
+
+                                if (prop.type) {
+                                    propDiv.innerHTML += `<p class="text-sm text-gray-600">Type: ${prop.type}</p>`;
+                                }
+
+                                if (prop.default) {
+                                    propDiv.innerHTML += `<p class="text-sm text-gray-600">Default: ${prop.default}</p>`;
+                                }
+                                propParentDiv.appendChild(propDiv);
+                            });
+
+                            dataDiv.appendChild(propParentDiv);
+                        }
+
+                        codeDiv.appendChild(dataDiv);
+                    }
+
+                    hljs.highlightAll();
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>

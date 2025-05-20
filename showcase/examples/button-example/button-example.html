@@ -1,0 +1,287 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="button" class="p-2 flex gap-2 flex-col items-start justify-start">
+    <div>
+        <p>Primary Buttons</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'" :on-click.func="`(e) => { alert('Prop Event') }`">
+                Extra Small
+            </foui-button>
+        
+            <foui-button :size="'sm'" :submit="true">
+                Small
+            </foui-button>
+        
+            <foui-button :submit="true">
+                Medium
+            </foui-button>
+        
+            <foui-button :size="'lg'" :submit="false">
+                Large
+            </foui-button>
+        
+            <foui-button :size="'xl'" :submit="false">
+                Extra Large
+            </foui-button>
+        </div>
+    </div>
+
+    <div>
+        <p>Secondary Buttons</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'" :variant="'secondary'">
+                Extra Small
+            </foui-button>
+        
+            <foui-button :size="'sm'" :variant="'secondary'">
+                Small
+            </foui-button>
+        
+            <foui-button :variant="'secondary'">
+                Medium
+            </foui-button>
+        
+            <foui-button :size="'lg'" :variant="'secondary'">
+                Large
+            </foui-button>
+        
+            <foui-button :size="'xl'" :variant="'secondary'">
+                Extra Large
+            </foui-button>
+        </div>
+    </div>
+
+    <div>
+        <p>Soft Buttons</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'" :variant="'soft'">
+                Extra Small
+            </foui-button>
+        
+            <foui-button :size="'sm'" :variant="'soft'">
+                Small
+            </foui-button>
+        
+            <foui-button :variant="'soft'">
+                Medium
+            </foui-button>
+        
+            <foui-button :size="'lg'" :variant="'soft'">
+                Large
+            </foui-button>
+        
+            <foui-button :size="'xl'" :variant="'soft'">
+                Extra Large
+            </foui-button>
+        </div>
+    </div>
+
+    <div>
+        <p>Rounded Buttons</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'" :rounded="true">
+                Extra Small
+            </foui-button>
+        
+            <foui-button :size="'sm'" :rounded="true">
+                Small
+            </foui-button>
+        
+            <foui-button :rounded="true">
+                Medium
+            </foui-button>
+        
+            <foui-button :size="'lg'" :rounded="true">
+                Large
+            </foui-button>
+        
+            <foui-button :size="'xl'" :rounded="true">
+                Extra Large
+            </foui-button>
+        </div>
+    </div>
+
+    <div>
+        <p>Prepend w/Icons</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'">
+                <span x-slot:prepend>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+                Extra Small
+            </foui-button>
+        
+            <foui-button :size="'sm'">
+                <span x-slot:prepend>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+                Small
+            </foui-button>
+        
+            <foui-button>
+                <span x-slot:prepend>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+                Medium
+            </foui-button>
+        
+            <foui-button :size="'lg'">
+                <span x-slot:prepend>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+                Large
+            </foui-button>
+        
+            <foui-button :size="'xl'">
+                <span x-slot:prepend>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+                Extra Large
+            </foui-button>
+        </div>
+    </div>
+
+    <div>
+        <p>Append w/Icons</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'">
+                Extra Small
+                <span x-slot:append>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+            </foui-button>
+        
+            <foui-button :size="'sm'">
+                Small
+                <span x-slot:append>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+            </foui-button>
+        
+            <foui-button>
+                Medium
+                <span x-slot:append>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+            </foui-button>
+        
+            <foui-button :size="'lg'">
+                Large
+                <span x-slot:append>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+            </foui-button>
+        
+            <foui-button :size="'xl'">
+                Extra Large
+                <span x-slot:append>
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1.5 11.5a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5zm0-3a.5.5 0 01-.5.5h-3a.5.5 0 010-1h3a.5.5 0 01.5.5z" />
+                    </svg>
+                </span>
+            </foui-button>
+        </div>
+    </div>
+
+    <div>
+        <p>Loading</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'" :loading="true">
+                Extra Small
+            </foui-button>
+        
+            <foui-button :size="'sm'" :loading="true">
+                Small
+            </foui-button>
+        
+            <foui-button :loading="true">
+                Medium
+            </foui-button>
+        
+            <foui-button :size="'lg'" :loading="true">
+                Large
+            </foui-button>
+        
+            <foui-button :size="'xl'" :loading="true">
+                Extra Large
+            </foui-button>
+        </div>
+    </div>
+
+    <div>
+        <p>Disabled</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-button :size="'xs'" :disabled="true">
+                Extra Small
+            </foui-button>
+        
+            <foui-button :size="'sm'" :disabled="true">
+                Small
+            </foui-button>
+        
+            <foui-button :disabled="true">
+                Medium
+            </foui-button>
+        
+            <foui-button :size="'lg'" :disabled="true">
+                Large
+            </foui-button>
+        
+            <foui-button :size="'xl'" :disabled="true">
+                Extra Large
+            </foui-button>
+        </div>
+    </div>
+
+</body>

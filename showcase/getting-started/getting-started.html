@@ -1,0 +1,509 @@
+<h1 id="whyfirstorionui" class="text-3xl font-bold mb-4">Why First Orion UI</h1>
+<p class="text-base mb-4">I hate compiling frontend code with complex toolchains, like webpack, rollup, vite etc. Unfortunately, most frontend frameworks heavily depends on them. Alpine.js is clean, powerful and without extra build process. While it is a challenge to develop a UI library directly with Alpine.js. First Orion UI is an ultra lightweight library to build UI components for Alpine.js.</p>
+<h1 id="basicusages" class="text-3xl font-bold mb-4">Basic Usages</h1>
+<p class="text-base mb-4">Just add First Orion UI CDN url before Alpine.js</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">Now there are three important Alpine.js directives to build your own UI components</p>
+<h2 id="xcomponent" class="text-2xl font-bold mb-4">x-component</h2>
+<p class="text-base mb-4">This directive creates an HTML native custom element around Alpine.js template.</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-greeting</span>&gt;</span>First Orion UI<span class="hljs-tag">&lt;/<span class="hljs-name">foui-greeting</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">It shows <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">Hello First Orion UI</span></code>. The slots could have their default content. </p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-greeting</span>&gt;</span>First Orion UI<span class="hljs-tag">&lt;/<span class="hljs-name">foui-greeting</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-greeting</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">&quot;from&quot;</span>&gt;</span>Team First Orion<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-greeting</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span>World<span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span> from <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;from&quot;</span>&gt;</span>Team Default<span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">Now there are <code class="hljs !px-2 !py-1 rounded">Hello <span class="hljs-keyword">First</span> Orion UI <span class="hljs-keyword">from</span> Team <span class="hljs-keyword">Default</span></code> and <code class="hljs !px-2 !py-1 rounded">Hello World <span class="hljs-keyword">from</span> Team <span class="hljs-keyword">First</span> Orion</code>. </p>
+<p class="text-base mb-4">Let's add some interaction logic. There are two magics <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> and <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$prop</span></span></code> for a First Orion UI component. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> comes from the return object of the first <code class="hljs !px-2 !py-1 rounded"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></code> inside of component template. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$prop</span></span></code> is function to get the passed value of component property:</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{name: &#x27;First Orion UI&#x27;}&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-greeting</span> <span class="hljs-attr">greeting-word</span>=<span class="hljs-string">&quot;Hi&quot;</span> <span class="hljs-attr">:who</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-greeting</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">x-text</span>=<span class="hljs-string">&quot;$prop(&#x27;greeting-word&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">x-text</span>=<span class="hljs-string">&quot;$prop(&#x27;who&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;$api.say()&quot;</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+      <span class="hljs-keyword">return</span> {
+        <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) {
+          <span class="hljs-title function_">alert</span>(<span class="hljs-variable language_">this</span>.$prop(<span class="hljs-string">&quot;greeting-word&quot;</span>) + <span class="hljs-string">&quot; &quot;</span> + <span class="hljs-variable language_">this</span>.$prop(<span class="hljs-string">&quot;who&quot;</span>));
+        },
+      };
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">The default custom element namespace is <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">foui</span></code>, which could be modified in config. You could also give a different namespace with format <code class="hljs !px-2 !py-1 rounded">x-component:{<span class="hljs-keyword">namespace</span>}=&quot;<span class="hljs-symbol">component</span> <span class="hljs-symbol">name</span></code></p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+    $foui.<span class="hljs-property">config</span> = {
+      <span class="hljs-attr">namespace</span>: <span class="hljs-string">&quot;myui&quot;</span>,
+    };
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">myui-greeting</span>&gt;</span>My UI<span class="hljs-tag">&lt;/<span class="hljs-name">myui-greeting</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">new-greeting</span>&gt;</span>My UI<span class="hljs-tag">&lt;/<span class="hljs-name">new-greeting</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component:new</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hi <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">The final html result will be</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">...
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">myui-greeting</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello My UI<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">myui-greeting</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">new-greeting</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hi My UI<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">new-greeting</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">In some cases, we do not want the component tag to exist in the result. We could just add an <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">unwrap</span></code> modifier in <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">x</span>-component</code>.</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">...
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">myui-greeting</span>&gt;</span>My UI<span class="hljs-tag">&lt;/<span class="hljs-name">myui-greeting</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">new-greeting</span>&gt;</span>My UI<span class="hljs-tag">&lt;/<span class="hljs-name">new-greeting</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component.unwrap</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component:new.unwrap</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hi <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">The component tags <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">myui-greeting</span></code> and <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">new</span>-greeting</code> will no longer exist in the final html result</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">...
+
+&lt;<span class="hljs-selector-tag">body</span> <span class="hljs-attribute">x</span>-data&gt;
+  &lt;<span class="hljs-selector-tag">h1</span>&gt;Hello My UI&lt;/<span class="hljs-selector-tag">h1</span>&gt;
+  &lt;<span class="hljs-selector-tag">h1</span>&gt;Hi My UI&lt;/<span class="hljs-selector-tag">h1</span>&gt;
+&lt;/<span class="hljs-selector-tag">body</span>&gt;
+</code></pre>
+<h2 id="ximport" class="text-2xl font-bold mb-4">x-import</h2>
+<p class="text-base mb-4">Of course, we don't want to embed common components in every page. The <code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-keyword">import</span></code> directive helps to load remote components asynchronously. Let's extract the greeting component into a standalone file.</p>
+<blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
+  <p class="text-base mb-4">/hello-remote.html</p>
+</blockquote>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+    $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
+      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}.html&quot;</span>,
+    };
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+    <span class="hljs-selector-attr">[x-cloak]</span> {
+      <span class="hljs-attribute">display</span>: none <span class="hljs-meta">!important</span>;
+    }
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-cloak</span> <span class="hljs-attr">x-import</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-greeting</span>&gt;</span>First Orion UI<span class="hljs-tag">&lt;/<span class="hljs-name">foui-greeting</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
+  <p class="text-base mb-4">/components/greeting.html</p>
+</blockquote>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Cloud Hello <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4">The components could be loaded from anywhere, like</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
+    <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui/examples/components/${component}.html&quot;</span>,
+  };
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p class="text-base mb-4"><code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-keyword">import</span></code> could load components from different namespaces. The syntax is <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">x-import</span><span class="hljs-operator">=</span><span class="hljs-string">&quot;namespace1:comp11,comp12;namespace2:comp21,comp22;...</span></code>. For default namespace, it could be omitted.
+Here is a more complete example:</p>
+<blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
+  <p class="text-base mb-4">/counters.html</p>
+</blockquote>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/style&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+    $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
+      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}.html&quot;</span>,
+    };
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+    <span class="hljs-selector-attr">[x-cloak]</span> {
+      <span class="hljs-attribute">display</span>: none <span class="hljs-meta">!important</span>;
+    }
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>
+  <span class="hljs-attr">x-cloak</span>
+  <span class="hljs-attr">x-import</span>=<span class="hljs-string">&quot;counter;counter-trigger&quot;</span>
+  <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;p-2&quot;</span>
+  <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{name: &#x27;Counter to rename&#x27;, winner: &#x27;Jacky&#x27;}&quot;</span>
+&gt;</span>
+  Rename the 2nd counter :
+  <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+    <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>
+    <span class="hljs-attr">x-model</span>=<span class="hljs-string">&quot;name&quot;</span>
+    <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;rounded-md border-2 border-blue-500&quot;</span>
+  /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter</span>
+    <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{step: 1}&quot;</span>
+    <span class="hljs-attr">:primary</span>=<span class="hljs-string">&quot;true&quot;</span>
+    <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;First&quot;</span>
+    <span class="hljs-attr">x-init</span>=<span class="hljs-string">&quot;console.log(&#x27;This is the first one&#x27;)&quot;</span>
+    <span class="hljs-attr">owner-name</span>=<span class="hljs-string">&quot;Tom&quot;</span>
+  &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter</span>
+    <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{step: 5}&quot;</span>
+    <span class="hljs-attr">:title</span>=<span class="hljs-string">&quot;name + &#x27; @ &#x27; + $prop(&#x27;owner-name&#x27;)&quot;</span>
+    <span class="hljs-attr">owner-name</span>=<span class="hljs-string">&quot;Frank&quot;</span>
+  &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter</span> <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{step: 10, value: 1000}&quot;</span> <span class="hljs-attr">:owner-name</span>=<span class="hljs-string">&quot;winner&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter-trigger</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter-trigger</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
+  <p class="text-base mb-4">/components/counter.html</p>
+</blockquote>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>
+  <span class="hljs-attr">x-component.unwrap</span>=<span class="hljs-string">&quot;counter&quot;</span>
+  <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;$prop(&#x27;primary&#x27;) ? &#x27;text-red-500&#x27; : &#x27;text-blue-500&#x27;&quot;</span>
+  <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{ step : 1, value: 0}&quot;</span>
+  <span class="hljs-attr">x-init</span>=<span class="hljs-string">&quot;$api &amp;&amp; $api.init()&quot;</span>
+  <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Counter&quot;</span>
+  <span class="hljs-attr">owner-name</span>=<span class="hljs-string">&quot;nobody&quot;</span>
+&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">x-text</span>=<span class="hljs-string">&quot;$prop(&#x27;title&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+    Owner: <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">x-text</span>=<span class="hljs-string">&quot;$prop(&#x27;owner-name&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+    Step: <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">x-text</span>=<span class="hljs-string">&quot;step&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+    Value : <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">x-text</span>=<span class="hljs-string">&quot;value&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+      @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;$api.increase()&quot;</span>
+      <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-white shadow ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700&quot;</span>
+    &gt;</span>
+      Increase
+    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Value : <span class="hljs-subst">${<span class="hljs-variable language_">this</span>.value}</span> , Step : <span class="hljs-subst">${<span class="hljs-variable language_">this</span>.step}</span>`</span>);
+      },
+      <span class="hljs-title function_">increase</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span> += <span class="hljs-variable language_">this</span>.<span class="hljs-property">step</span>;
+      },
+    };
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</code></pre>
+<blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
+  <p class="text-base mb-4">/components/counter-trigger.html</p>
+</blockquote>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">&lt;template x-component=&quot;counter-trigger&quot;&gt;
+  &lt;button
+    @click=&quot;$api.$of(&#x27;counter&#x27;).increase()&quot;
+    class=&quot;inline-block rounded-lg mt<span class="hljs-string">-2</span> bg-green<span class="hljs-string">-600</span> px<span class="hljs-string">-4</span> py<span class="hljs-string">-1</span>.5 text-white shadow ring<span class="hljs-string">-1</span> ring-green<span class="hljs-string">-600</span> hover:bg-green<span class="hljs-string">-700</span> hover:ring-green<span class="hljs-string">-700</span>&quot;
+  &gt;
+    Tigger from child element
+  &lt;/button&gt;
+&lt;/template&gt;
+</code></pre>
+<h3 id="howtoimportdynamiccomponents" class="text-xl font-bold mb-4">How to import dynamic components ?</h3>
+<p class="text-base mb-4">Add <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">dynamic</span></code> modifier to <code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-keyword">import</span></code>, it will evaluate the express to a string or array and then import all these components. Please refer the example in <code class="hljs !px-2 !py-1 rounded">examples<span class="hljs-regexp">/spa/</span>app.html</code>.</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">&lt;template
+  x-component=<span class="hljs-string">&quot;router-view&quot;</span>
+  x-shtml=<span class="hljs-string">&quot;<span class="hljs-subst">$api</span> &amp;&amp; <span class="hljs-subst">$api</span>.pageContent || &#x27;&#x27;&quot;</span>
+  x-<span class="hljs-keyword">import</span>:<span class="hljs-built_in">dynamic</span>=<span class="hljs-string">&quot;<span class="hljs-subst">$api</span> &amp;&amp; <span class="hljs-subst">$api</span>.pageToImport&quot;</span>
+&gt;
+  ...
+&lt;/template&gt;
+</code></pre>
+<h3 id="autoimportallcomponents" class="text-xl font-bold mb-4">Auto import all components</h3>
+<p class="text-base mb-4">Set the <code class="hljs !px-2 !py-1 rounded"><span class="hljs-built_in">auto</span>Import</code> config to <code class="hljs !px-2 !py-1 rounded"><span class="hljs-literal">true</span></code>, First Orion UI will automatically try to import all custom html elements. Most <code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-keyword">import</span></code> could be omitted. For example the previous <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">counters</span>.html</code> could be rewritten as</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/style&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+    $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
+      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}.html&quot;</span>,
+    };
+    $foui.<span class="hljs-property">config</span>.<span class="hljs-property">autoImport</span> = <span class="hljs-literal">true</span>;
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+    <span class="hljs-selector-attr">[x-cloak]</span> {
+      <span class="hljs-attribute">display</span>: none <span class="hljs-meta">!important</span>;
+    }
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-cloak</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;p-2&quot;</span> <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{name: &#x27;Counter to rename&#x27;, winner: &#x27;Jacky&#x27;}&quot;</span>&gt;</span>
+  Rename the 2nd counter :
+  <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+    <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>
+    <span class="hljs-attr">x-model</span>=<span class="hljs-string">&quot;name&quot;</span>
+    <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;rounded-md border-2 border-blue-500&quot;</span>
+  /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter</span>
+    <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{step: 1}&quot;</span>
+    <span class="hljs-attr">:primary</span>=<span class="hljs-string">&quot;true&quot;</span>
+    <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;First&quot;</span>
+    <span class="hljs-attr">x-init</span>=<span class="hljs-string">&quot;console.log(&#x27;This is the first one&#x27;)&quot;</span>
+    <span class="hljs-attr">owner-name</span>=<span class="hljs-string">&quot;Tom&quot;</span>
+  &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter</span>
+    <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{step: 5}&quot;</span>
+    <span class="hljs-attr">:title</span>=<span class="hljs-string">&quot;name + &#x27; @ &#x27; + $prop(&#x27;owner-name&#x27;)&quot;</span>
+    <span class="hljs-attr">owner-name</span>=<span class="hljs-string">&quot;Frank&quot;</span>
+  &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter</span> <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{step: 10, value: 1000}&quot;</span> <span class="hljs-attr">:owner-name</span>=<span class="hljs-string">&quot;winner&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">foui-counter-trigger</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter-trigger</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">foui-counter</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<h2 id="xinclude" class="text-2xl font-bold mb-4">x-include</h2>
+<p class="text-base mb-4">Sometimes we just need to load a piece of html. The <code class="hljs !px-2 !py-1 rounded">x-<span class="hljs-meta"><span class="hljs-keyword">include</span></span></code> is convenient to use in this case. The <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">unwrap</span></code> modifier is used to remove the host html tag.</p>
+<blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
+  <p class="text-base mb-4">/include-article.html</p>
+</blockquote>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>&gt;</span>
+  Load into the external &quot;div&quot; tag:<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-color: #888;&quot;</span> <span class="hljs-attr">x-include</span>=<span class="hljs-string">&quot;./static/article&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+  Unwrap the external &quot;div&quot; tag:<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-color: #888;&quot;</span>
+    <span class="hljs-attr">x-include.unwrap</span>=<span class="hljs-string">&quot;./static/article&quot;</span>
+  &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
+  <p class="text-base mb-4">/static/article.html</p>
+</blockquote>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">&lt;<span class="hljs-selector-tag">h1</span>&gt;Title&lt;/<span class="hljs-selector-tag">h1</span>&gt;
+&lt;<span class="hljs-selector-tag">p</span>&gt;<span class="hljs-attribute">Content</span>&lt;/<span class="hljs-selector-tag">p</span>&gt;
+</code></pre>
+<p class="text-base mb-4">The final result will be</p>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>&gt;</span>
+  Load into the external &quot;div&quot; tag:<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-color: #888;&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+  Unwrap the external &quot;div&quot; tag:<span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<h2 id="xshtml" class="text-2xl font-bold mb-4">x-shtml</h2>
+<p class="text-base mb-4">In First Orion UI, please use x-shtml instead of Alpine.js original x-html, which has wrong behaviors in case of complex component lifecycle.</p>
+<h1 id="advancedusage" class="text-3xl font-bold mb-4">Advanced Usage</h1>
+<h2 id="dapiforcomponent" class="text-2xl font-bold mb-4">$api for component</h2>
+<p class="text-base mb-4"><code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-class"><span class="hljs-keyword">data</span></span></code> is very convenient to use. Its data is accessible to all descendant elements. There is no problems for simple static web page. When developping reusable components, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-class"><span class="hljs-keyword">data</span></span></code> is too open to store component own states. We do not want the properties to be modified occasionally just because of name confliction. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> allows to define <strong>private</strong> properties and methods. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> is only available to current component. At the same time, it inherets from x-data. That means if <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">this</span>.somePropOrMethod</code> does not exist in $api, it will check <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">somePropOrMethod</span></code> from x-data. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> has some predefined properties and methods:</p>
+<table class="table-auto w-full mb-4">
+<thead>
+<tr>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">Properties</th>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$meta</td>
+<td class="px-4 py-2 border-b border-gray-500">Get the meta info of current component, including type, namespace, prefix.</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$parent</td>
+<td class="px-4 py-2 border-b border-gray-500">Get the closest parent component element</td>
+</tr>
+</tbody>
+</table>
+<table class="table-auto w-full mb-4">
+<thead>
+<tr>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">Methods</th>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$of('component type')</td>
+<td class="px-4 py-2 border-b border-gray-500">Find the $api of specific component type of its ancestors. If the component type is empty, it will return the $api of its closest parent component</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$closest(filter)</td>
+<td class="px-4 py-2 border-b border-gray-500">Find the closest ancestor component element according to the filter, which could be component type or a function</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$find(filter)</td>
+<td class="px-4 py-2 border-b border-gray-500">Find all descendant component element according to the filter, which could be component type or a function</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$findOne(filter)</td>
+<td class="px-4 py-2 border-b border-gray-500">It is similar to $find, but only return the first component element match the filter</td>
+</tr>
+</tbody>
+</table>
+<p class="text-base mb-4"><code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-class"><span class="hljs-keyword">data</span></span></code> has two lifecycle hooks: init and destroy. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> has equivalents:</p>
+<table class="table-auto w-full mb-4">
+<thead>
+<tr>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">x-data</th>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">$api</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">init()</td>
+<td class="px-4 py-2 border-b border-gray-500">onMounted()</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">destroy()</td>
+<td class="px-4 py-2 border-b border-gray-500">onUnmounted()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dfouiglobalvariable" class="text-2xl font-bold mb-4">$foui global variable</h2>
+<p class="text-base mb-4">Once First Orion UI is initialized, there is a global variable <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$foui</span></span></code> attached to <code class="hljs !px-2 !py-1 rounded"><span class="hljs-built_in">window</span></code>.</p>
+<table class="table-auto w-full mb-4">
+<thead>
+<tr>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">Property/Method</th>
+<th class="px-4 py-2 border-b border-gray-500 bg-gray-200">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.config</td>
+<td class="px-4 py-2 border-b border-gray-500">A config object of <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">debug</span></code> mode flag and <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">importMap</span></code></td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui._</td>
+<td class="px-4 py-2 border-b border-gray-500">An utility object of some most used functions: <code class="hljs !px-2 !py-1 rounded"><span class="hljs-built_in">isString</span></code>, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-built_in">isArray</span></code>, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">isFunction</span></code>, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">isPlainObject</span></code>, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">each</span></code>, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-built_in">map</span></code>, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-built_in">filter</span></code>, <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">extend</span></code></td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.getComponentMeta(element)</td>
+<td class="px-4 py-2 border-b border-gray-500">Get component type and namespace from html element</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.isComponent(element)</td>
+<td class="px-4 py-2 border-b border-gray-500">Return true if an html element is a First Orion UI component</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.visitComponents(elContainer, callback)</td>
+<td class="px-4 py-2 border-b border-gray-500">Recursively visit all components inside an html container element with callback</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.findChildComponents(elContainer, filter)</td>
+<td class="px-4 py-2 border-b border-gray-500">Find all child component inside an html container element with specific filter, which could be component type or a function</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.getParentComponent(element)</td>
+<td class="px-4 py-2 border-b border-gray-500">Get the parent component of specific html element</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.findClosestComponent(element, filter)</td>
+<td class="px-4 py-2 border-b border-gray-500">Find the closest ancestor component element according to the filter, which could be component type or a function</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.$api(element)</td>
+<td class="px-4 py-2 border-b border-gray-500">Get $api of a component element</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.$data(element)</td>
+<td class="px-4 py-2 border-b border-gray-500">Alias of Alpine.$data(element)</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.setHtml(elContainer, html)</td>
+<td class="px-4 py-2 border-b border-gray-500">Load html into a container element. And First Orion UI components in the html will be correctly initialized</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.defer(callback)</td>
+<td class="px-4 py-2 border-b border-gray-500">Execute callback in next event loop.</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.dom(html)</td>
+<td class="px-4 py-2 border-b border-gray-500">Load a plain html into dom with First Orion UI components correctly initialized</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.nextTick(callback)</td>
+<td class="px-4 py-2 border-b border-gray-500">Alias of Alpine.nextTick(callback)</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.effect(callback)</td>
+<td class="px-4 py-2 border-b border-gray-500">Alias of Alpine.effect(callback)</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.focus(element, option)</td>
+<td class="px-4 py-2 border-b border-gray-500">Try to make an html element focused</td>
+</tr>
+<tr>
+<td class="px-4 py-2 border-b border-gray-500">$foui.scrollIntoView(element)</td>
+<td class="px-4 py-2 border-b border-gray-500">Try to scroll an html element into view</td>
+</tr>
+</tbody>
+</table>
+<h2 id="multipagesapplication" class="text-2xl font-bold mb-4">Multi pages application</h2>
+<p class="text-base mb-4">Check <a href="/examples/mpa">mpa example</a></p>
+<h2 id="singlepageapplication" class="text-2xl font-bold mb-4">Single page application</h2>
+<p class="text-base mb-4">Check <a href="/examples/spa/app.html">spa example</a></p>

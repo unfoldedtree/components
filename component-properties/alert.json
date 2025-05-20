@@ -1,0 +1,6 @@
+{
+    "name": "Alert",
+    "path": "/alert",
+    "description": "An alert component that displays a message to the user.",
+    "props": []
+}

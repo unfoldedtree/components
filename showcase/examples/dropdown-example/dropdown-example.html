@@ -1,0 +1,26 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="dropdown" class="p-2">   
+    <foui-dropdown
+        :primary="true"
+        :options="['Option 1', 'Option 2', 'Option 3']"
+        :selected-option="'Option 1'"
+        :label="'Select an option'"
+        :on-change.func="`(item) => { console.log('Callback:', item) }`"
+    ></foui-dropdown>
+</body>

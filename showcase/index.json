@@ -1,0 +1,10 @@
+{
+    "page": {
+        "title": "First Orion UI Documentation",
+        "description": "Find all the information you need to get started with First Orion UI.",
+        "path": "/",
+        "entry": "index",
+        "excludedDirectories": [],
+        "tabSourceJson": "info"
+    }
+}
