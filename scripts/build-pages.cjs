@@ -163,7 +163,7 @@ async function convertReadmeToHtml(readmePath) {
         });
 
         htmlObject.querySelectorAll('th').forEach((th) => {
-            th.setAttribute('class', 'px-4 py-2 border-b border-gray-500 bg-gray-200');
+            th.setAttribute('class', 'px-4 py-2 border-b border-gray-500 bg-black/10');
         });
 
         htmlObject.querySelectorAll('td').forEach((td) => {

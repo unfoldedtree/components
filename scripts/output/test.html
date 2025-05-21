@@ -12,128 +12,86 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/felipec.min.css">
 </head>
 
-<body class="bg-gray-100 text-gray-800 min-h-screen">
+<body class="bg-gray-900 text-white min-h-screen">
     <div class="mx-auto min-h-screen flex flex-col" x-data="dataHandler()">
-        <div class="p-6 border-b border-gray-300 bg-indigo-600 text-white">
-            <h1 class="text-2xl font-bold mb-4" x-text="documentTitle"></h1>
-            <p x-text="documentDescription"></p>
-        </div>
-
-        <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
-            <div class="flex h-16 shrink-0 items-center">
-              <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+        <div class="md:flex md:items-center md:justify-between p-8 border-b border-white/5 bg-black/10">
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl/7 font-bold text-white sm:truncate sm:text-3xl sm:tracking-tight" x-text="documentTitle"></h2>
             </div>
-            <nav class="flex flex-1 flex-col">
-              <ul role="list" class="flex flex-1 flex-col gap-y-7">
-                <li>
-                  <ul role="list" class="-mx-2 space-y-1">
-                    <template x-for="tab in sideBarTabs" :key="tab.tabId">
-                        <li class="mb-2">
-                            <!-- If the tab doesn't have a children property, just do a li, it if does have them then a drop down of the child elements -->
-                            <template x-if="tab.children">
-                                <li x-data="{ isOpen: false }">
-                                    <div>
-                                      <button @click="isOpen = !isOpen"  type="button" class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-700 hover:bg-gray-50" :aria-controls="`sub-menu-${tab.tabId}`" aria-expanded="false">
-                                        <!-- Expanded: "rotate-90 text-gray-500", Collapsed: "text-gray-400" -->
-                                        <span x-text="tab.name"></span>
-                                      </button>
-                                      <!-- Expandable link section, show/hide based on state. -->
-
-                                      <template x-if="isOpen">
-                                        <ul class="mt-1 px-2" :id="`sub-menu-${tab.tabId}`">
-                                            <template x-for="subTab in tab.children" :key="subTab.tabId">
-                                                <li class="">
-                                                    <a 
-                                                        :href="'#' + subTab.tabId" 
-                                                        class="block rounded-md py-2 pr-2 pl-9 text-sm/6 text-gray-700 hover:bg-gray-50" 
-                                                        x-text="subTab.name"
-                                                        @click="selectTab(subTab)"
-                                                    ></a>
-                                                </li>
-                                            </template>
-                                        </ul>
-                                        </template>
-                                    </div>
-                                  </li>
-                            </template>
-
-                            <template x-if="!tab.children">
-                                <li>
-                                    <!-- Current: "bg-gray-50", Default: "hover:bg-gray-50" -->
-                                    <a 
-                                        :href="'#' + tab.tabId" 
-                                        class="block rounded-md bg-gray-50 py-2 pr-2 pl-10 text-sm/6 font-semibold text-gray-700"
-                                        x-text="tab.name"
-                                        @click="selectTab(tab)"
-                                    ></a>
-                                  </li>
-                            </template>
-                        </li>
-                    </template>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-          </div>
+        </div>
 
         <!-- Create a sidebar with the sideBarTabs -->
         <div class="flex flex-1">
-            <div class="w-1/4 bg-gray-200 p-4 border-r border-gray-300">
-                <h2 class="text-xl font-semibold mb-2">Navigation</h2>
-                <ul>
-                    <template x-for="tab in sideBarTabs" :key="tab.tabId">
-                        <li class="mb-2">
-                            <!-- If the tab doesn't have a children property, just do a li, it if does have them then a drop down of the child elements -->
-                            <template x-if="tab.children">
-                                <div 
-                                    x-data="{ isOpen: false }"
-                                >
-                                    <div class="flex items-center">
-                                        <span class="font-semibold" x-text="tab.name"></span>
-                                        <button
+            <div class="flex grow flex-col overflow-y-auto px-6 border-r border-white/5 bg-black/10">
+                <div class="flex pt-4 pb-1 shrink-0 items-center">
+                    <!-- <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company"> -->
+                    <h2 class="text-xl font-semibold text-white">Navigation</h2>
+                </div>
+                <nav class="flex flex-1 flex-col">
+                  <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                    <li>
+                      <ul role="list" class="-mx-2 space-y-1">
+                        <template x-for="tab in sideBarTabs" :key="tab.tabId">
+                            <li class="mb-2">
+                                <!-- If the tab doesn't have a children property, just do a li, it if does have them then a drop down of the child elements -->
+                                <template x-if="tab.children">
+                                    <li x-data="{ isOpen: false }">
+                                        <div>
+                                          <button 
                                             @click="isOpen = !isOpen" 
-                                            class="ml-2 text-blue-500 hover:underline"
+                                            :id="tab.tabId"
+                                            type="button" class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-400 hover:bg-gray-50 group text-gray-400 hover:text-white hover:bg-gray-800" 
+                                            :aria-controls="`sub-menu-${tab.tabId}`"
+                                            aria-expanded="false"
                                         >
-                                            Toggle
-                                        </button>
-                                    </div>
-
-                                    <template x-if="isOpen">
-                                        <ul class="ml-4 flex flex-col gap-y-1 my-1">
-                                            <template x-for="subTab in tab.children" :key="subTab.tabId">
-                                                <li class="">
-                                                    <a 
-                                                        :href="'#' + subTab.tabId" 
-                                                        class="text-blue-500 hover:underline" 
-                                                        x-text="subTab.name"
-                                                        @click="selectTab(subTab)"
-                                                    ></a>
-                                                </li>
+                                            <!-- Expanded: "rotate-90 text-gray-500", Collapsed: "text-gray-400" -->
+                                            <span x-text="tab.name"></span>
+                                          </button>
+                                          <!-- Expandable link section, show/hide based on state. -->
+    
+                                          <template x-if="isOpen">
+                                            <ul class="mt-1 px-2" :id="`sub-menu-${tab.tabId}`">
+                                                <template x-for="subTab in tab.children" :key="subTab.tabId">
+                                                    <li class="">
+                                                        <a 
+                                                            :id="subTab.tabId"
+                                                            :href="'#' + tab.tabId + '/' + subTab.tabId" 
+                                                            class="block rounded-md py-2 pr-2 pl-9 text-sm/6 text-gray-400 hover:text-white hover:bg-gray-800" 
+                                                            :class="selectedTab?.tabId === subTab.tabId ? '!bg-gray-800 !text-white' : ''"
+                                                            x-text="subTab.name"
+                                                            @click="selectTab(subTab)"
+                                                        ></a>
+                                                    </li>
+                                                </template>
+                                            </ul>
                                             </template>
-                                        </ul>
-                                    </template>
-                                </div>
-                            </template>
-
-                            <template x-if="!tab.children">
-                                <ul>
-                                    <li class="mb-2">
+                                        </div>
+                                      </li>
+                                </template>
+    
+                                <template x-if="!tab.children">
+                                    <li>
+                                        <!-- Current: "bg-gray-800 text-white", Default: "text-gray-400 hover:text-white hover:bg-gray-800" -->
                                         <a 
-                                            :href="'#' + tab.tabId" 
-                                            class="text-blue-500 hover:underline" 
+                                            :href="'#' + tab.tabId"
+                                            :id="tab.tabId"
+                                            class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:text-white hover:bg-gray-800"
+                                            :class="selectedTab?.tabId === tab.tabId ? '!bg-gray-800 !text-white' : ''"
                                             x-text="tab.name"
                                             @click="selectTab(tab)"
                                         ></a>
-                                    </li>
-                                </ul>
-                            </template>
-                        </li>
-                    </template>
-                </ul>
-            </div>
+                                      </li>
+                                </template>
+                            </li>
+                        </template>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
 
             <!-- Main content area -->
-            <div class="w-3/4 p-4 h-100 flex flex-col">
+            <div class="w-4/5 p-4 h-100 flex flex-col p-8 overflow-auto">
                 <h2 id="content-heading" class="text-xl font-semibold mb-2" x-text="contentHeading"></h2>
                 <p x-text="contentDescription"></p>
                 <div id="content" class="flex flex-col flex-1 my-2">
@@ -152,6 +110,7 @@
                 contentDescription: '',
                 sideBarTabs: [],
                 buildContent: '',
+                selectedTab: null,
 
                 async init() {
                     try {
@@ -170,7 +129,8 @@
                                 this.documentDescription = this.data.page.description;
                                 this.sideBarTabs = this.data.page.tabs
 
-                                this.selectTab(this.data.page.tabs[0]); // Select the first tab by default
+                                // goto route if it exists, or default to the first tab
+                                this.goToRouteOnPageLoad();
                             });
                         } else {
                             console.error('No data found');
@@ -180,7 +140,46 @@
                     }
                 },
 
+                async goToRouteOnPageLoad() {
+                    // if there is a hash in the url, select the tab with that id
+                    const hash = window.location.hash.substring(1);
+                    if (hash) {
+                        const tabId = hash.split('/')[0];
+                        const tab = this.data.page.tabs.find(t => t.tabId === tabId);
+
+                        if (tab) {
+                            // Expand the tab if it has children
+                            const tabButton = document.getElementById(tabId);
+                            console.log('Tab button: ', tabButton);
+
+                            if (tabButton) {
+                                tabButton.click();
+                            }
+
+                            if (tab.children) {
+                                const subTabId = hash.split('/')[1];
+                                const subTab = tab.children.find(t => t.tabId === subTabId);
+                                if (subTab) {
+                                    this.selectTab(subTab);
+                                } else {
+                                    console.error('Sub-tab not found');
+                                }
+                            } else {
+                                this.selectTab(tab);
+                            }
+                        } else {
+                            console.error('Tab not found');
+                        }
+                    } else {
+                        // Select the first tab by default
+                        this.selectTab(this.data.page.tabs[0]);
+                    }
+                },
+
                 async selectTab(tab) {
+                    this.selectedTab = tab;
+                    console.log('Selected tab: ', this.selectedTab);
+
                     this.contentHeading = tab.name;
                     this.contentDescription = tab.description;
 
@@ -193,12 +192,12 @@
                     if (tab.entry) {
                         // Create a tabbed div for "Preview" and "Code" sections
                         const tabbedDiv = document.createElement('div');
-                        tabbedDiv.className = 'flex flex-1 flex-col gap-y-2';
+                        tabbedDiv.className = 'flex flex-1 flex-col gap-y-4';
                         const tabButtons = document.createElement('div');
-                        tabButtons.className = 'flex gap-x-2 mb-2';
+                        tabButtons.className = '-mb-px flex space-x-8 border-b border-white/10';
                         const previewButton = document.createElement('button');
 
-                        const buttonClass = 'px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md';
+                        const buttonClass = 'border-b-2 border-transparent px-1 py-4 text-sm font-medium whitespace-nowrap text-gray-400 hover:text-white hover:border-gray-300';
 
                         previewButton.className = buttonClass;
                         previewButton.innerText = 'Preview';
@@ -234,10 +233,10 @@
                         contentDiv.appendChild(tabButtons);
 
                         const previewDiv = document.createElement('div');
-                        previewDiv.className = 'flex-1 bg-white p-4 rounded-md border border-gray-300';
+                        previewDiv.className = 'flex-1 bg-black/10 p-4 rounded-md border border-white/5 mt-4';
                         previewDiv.id = 'preview';
                         const codeDiv = document.createElement('div');
-                        codeDiv.className = 'flex-1 flex-col hidden w-full';
+                        codeDiv.className = 'flex-1 flex-col hidden w-full mt-4';
                         codeDiv.id = 'code';
 
                         tabbedDiv.appendChild(previewDiv);
@@ -276,7 +275,7 @@
                     codeSnippet.className = 'overflow-auto w-full';
 
                     const codeElement = document.createElement('code');
-                    codeElement.className = 'p-4 rounded-md border border-gray-300 overflow-auto';
+                    codeElement.className = 'p-4 rounded-md border border-white/5 overflow-auto';
 
                     // look for a "<!-- Code injected by live-server -->" comment, remove the script tags that follow it and the comment itself
                     let code = componentText.split('<!-- Code injected by live-server -->');
@@ -321,16 +320,16 @@
 
                             tab.componentData.props.forEach(prop => {
                                 const propDiv = document.createElement('div');
-                                propDiv.className = 'my-2 border border-gray-300 p-2 rounded-md';
-                                propDiv.innerHTML = `<p class="font-semibold">${prop.name}</p>`;
-                                propDiv.innerHTML += `<p class="text-sm text-gray-600">${prop.description}</p>`;
+                                propDiv.className = 'my-2 border border-white/5 p-2 rounded-md';
+                                propDiv.innerHTML = `<p class="font-semibold text-white">${prop.name}</p>`;
+                                propDiv.innerHTML += `<p class="text-sm text-gray-400">${prop.description}</p>`;
 
                                 if (prop.type) {
-                                    propDiv.innerHTML += `<p class="text-sm text-gray-600">Type: ${prop.type}</p>`;
+                                    propDiv.innerHTML += `<p class="text-sm text-gray-400">Type: ${prop.type}</p>`;
                                 }
 
                                 if (prop.default) {
-                                    propDiv.innerHTML += `<p class="text-sm text-gray-600">Default: ${prop.default}</p>`;
+                                    propDiv.innerHTML += `<p class="text-sm text-gray-400">Default: ${prop.default}</p>`;
                                 }
                                 propParentDiv.appendChild(propDiv);
                             });
@@ -342,7 +341,7 @@
                     }
 
                     hljs.highlightAll();
-                }
+                },
             };
         }
     </script>
