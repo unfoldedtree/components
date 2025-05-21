@@ -1,27 +1,152 @@
 <template 
-    x-component.unwrap="alert"
+    x-component.unwrap="alert" 
+    x-init="$api && $api.init()" 
+    x-ref="alert" 
+    title="Alert"
+    :message="''"
+    :accent-border="false"
+    :link-text="''"
+    :link-url="''"
+    :dismissible="false"
+    :on-close.func="`() => {}`"
+    variant="info"
+    x-data="{ classList: '' }"
 >
-    <div class="rounded-md bg-yellow-50 p-4">
+    <div class="rounded-md p-4">
         <div class="flex">
-        <div class="shrink-0">
-            <svg class="size-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
-            </svg>
-        </div>
-        <div class="ml-3">
-            <h3 class="text-sm font-medium text-yellow-800">Attention needed</h3>
-            <div class="mt-2 text-sm text-yellow-700">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam quo totam eius aperiam dolorum.</p>
+            <div class="shrink-0">
             </div>
-        </div>
+            <div class="ml-3 flex-1 md:flex md:justify-between items-center">
+                <div>
+                    <h3 class="text-sm font-medium" x-ref="title" x-text="$prop('title')"></h3>
+                    <template x-if="$prop('message')" x-cloak>
+                        <div class="mt-2 text-sm" x-ref="message" >
+                            <p x-text="$prop('message')"></p>
+                        </div>
+                    </template>
+                    <div class="flex mt-4" x-ref="slotParent">
+                        <slot></slot>
+                      </div>
+                </div>
+                <div class="ml-auto flex gap-x-2 items-center">
+                    <p class="mt-3 text-sm md:ml-6 md:mt-0" x-show="$prop('link-text') && $prop('link-url')">
+                        <a x-ref="link" :href="$prop('link-url')" class="whitespace-nowrap font-medium">
+                            <span x-text="$prop('link-text')"></span>
+                            <span aria-hidden="true"> &rarr;</span>
+                        </a>
+                    </p>
+                    <div class="pl-3" x-show="$prop('dismissible')">
+                        <div>
+                          <button x-ref="dismiss" type="button" class="inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2" @click="$prop('on-close')">
+                            <span class="sr-only">Dismiss</span>
+                            <!-- <span aria-hidden="true" class="text-2xl">&times;</span> -->
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                              </svg>
+                          </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         return {
             init() {
-                this.$el.classList.add('flex', 'items-center', 'p-4', 'mb-4', 'text-sm', 'text-gray-800', 'bg-white', 'rounded-lg', 'dark:bg-gray-800', 'dark:text-gray-400')
-                this.$el.setAttribute('role', 'alert')
+                const el = this.$refs.alert
+                const title = this.$refs.title
+                const message = this.$refs.message
+                const link = this.$refs.link
+                const dismiss = this.$refs.dismiss
+                const slotParent = this.$refs.slotParent
+
+                const variant = this.$prop('variant')
+
+                // check if slot is empty
+                if (slotParent.childElementCount === 0) {
+                    slotParent.classList.add('hidden')
+                }
+
+                switch (variant) {
+                    case 'info':
+                        el.classList.add('bg-blue-50', 'text-blue-800')
+                        title.classList.add('text-blue-800')
+                        message?.classList.add('text-blue-700')
+                        link.classList.add('text-blue-700', 'hover:text-blue-600')
+
+                        if (this.$prop('accent-border') === true) {
+                            el.classList.add('border-blue-500', 'border-l-4')
+                            el.classList.remove('rounded-md')
+                        }
+
+                        if (this.$prop('link-text') && this.$prop('link-url')) {
+                            link.classList.add('text-blue-700', 'hover:text-blue-600')
+                        }
+
+                        if (this.$prop('dismissible') === true) {
+                            dismiss.classList.add('text-blue-500', 'hover:text-blue-600', 'focus:ring-blue-600', 'focus:ring-offset-blue-50', 'hover:bg-blue-100')
+                        }
+
+                        break
+                    case 'success':
+                        el.classList.add('bg-green-50', 'text-green-800')
+                        title.classList.add('text-green-800')
+                        message?.classList.add('text-green-700')
+
+                        if (this.$prop('accent-border') === true) {
+                            el.classList.add('border-green-500', 'border-l-4')
+                            el.classList.remove('rounded-md')
+                        }
+
+                        if (this.$prop('link-text') && this.$prop('link-url')) {
+                            link.classList.add('text-green-700', 'hover:text-green-600')
+                        }
+
+                        if (this.$prop('dismissible') === true) {
+                            dismiss.classList.add('text-green-500', 'hover:text-green-600', 'focus:ring-green-600', 'focus:ring-offset-green-50', 'hover:bg-green-100')
+                        }
+
+                        break
+                    case 'warning':
+                        el.classList.add('bg-yellow-50', 'text-yellow-800')
+                        title.classList.add('text-yellow-800')
+                        message?.classList.add('text-yellow-700')
+
+                        if (this.$prop('accent-border') === true) {
+                            el.classList.add('border-yellow-500', 'border-l-4')
+                            el.classList.remove('rounded-md')
+                        }
+
+                        if (this.$prop('link-text') && this.$prop('link-url')) {
+                            link.classList.add('text-yellow-700', 'hover:text-yellow-600')
+                        }
+
+                        if (this.$prop('dismissible') === true) {
+                            dismiss.classList.add('text-yellow-500', 'hover:text-yellow-600', 'focus:ring-yellow-600', 'focus:ring-offset-yellow-50', 'hover:bg-yellow-100')
+                        }
+
+                        break
+                    case 'error':
+                        el.classList.add('bg-red-50', 'text-red-800')
+                        title.classList.add('text-red-800')
+                        message?.classList.add('text-red-700')
+
+                        if (this.$prop('accent-border') === true) {
+                            el.classList.add('border-red-500', 'border-l-4')
+                            el.classList.remove('rounded-md')
+                        }
+
+                        if (this.$prop('link-text') && this.$prop('link-url')) {
+                            link.classList.add('text-red-700', 'hover:text-red-600')
+                        }
+
+                        if (this.$prop('dismissible') === true) {
+                            dismiss.classList.add('text-red-500', 'hover:text-red-600', 'focus:ring-red-600', 'focus:ring-offset-red-50', 'hover:bg-red-100')
+                        }
+
+                        break
+                }
             }
         }
     </script>

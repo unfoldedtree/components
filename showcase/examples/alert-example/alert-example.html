@@ -17,13 +17,60 @@
 
 <body x-cloak x-import="alert" class="p-2 flex gap-2 flex-col items-start justify-start">
     <div>
-        <p>Alert Example</p>
+        <p>Alert w/Description</p>
 
         <div class="p-2 flex gap-2 flex items-start justify-start">
-            <foui-alert :type="'info'" :message="'This is an info alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
-            <foui-alert :type="'success'" :message="'This is a success alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
-            <foui-alert :type="'warning'" :message="'This is a warning alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
-            <foui-alert :type="'error'" :message="'This is an error alert!'" :on-close.func="`(e) => { console.log('Alert closed') }`"></foui-alert>
+            <foui-alert :variant="'info'" :message="'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam quo totam eius aperiam dolorum.'"></foui-alert>
+        </div>
+    </div>
+
+    <div>
+        <p>Alert w/List</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-alert :variant="'error'" :title="'There were 2 errors with your submission'">
+                <ul role="list" class="list-disc space-y-1 pl-5">
+                    <li>Your password must be at least 8 characters</li>
+                    <li>Your password must include at least one pro wrestling finishing move</li>
+                </ul>
+            </foui-alert>
+        </div>
+    </div>
+
+    <div>
+        <p>Alert w/Actions</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-alert :variant="'success'" :title="'Order completed'" :message="'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam.'">
+                <div class="-mx-2 -my-1.5 flex">
+                    <button type="button" class="rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50">View status</button>
+                    <button type="button" class="ml-3 rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50">Dismiss</button>
+                </div>
+            </foui-alert>
+        </div>
+    </div>
+
+    <div>
+        <p>Alert w/Link</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-alert :title="'A new software update is available. See what’s new in version 2.0.4.'" :link-text="'Details'" :link-url="'#'"></foui-alert>
+        </div>
+    </div>
+
+    <div>
+        <p>Alert w/Accent Border</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-alert :variant="'warning'" :title="'You have no credits left.'" :accent-border="true"></foui-alert>
+        </div>
+    </div>
+
+    <div>
+        <p>Alert w/Dismiss Button</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-alert :variant="'success'" :title="'Successfully Uploaded'" :on-close.func="`(e) => { alert('Alert Closing') }`" :dismissible="true"></foui-alert>
         </div>
     </div>
 </body>

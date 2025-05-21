@@ -94,6 +94,18 @@
                   "type": "boolean",
                   "default": false,
                   "description": "If true, a loading spinner will be shown inside the button."
+                },
+                {
+                  "name": "submit",
+                  "type": "boolean",
+                  "default": false,
+                  "description": "If true, the button will be of type 'submit'."
+                },
+                {
+                  "name": "on-click",
+                  "type": "function",
+                  "default": null,
+                  "description": "A function to be called when the button is clicked."
                 }
               ]
             }

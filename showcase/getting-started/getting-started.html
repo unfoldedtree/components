@@ -2,13 +2,13 @@
 <p class="text-base mb-4">I hate compiling frontend code with complex toolchains, like webpack, rollup, vite etc. Unfortunately, most frontend frameworks heavily depends on them. Alpine.js is clean, powerful and without extra build process. While it is a challenge to develop a UI library directly with Alpine.js. First Orion UI is an ultra lightweight library to build UI components for Alpine.js.</p>
 <h1 id="basicusages" class="text-3xl font-bold mb-4">Basic Usages</h1>
 <p class="text-base mb-4">Just add First Orion UI CDN url before Alpine.js</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <p class="text-base mb-4">Now there are three important Alpine.js directives to build your own UI components</p>
 <h2 id="xcomponent" class="text-2xl font-bold mb-4">x-component</h2>
 <p class="text-base mb-4">This directive creates an HTML native custom element around Alpine.js template.</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
@@ -22,7 +22,7 @@
 <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 </code></pre>
 <p class="text-base mb-4">It shows <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">Hello First Orion UI</span></code>. The slots could have their default content. </p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
@@ -39,7 +39,7 @@
 </code></pre>
 <p class="text-base mb-4">Now there are <code class="hljs !px-2 !py-1 rounded">Hello <span class="hljs-keyword">First</span> Orion UI <span class="hljs-keyword">from</span> Team <span class="hljs-keyword">Default</span></code> and <code class="hljs !px-2 !py-1 rounded">Hello World <span class="hljs-keyword">from</span> Team <span class="hljs-keyword">First</span> Orion</code>. </p>
 <p class="text-base mb-4">Let's add some interaction logic. There are two magics <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> and <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$prop</span></span></code> for a First Orion UI component. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$api</span></span></code> comes from the return object of the first <code class="hljs !px-2 !py-1 rounded"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span></code> inside of component template. <code class="hljs !px-2 !py-1 rounded"><span class="hljs-meta"><span class="hljs-keyword">$prop</span></span></code> is function to get the passed value of component property:</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
@@ -64,7 +64,7 @@
 <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 </code></pre>
 <p class="text-base mb-4">The default custom element namespace is <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">foui</span></code>, which could be modified in config. You could also give a different namespace with format <code class="hljs !px-2 !py-1 rounded">x-component:{<span class="hljs-keyword">namespace</span>}=&quot;<span class="hljs-symbol">component</span> <span class="hljs-symbol">name</span></code></p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
@@ -88,7 +88,7 @@
 <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 </code></pre>
 <p class="text-base mb-4">The final html result will be</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">...
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4">...
 
 <span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">myui-greeting</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello My UI<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">myui-greeting</span>&gt;</span>
@@ -96,7 +96,7 @@
 <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 </code></pre>
 <p class="text-base mb-4">In some cases, we do not want the component tag to exist in the result. We could just add an <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">unwrap</span></code> modifier in <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">x</span>-component</code>.</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">...
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4">...
 
 <span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">x-data</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">myui-greeting</span>&gt;</span>My UI<span class="hljs-tag">&lt;/<span class="hljs-name">myui-greeting</span>&gt;</span>
@@ -112,7 +112,7 @@
 <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 </code></pre>
 <p class="text-base mb-4">The component tags <code class="hljs !px-2 !py-1 rounded"><span class="hljs-attribute">myui-greeting</span></code> and <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">new</span>-greeting</code> will no longer exist in the final html result</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">...
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4">...
 
 &lt;<span class="hljs-selector-tag">body</span> <span class="hljs-attribute">x</span>-data&gt;
   &lt;<span class="hljs-selector-tag">h1</span>&gt;Hello My UI&lt;/<span class="hljs-selector-tag">h1</span>&gt;
@@ -124,7 +124,7 @@
 <blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
   <p class="text-base mb-4">/hello-remote.html</p>
 </blockquote>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
@@ -146,12 +146,12 @@
 <blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
   <p class="text-base mb-4">/components/greeting.html</p>
 </blockquote>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">x-component</span>=<span class="hljs-string">&quot;greeting&quot;</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Cloud Hello <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
 </code></pre>
 <p class="text-base mb-4">The components could be loaded from anywhere, like</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
     <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui/examples/components/${component}.html&quot;</span>,
   };
@@ -162,7 +162,7 @@ Here is a more complete example:</p>
 <blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
   <p class="text-base mb-4">/counters.html</p>
 </blockquote>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/style&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
@@ -211,7 +211,7 @@ Here is a more complete example:</p>
 <blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
   <p class="text-base mb-4">/components/counter.html</p>
 </blockquote>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>
   <span class="hljs-attr">x-component.unwrap</span>=<span class="hljs-string">&quot;counter&quot;</span>
   <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;$prop(&#x27;primary&#x27;) ? &#x27;text-red-500&#x27; : &#x27;text-blue-500&#x27;&quot;</span>
   <span class="hljs-attr">x-data</span>=<span class="hljs-string">&quot;{ step : 1, value: 0}&quot;</span>
@@ -247,7 +247,7 @@ Here is a more complete example:</p>
 <blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
   <p class="text-base mb-4">/components/counter-trigger.html</p>
 </blockquote>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">&lt;template x-component=&quot;counter-trigger&quot;&gt;
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4">&lt;template x-component=&quot;counter-trigger&quot;&gt;
   &lt;button
     @click=&quot;$api.$of(&#x27;counter&#x27;).increase()&quot;
     class=&quot;inline-block rounded-lg mt<span class="hljs-string">-2</span> bg-green<span class="hljs-string">-600</span> px<span class="hljs-string">-4</span> py<span class="hljs-string">-1</span>.5 text-white shadow ring<span class="hljs-string">-1</span> ring-green<span class="hljs-string">-600</span> hover:bg-green<span class="hljs-string">-700</span> hover:ring-green<span class="hljs-string">-700</span>&quot;
@@ -258,7 +258,7 @@ Here is a more complete example:</p>
 </code></pre>
 <h3 id="howtoimportdynamiccomponents" class="text-xl font-bold mb-4">How to import dynamic components ?</h3>
 <p class="text-base mb-4">Add <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">dynamic</span></code> modifier to <code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-keyword">import</span></code>, it will evaluate the express to a string or array and then import all these components. Please refer the example in <code class="hljs !px-2 !py-1 rounded">examples<span class="hljs-regexp">/spa/</span>app.html</code>.</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">&lt;template
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4">&lt;template
   x-component=<span class="hljs-string">&quot;router-view&quot;</span>
   x-shtml=<span class="hljs-string">&quot;<span class="hljs-subst">$api</span> &amp;&amp; <span class="hljs-subst">$api</span>.pageContent || &#x27;&#x27;&quot;</span>
   x-<span class="hljs-keyword">import</span>:<span class="hljs-built_in">dynamic</span>=<span class="hljs-string">&quot;<span class="hljs-subst">$api</span> &amp;&amp; <span class="hljs-subst">$api</span>.pageToImport&quot;</span>
@@ -268,7 +268,7 @@ Here is a more complete example:</p>
 </code></pre>
 <h3 id="autoimportallcomponents" class="text-xl font-bold mb-4">Auto import all components</h3>
 <p class="text-base mb-4">Set the <code class="hljs !px-2 !py-1 rounded"><span class="hljs-built_in">auto</span>Import</code> config to <code class="hljs !px-2 !py-1 rounded"><span class="hljs-literal">true</span></code>, First Orion UI will automatically try to import all custom html elements. Most <code class="hljs !px-2 !py-1 rounded"><span class="hljs-title">x</span>-<span class="hljs-keyword">import</span></code> could be omitted. For example the previous <code class="hljs !px-2 !py-1 rounded"><span class="hljs-keyword">counters</span>.html</code> could be rewritten as</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/style&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
@@ -315,7 +315,7 @@ Here is a more complete example:</p>
 <blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
   <p class="text-base mb-4">/include-article.html</p>
 </blockquote>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
@@ -334,11 +334,11 @@ Here is a more complete example:</p>
 <blockquote class="border-l-4 border-gray-500 pl-4 italic mb-4">
   <p class="text-base mb-4">/static/article.html</p>
 </blockquote>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2">&lt;<span class="hljs-selector-tag">h1</span>&gt;Title&lt;/<span class="hljs-selector-tag">h1</span>&gt;
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4">&lt;<span class="hljs-selector-tag">h1</span>&gt;Title&lt;/<span class="hljs-selector-tag">h1</span>&gt;
 &lt;<span class="hljs-selector-tag">p</span>&gt;<span class="hljs-attribute">Content</span>&lt;/<span class="hljs-selector-tag">p</span>&gt;
 </code></pre>
 <p class="text-base mb-4">The final result will be</p>
-<pre><code class="text-sm font-mono hljs !p-2 rounded my-2"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>

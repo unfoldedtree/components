@@ -105,11 +105,6 @@ fs.writeFileSync(jsonOutputPath, JSON.stringify(index, null, 2), 'utf-8');
 // Function to convert README.md to HTML
 async function convertReadmeToHtml(readmePath) {
     try {
-        // const converter = new parser.Converter({
-        //     moreStyling: true,
-        //     ghCodeBlocks: true,
-        // });
-
         const converter = new parser.Converter({
             tables: true
         });
@@ -207,7 +202,7 @@ async function convertReadmeToHtml(readmePath) {
                 const codeContent = code.textContent;
 
                 // add hljs class to the code block
-                code.setAttribute('class', 'text-sm font-mono hljs !p-2 rounded my-2');
+                code.setAttribute('class', 'text-sm font-mono hljs !p-2 rounded my-4');
 
                 // remove double quotes from the beginning and end of the code content
                 // const cleanedCodeContent = codeContent.replace(/^"/, '').replace(/"$/, '');

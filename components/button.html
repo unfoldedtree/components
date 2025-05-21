@@ -6,11 +6,11 @@
     :rounded="false"
     :disabled="false"
     :loading="false"
-    :on-click.func="`(e) => { }`"
+    :on-click.func="`(e) => {}`"
     x-init="$api && $api.init()"
     x-data="{ classList: '', loadingSize: '' }"
 >
-    <button :class="classList" @click="$prop('on-click')" :disabled="$prop('disabled')">
+    <button :class="classList" @click="$prop('on-click')" :disabled="$prop('disabled')" :type="$prop('submit') ? 'submit' : 'button'">
         <slot name="prepend" class="inline-flex items-center justify-center w-4 h-4 mr-2"></slot>
         <slot></slot>
         <slot name="append" class="inline-flex items-center justify-center w-4 h-4 ml-2"></slot>
