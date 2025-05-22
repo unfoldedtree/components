@@ -148,27 +148,35 @@
                         const tab = this.data.page.tabs.find(t => t.tabId === tabId);
 
                         if (tab) {
-                            // Expand the tab if it has children
-                            const tabButton = document.getElementById(tabId);
-                            console.log('Tab button: ', tabButton);
-
-                            if (tabButton) {
-                                tabButton.click();
-                            }
-
                             if (tab.children) {
-                                const subTabId = hash.split('/')[1];
+                                const subTabId = hash.split('/')[1]?.split('?')[0];
                                 const subTab = tab.children.find(t => t.tabId === subTabId);
                                 if (subTab) {
                                     this.selectTab(subTab);
+
+                                    // in 150 ms click the tab
+                                    setTimeout(() => {
+                                        const tabElement = document.getElementById(tab.tabId);
+                                        if (tabElement) {
+                                            tabElement.click();
+                                        }
+                                    }, 150);
                                 } else {
                                     console.error('Sub-tab not found');
+
+                                    // remove hash from url
+                                    this.selectTab(this.data.page.tabs[0]);
+                                    window.history.pushState('', document.title, window.location.pathname + window.location.search);
                                 }
                             } else {
                                 this.selectTab(tab);
                             }
                         } else {
                             console.error('Tab not found');
+
+                            // remove hash from url
+                            this.selectTab(this.data.page.tabs[0]);
+                            window.history.pushState('', document.title, window.location.pathname + window.location.search);
                         }
                     } else {
                         // Select the first tab by default
@@ -178,7 +186,7 @@
 
                 async selectTab(tab) {
                     this.selectedTab = tab;
-                    console.log('Selected tab: ', this.selectedTab);
+                    // console.log('Selected tab: ', this.selectedTab);
 
                     this.contentHeading = tab.name;
                     this.contentDescription = tab.description;
@@ -190,58 +198,56 @@
 
                     // if componentPath is defined, fetch the component from the path and append it to the content div
                     if (tab.entry) {
+                        // add x-data with tab switching
+                        const tabParentDiv = document.createElement('div');
+                        tabParentDiv.className = 'flex flex-1 flex-col gap-y-4';
+                        tabParentDiv.setAttribute('id', 'tab-parent');
+                        tabParentDiv.setAttribute('x-data', '{ tab: "" }');
+                        tabParentDiv.setAttribute('x-init', `initUrlHash('preview')`);
+
                         // Create a tabbed div for "Preview" and "Code" sections
                         const tabbedDiv = document.createElement('div');
-                        tabbedDiv.className = 'flex flex-1 flex-col gap-y-4';
+
+                        tabbedDiv.className = 'flex flex-1 flex-col';
                         const tabButtons = document.createElement('div');
                         tabButtons.className = '-mb-px flex space-x-8 border-b border-white/10';
+
+                        const buttonClass = 'border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap';
+
                         const previewButton = document.createElement('button');
-
-                        const buttonClass = 'border-b-2 border-transparent px-1 py-4 text-sm font-medium whitespace-nowrap text-gray-400 hover:text-white hover:border-gray-300';
-
                         previewButton.className = buttonClass;
                         previewButton.innerText = 'Preview';
-                        previewButton.onclick = () => {
-                            console.log('Preview clicked');
-                            const previewDiv = document.getElementById('preview');
-                            const codeDiv = document.getElementById('code');
+                        previewButton.setAttribute('id', 'preview-button');
+                        // Set the tab to "preview", add the preview query string to the url hash
+                        previewButton.setAttribute('x-on:click', `tab = "preview"; addToUrlHash('preview')`);
+                        previewButton.setAttribute('x-bind:class', 'tab === "preview" ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-400 hover:text-white hover:border-gray-300"');
 
-                            previewDiv.classList.add('flex');
-                            previewDiv.classList.remove('hidden');
-
-                            codeDiv.classList.add('hidden');
-                            codeDiv.classList.remove('flex');
-                        };
                         const codeButton = document.createElement('button');
                         codeButton.className = buttonClass;
                         codeButton.innerText = 'Code';
-                        codeButton.onclick = () => {
-                            console.log('Code clicked');
-
-                            const previewDiv = document.getElementById('preview');
-                            const codeDiv = document.getElementById('code');
-
-                            previewDiv.classList.add('hidden');
-                            previewDiv.classList.remove('flex');
-
-                            codeDiv.classList.add('flex');
-                            codeDiv.classList.remove('hidden');
-                        };
+                        codeButton.setAttribute('id', 'code-button');
+                        codeButton.setAttribute('x-on:click', 'tab = "code"; addToUrlHash("code")');
+                        codeButton.setAttribute('x-bind:class', 'tab === "code" ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-400 hover:text-white hover:border-gray-300"');
 
                         tabButtons.appendChild(previewButton);
                         tabButtons.appendChild(codeButton);
-                        contentDiv.appendChild(tabButtons);
+                        // contentDiv.appendChild(tabButtons);
 
                         const previewDiv = document.createElement('div');
                         previewDiv.className = 'flex-1 bg-black/10 p-4 rounded-md border border-white/5 mt-4';
+                        previewDiv.setAttribute('x-show', 'tab === "preview"');
                         previewDiv.id = 'preview';
+
                         const codeDiv = document.createElement('div');
-                        codeDiv.className = 'flex-1 flex-col hidden w-full mt-4';
+                        codeDiv.className = 'flex-1 flex-col w-full mt-4';
+                        codeDiv.setAttribute('x-show', 'tab === "code"');
                         codeDiv.id = 'code';
 
                         tabbedDiv.appendChild(previewDiv);
                         tabbedDiv.appendChild(codeDiv);
-                        contentDiv.appendChild(tabbedDiv);
+                        tabParentDiv.appendChild(tabButtons);
+                        tabParentDiv.appendChild(tabbedDiv);
+                        contentDiv.appendChild(tabParentDiv);
 
                         this.buildContentAndPreview(tab);
                     } else if (tab.tabId && tab.path) {
@@ -255,6 +261,44 @@
                         contentDiv.appendChild(div);
                     } else {
                         console.error('No entry or path found for tab');
+                    }
+                },
+
+                addToUrlHash(query) {
+                    console.log('Adding to URL hash: ', query);
+
+                    const hash = window.location.hash.substring(1);
+
+                    // if hash has ? replace it with the new query
+                    const newHash = hash.split('?')[0] + '?' + query;
+
+                    window.history.replaceState('', document.title, window.location.pathname + window.location.search + '#' + newHash);
+                },
+
+                initUrlHash(defaultTab) {
+                    const hash = window.location.hash.substring(1);
+                    if (hash) {
+                        const query = hash.split('?')[1];
+                        
+                        // wait 150ms and then set the tab to the query
+                        setTimeout(() => {
+                            if (query) {
+                                const button = document.getElementById(query + '-button');
+                                if (button) {
+                                    button.click();
+                                } else {
+                                    console.error('Button not found: ', query);
+                                }
+                            } else {
+                                // if there is no query, set the default tab
+                                const button = document.getElementById(defaultTab + '-button');
+                                if (button) {
+                                    button.click();
+                                } else {
+                                    console.error('Button not found: ', defaultTab + '-button');
+                                }
+                            }
+                        }, 150);
                     }
                 },
 

@@ -320,15 +320,22 @@ function setupCore(G) {
                 let comp = findClosestComponent(el)
                 if (!comp) return null
 
-                // console.log(comp)
+                const value = Alpine.bound(comp, `${name}`, fallback)
 
-                // get :name.func attribute to check if it is a function
-                if (comp.getAttribute(`:${name}.func`) || comp.getAttribute(`${name}.func`) || comp.getAttribute(`x-bind:${name}.func`)) {
-                    // run the function
-                    return eval(Alpine.bound(comp, `${name}`, fallback))
+                // if null or undefined return the value
+                if (value === null || value === undefined) return value
+
+                try {
+                    const func = new Function(`return ${value}`)();
+
+                    if (typeof func === 'function') {
+                        return func;
+                    }
+                } catch (e) {
+                    //
                 }
 
-                return Alpine.bound(comp, `${name}`, fallback)
+                return value;
             }
         })
 
