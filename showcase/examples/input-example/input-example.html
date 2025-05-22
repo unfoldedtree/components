@@ -1,0 +1,74 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="input" class="p-2 flex gap-2 flex-col items-start justify-start text-white">
+    <div>
+        <p>Input w/Label</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Username'"></foui-input>
+        </div>
+    </div>
+    
+    <div>
+        <p>Input w/Label and Help Text</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Email'" :description="'We only use this for spam.'"></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Hidden Label</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Placeholder</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Input'" :placeholder="'Enter text here'"></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Hint</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Input'" :placeholder="'Enter text here'" :hint="'Optional'"></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Disabled State</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Input'" :placeholder="'Enter text here'" :disabled="true"></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Inset Label</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Input'" :placeholder="'Enter text here'" :variant="'inset'"></foui-input>
+        </div>
+    </div>
+</body>

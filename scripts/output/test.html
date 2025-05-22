@@ -119,7 +119,7 @@
                         this.data = await response.json();
 
                         if (this.data) {
-                            console.log('Data loaded successfully: ', this.data);
+                            // console.log('Data loaded successfully: ', this.data);
 
                             this.$nextTick(() => {
                                 // change page title to data.page.title
@@ -265,7 +265,7 @@
                 },
 
                 addToUrlHash(query) {
-                    console.log('Adding to URL hash: ', query);
+                    // console.log('Adding to URL hash: ', query);
 
                     const hash = window.location.hash.substring(1);
 

@@ -216,6 +216,15 @@
                 }
               ]
             }
+          },
+          {
+            "name": "Input Example",
+            "entry": "input-example",
+            "description": "Input example demonstrates the usage of the input component. It showcases how to create different types of inputs, such as text, password, and email.",
+            "path": "input-example",
+            "excludedDirectories": [],
+            "tabId": "input-example",
+            "componentPath": "/input"
           }
         ]
       }
