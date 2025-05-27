@@ -325,14 +325,18 @@ function setupCore(G) {
                 // if null or undefined return the value
                 if (value === null || value === undefined) return value
 
+
                 try {
                     const func = new Function(`return ${value}`)();
 
                     if (typeof func === 'function') {
-                        return func;
+                        const api = getApiOf(el);
+
+                        // If the value is a function, return it bound to the Alpine Component API
+                        return new Function(`return ${value}`).call(api)
                     }
                 } catch (e) {
-                    //
+                    // console.warn(`Error evaluating prop "${name}":`, e);
                 }
 
                 return value;

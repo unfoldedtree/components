@@ -16,11 +16,96 @@
 </head>
 
 <body x-cloak x-import="input" class="p-2 flex gap-2 flex-col items-start justify-start text-white">
+    <!-- Need to add Input Support from Prepend/Appends -->
+
+    <!-- Need to make passing of named functions working -->
+    <!-- Need to make passing of bound model values working -->
+    <div x-data="test">
+        <div>
+            <p>Input w/On Input Event</p>
+
+            <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
+                <foui-input :label="'Input'" :value="value" :on-input="`(e) => this.handleInputChange(e)`"></foui-input>
+                <p class="text-gray-400 dark:text-white">
+                    <span>Value: </span>
+                    <span x-text="value"></span>
+                </p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('test', () => ({
+                    value: '',
+
+                    init() {
+                        this.$watch('value', (newValue) => {
+                            console.log('Value changed:', newValue);
+                        });
+
+                        this.value = 'Initial Value'; // Set initial value
+                    },
+
+                    handleInputChange(event) {
+                        console.log('Callback value:', event.target.value);
+                        this.value = event.target.value;
+                    },
+                }))
+            })
+        </script>
+    </div>
+
+    <!-- <template x-component="input-with-change" x-data="{ value: '' }" x-init="$api && $api.init()" x-if="true">
+        <div>
+            <p>Input w/On Change Event</p>
+
+            <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
+                <foui-input :label="'Input'" :value="value" :on-input="`(e) => { console.log(this, $api) }`"></foui-input>
+                <p class="text-gray-400 dark:text-white">
+                    <span>Value: </span>
+                    <span x-text="value"></span>
+                </p>
+            </div>
+        </div>
+
+        <script>
+            return {
+                    init() {
+                        this.$watch('value', (newValue) => {
+                            console.log('Value changed:', newValue);
+                        });
+
+                        this.value = 'Initial Value'; // Set initial value
+                    },
+
+                    handleInputChange(event) {
+                        console.log('Input changed:', event.target.value);
+                    }
+                }
+        </script>
+    </template> -->
+
     <div>
         <p>Input w/Label</p>
 
         <div class="p-2 flex gap-2 flex items-start justify-start">
             <foui-input :label="'Username'"></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Pill Shape</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Username'" :variant="'pill'"></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Bottom Border</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Username'" :variant="'bottom-border'"></foui-input>
         </div>
     </div>
     
@@ -69,6 +154,15 @@
 
         <div class="p-2 flex gap-2 flex items-start justify-start">
             <foui-input :label="'Input'" :placeholder="'Enter text here'" :variant="'inset'"></foui-input>
+        </div>
+    </div>
+
+    <div>
+        <p>Input w/Overlap Label</p>
+        <p class="text-xs text-gray-400">Background of Label is Fixed Background Color, Looks Off</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start">
+            <foui-input :label="'Input'" :placeholder="'Enter text here'" :variant="'overlap'"></foui-input>
         </div>
     </div>
 </body>
