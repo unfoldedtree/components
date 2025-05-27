@@ -22,7 +22,7 @@
     <!-- Need to make passing of bound model values working -->
     <div x-data="test">
         <div>
-            <p>Input w/On Input Event</p>
+            <p>Input w/On Input Event <span class="text-red-600 font-bold">(Alpine Only Example)</span></p>
 
             <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
                 <foui-input :label="'Input'" :value="value" :on-input="`(e) => this.handleInputChange(e)`"></foui-input>
@@ -43,7 +43,7 @@
                             console.log('Value changed:', newValue);
                         });
 
-                        this.value = 'Initial Value'; // Set initial value
+                        this.value = 'This is a test'; // Set initial value
                     },
 
                     handleInputChange(event) {
@@ -55,35 +55,39 @@
         </script>
     </div>
 
-    <!-- <template x-component="input-with-change" x-data="{ value: '' }" x-init="$api && $api.init()" x-if="true">
-        <div>
-            <p>Input w/On Change Event</p>
-
-            <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
-                <foui-input :label="'Input'" :value="value" :on-input="`(e) => { console.log(this, $api) }`"></foui-input>
-                <p class="text-gray-400 dark:text-white">
-                    <span>Value: </span>
-                    <span x-text="value"></span>
-                </p>
+    <div x-data="{ value: 'Test' }">
+        <template x-component="input-with-change" x-init="$api && $api.init()">
+            <div>
+                <p>Input w/On Change Event <span class="text-red-600 font-bold">(FOUI API Example)</span></p>
+    
+                <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
+                    <foui-input :label="'Input'" :value="value" :on-change="`(e) => this.handleInputChange(e)`"></foui-input>
+                    <p class="text-gray-400 dark:text-white">
+                        <span>Value: </span>
+                        <span x-text="value"></span>
+                    </p>
+                </div>
             </div>
-        </div>
+    
+            <script>
+                return {    
+                        init() {
+                            this.$watch('value', (newValue) => {
+                                console.log('Value changed:', newValue);
+                            });
 
-        <script>
-            return {
-                    init() {
-                        this.$watch('value', (newValue) => {
-                            console.log('Value changed:', newValue);
-                        });
-
-                        this.value = 'Initial Value'; // Set initial value
-                    },
-
-                    handleInputChange(event) {
-                        console.log('Input changed:', event.target.value);
+                            this.value = 'This is a test'; // Set initial value
+                        },
+    
+                        handleInputChange(event) {
+                            this.value = event.target.value;
+                        }
                     }
-                }
-        </script>
-    </template> -->
+            </script>
+        </template>
+
+        <foui-input-with-change></foui-input-with-change>
+    </div>
 
     <div>
         <p>Input w/Label</p>

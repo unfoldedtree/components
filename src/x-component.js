@@ -252,15 +252,21 @@ function setupXComponent(G) {
                 // if null or undefined return the value
                 if (value === null || value === undefined) return value
 
-
                 try {
                     const func = new Function(`return ${value}`)();
 
                     if (typeof func === 'function') {
                         const api = getApiOf(el);
 
-                        // If the value is a function, return it bound to the Alpine Component API
-                        return new Function(`return ${value}`).call(api)
+                        // This should make sure that the function is called in the context of the component
+                        // If using the API syntax, instead of vanilla Alpine
+                        if (window.$foui.getParentComponent(comp)) {
+                            const parentApi = getApiOf(window.$foui.getParentComponent(comp));
+
+                            return new Function(`return ${value}`).call(parentApi);
+                        }
+
+                        return new Function(`return ${value}`).call(api);
                     }
                 } catch (e) {
                     // console.warn(`Error evaluating prop "${name}":`, e);
