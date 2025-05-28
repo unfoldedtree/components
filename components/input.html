@@ -1,6 +1,6 @@
 <template x-component.unwrap="input" x-init="$api && $api.init()" :type="'text'" :label="''" :placeholder="''"
-    :description="''" :hint="''" :disabled="false" :variant="'default'" :on-change="`() => {}`" :on-input="`() => {}`">
-    <div>
+    :description="''" :error="false" :errorMessage="''" :hint="''" :disabled="false" :variant="'default'" :on-change="`() => {}`" :on-input="`() => {}`">
+    <div class="w-full">
         <template x-if="$prop('variant') === 'default' || $prop('variant') === 'pill'">
             <div>
                 <div class="flex justify-between">
@@ -16,15 +16,20 @@
                 <div :class="$prop('label') ? 'mt-2' : ''">
                     <input :type="$prop('type')" :name="$prop('label')" :id="$prop('label')" :disabled="$prop('disabled')"
                         class="block w-full ring-1 ring-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-none focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 dark:ring-white/10 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:outline-gray-200 dark:disabled:bg-gray-700 dark:disabled:text-gray-500 dark:disabled:outline-gray-600"
-                        :class="$prop('variant') === 'pill' ? 'rounded-full' : 'rounded-md'"
+                        :class="[ $prop('variant') === 'pill' ? 'rounded-full' : 'rounded-md', $prop('error') ? '!ring-red-500 !outline-red-500 focus:!outline-red-500' : '' ]"
                         :placeholder="$prop('placeholder')" x-ref="input"
                         @input="$prop('on-input')"
                         @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
                         :value="$prop('value')"
                     />
-                    <template x-if="$prop('description')">
+                    <template x-if="$prop('description') && !$prop('error')">
                         <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" :id="`$prop('label')-description`"
                             x-text="$prop('description')"></p>
+                    </template>
+
+                    <template x-if="$prop('error') && $prop('errorMessage')">
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-500" :id="`$prop('label')-error`"
+                            x-text="$prop('errorMessage')"></p>
                     </template>
                 </div>
             </div>
@@ -51,20 +56,29 @@
                     />
                     <div 
                         class="absolute inset-x-0 bottom-0 border-t border-gray-300 peer-focus:border-t-2 peer-focus:border-indigo-600 dark:border-gray-600 dark:peer-focus:border-indigo-500" 
+                        :class="[ $prop('error') ? '!border-red-500 peer-focus:!border-red-500' : '' ]"
                         aria-hidden="true"
                     ></div>
-                    <template x-if="$prop('description')">
-                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" :id="`$prop('label')-description`"
-                            x-text="$prop('description')"></p>
-                    </template>
                 </div>
+
+                <template x-if="$prop('description') && !$prop('error')">
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" :id="`$prop('label')-description`"
+                        x-text="$prop('description')"></p>
+                </template>
+
+                <template x-if="$prop('error') && $prop('errorMessage')">
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-500" :id="`$prop('label')-error`"
+                        x-text="$prop('errorMessage')"></p>
+                </template>
             </div>
         </template>
 
         <template x-if="$prop('variant') === 'inset'">
             <div class="-space-y-px">
                 <div
-                    class="rounded-md bg-white px-3 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-none focus-within:relative focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-gray-800 dark:text-white dark:outline-gray-600 dark:focus-within:outline-indigo-500">
+                    class="rounded-md bg-white px-3 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-none focus-within:relative focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-gray-800 dark:text-white dark:outline-gray-600 dark:focus-within:outline-indigo-500"
+                    :class="[ $prop('error') ? 'ring-1 ring-red-500 !outline-red-500 focus-within:!outline-red-500' : '' ]"
+                >
                     <div class="flex justify-between" :class="$prop('label') ? 'mb-2' : ''">
                         <template x-if="$prop('label')">
                             <label :for="$prop('label')"
@@ -84,8 +98,13 @@
                         @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
                     />
 
-                    <template x-if="$prop('description')">
+                    <template x-if="$prop('description') && !$prop('error')">
                         <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" :id="`$prop('label')-description`" x-text="$prop('description')"></p>
+                    </template>
+
+                    <template x-if="$prop('error') && $prop('errorMessage')">
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-500" :id="`$prop('label')-error`"
+                            x-text="$prop('errorMessage')"></p>
                     </template>
                 </div>
             </div>
@@ -108,13 +127,19 @@
                 <input :type="$prop('type')" :name="$prop('label')" :id="$prop('label')"
                     :disabled="$prop('disabled')"
                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-none focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:outline-gray-200 dark:disabled:bg-gray-700 dark:disabled:text-gray-500 dark:disabled:outline-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500"
+                    :class="[ $prop('error') ? '!ring-1 !ring-red-500 !outline-red-500 focus:!outline-red-500' : '' ]"
                     :placeholder="$prop('placeholder')" x-ref="input"
                     @input="$prop('on-input')"
                     @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
                 />
 
-                <template x-if="$prop('description')">
+                <template x-if="$prop('description') && !$prop('error')">
                     <p class="mt-1 ml-1 text-sm text-gray-500 dark:text-gray-400" :id="`$prop('label')-description`" x-text="$prop('description')"></p>
+                </template>
+
+                <template x-if="$prop('error') && $prop('errorMessage')">
+                    <p class="mt-1 ml-1 text-sm text-red-600 dark:text-red-500" :id="`$prop('label')-error`"
+                        x-text="$prop('errorMessage')"></p>
                 </template>
             </div>
         </template>

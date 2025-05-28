@@ -333,8 +333,8 @@ function setupCore(G) {
 
                         // This should make sure that the function is called in the context of the component
                         // If using the API syntax, instead of vanilla Alpine
-                        if (window.$foui.getParentComponent(comp)) {
-                            const parentApi = getApiOf(window.$foui.getParentComponent(comp));
+                        if (getParentComponent(comp)) {
+                            const parentApi = getApiOf(getParentComponent(comp));
 
                             return new Function(`return ${value}`).call(parentApi);
                         }

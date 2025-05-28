@@ -40,6 +40,13 @@
                           <button x-ref="dismiss" type="button" class="inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2" @click="$prop('on-close')">
                             <span class="sr-only">Dismiss</span>
                             <!-- <span aria-hidden="true" class="text-2xl">&times;</span> -->
+
+                            <!-- SVG does not need to be wrapped in template tag for use, this is to make the svg not break the LivePreview in VS Code -->
+                             <template x-if="$prop('dismissible')">
+                                <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                                </svg>
+                             </template>
                           </button>
                         </div>
                     </div>
