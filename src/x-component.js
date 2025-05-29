@@ -250,7 +250,7 @@ function setupXComponent(G) {
                 // Find the bound value for the given name
                 const value = Alpine.bound(comp, `${name}`, fallback)
 
-                // if null or undefined return the value
+                // If null or undefined return the value
                 if (value === null || value === undefined) return value
 
                 try {
