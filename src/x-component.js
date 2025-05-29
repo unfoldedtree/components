@@ -253,24 +253,31 @@ function setupXComponent(G) {
                 if (value === null || value === undefined) return value
 
                 try {
-                    const func = new Function(`return ${value}`)();
+                    // console.log(`Evaluating prop "${name}" with value:`, value);
+
+                    const func = new Function(`return ${value}`);
+
+                    // console.log(`Evaluating prop "${name}" with function:`, func);
 
                     if (typeof func === 'function') {
-                        const api = getApiOf(el);
-
                         // This should make sure that the function is called in the context of the component
                         // If using the API syntax, instead of vanilla Alpine
-                        if (getParentComponent(comp)) {
-                            const parentApi = getApiOf(getParentComponent(comp));
+                        let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(el);
 
-                            return new Function(`return ${value}`).call(parentApi);
+                        // console.log(`Evaluating prop "${name}" with function:`, func.call(api), " with type:", typeof func.call(api));
+
+                        if (typeof func.call(api) === 'function') {
+                            // If the function returns another function, we call it immediately
+                            return func.call(api);
                         }
-
-                        return new Function(`return ${value}`).call(api);
+                        // Otherwise, we just return the result of the function call
+                        return value;
                     }
                 } catch (e) {
                     // console.warn(`Error evaluating prop "${name}":`, e);
                 }
+
+                // console.log(`Returning prop "${name}" with value:`, value);
 
                 return value;
             }

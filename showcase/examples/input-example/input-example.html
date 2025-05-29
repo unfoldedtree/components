@@ -142,7 +142,7 @@
             <p class="whitespace-nowrap">Input w/On Input Event <span class="text-red-600 font-bold">[Alpine Only Example]</span></p>
 
             <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
-                <foui-input :label="'Input'" :value="value" :on-input="`(e) => this.handleInputChange(e)`"></foui-input>
+                <foui-input :label="'Input'" :value="value" :on-input="`this.handleInputChange`"></foui-input>
                 <p class="text-gray-400 dark:text-white">
                     <span>Value: </span>
                     <span x-text="value"></span>
