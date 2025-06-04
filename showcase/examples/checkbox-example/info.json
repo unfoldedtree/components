@@ -1,0 +1,9 @@
+{
+    "entry": "checkbox-example",
+    "name": "Checkbox Example",
+    "description": "Checkbox example demonstrates the usage of the checkbox component. It showcases how to create a simple checkbox that allows you to select or deselect an option.",
+    "path": "checkbox-example",
+    "excludedDirectories": [],
+    "tabId": "checkbox-example",
+    "componentPath": "/checkbox"
+}

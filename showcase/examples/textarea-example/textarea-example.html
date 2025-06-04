@@ -1,0 +1,64 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="textarea,button" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
+    <div class="w-full max-w-xl" x-data="textareaExample">
+        <p>Toggle w/Label (Shows Unchecked/Checked Slot States)</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start w-full">
+            <foui-textarea :on-input="`this.input`" :value="textareaValue">
+                <div slot="aside">
+                    <img class="inline-block size-10 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                </div>
+
+                <div slot="footer" class="w-full flex items-center justify-between">
+                    <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`${usedChars}/${maxLength}`"></span>
+                    <foui-button :variant="'primary'" :size="'sm'" :on-click="`this.submit`">Post</foui-button>
+                </div>
+            </foui-textarea>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('textareaExample', () => ({
+                textareaValue: '',
+                maxLength: 500,
+                usedChars: 0,
+
+                init() {
+                    // not updating for some reason
+                    this.$watch('textareaValue', (value) => {
+                        console.log(`Textarea value changed: ${value}`);
+                        this.usedChars = value.length;
+                    });
+                },
+
+                input(value) {
+                    // console.log(`Input changed: ${value}`);
+                    this.textareaValue = value;
+                    // console.log(`Current textarea value: ${this.textareaValue}`);
+                },
+
+                submit() {
+                    alert(`Submitted: ${this.textareaValue}`);
+                    this.textareaValue = ''; // Clear the textarea after submission
+                }
+            }));
+        });
+    </script>
+</body>

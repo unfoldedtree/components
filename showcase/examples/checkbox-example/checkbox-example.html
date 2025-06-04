@@ -1,0 +1,27 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="checkbox" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
+    <div class="w-full max-w-xl" x-data="{ checked: true }">
+        <p>Checkbox w/Label (Shows Unchecked/Checked Slot States)</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start w-full">
+            <foui-checkbox :label="'Comments'" :description="'Get notified when someones posts a comment on a posting.'" :checked="checked" :on-change="`(value) => { this.checked = value; console.log('Checkbox changed:', value); }`">
+            </foui-checkbox>
+        </div>
+    </div>
+</body>

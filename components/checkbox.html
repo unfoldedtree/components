@@ -1,0 +1,59 @@
+<template 
+    x-component.unwrap="checkbox" 
+    x-data x-init="$api && $api.init()" 
+    :checked="true"
+    :label="''" 
+    :description="''"
+    :disabled="false"
+    :on-change="`() => {}`"
+>
+    <div class="flex items-center justify-between w-full">
+        <div class="flex gap-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <input 
+                    id="comments" 
+                    aria-describedby="comments-description" 
+                    aria-checked=""
+                    name="comments" 
+                    type="checkbox"
+                    :disabled="$prop('disabled')"
+                    @click="$api.toggle($el, $prop('on-change'))"
+                    x-ref="checkboxButton" 
+                    class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto dark:focus-visible:outline-gray-800 dark:indeterminate:border-gray-800 dark:indeterminate:bg-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:checked:border-indigo-500 dark:checked:bg-indigo-500 dark:disabled:border-gray-600 dark:disabled:bg-gray-700"
+                >
+                <template x-if="true">
+                    <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                        <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </template>
+              </div>
+            </div>
+            <template x-if="$prop('label') || $prop('description')">
+                <div class="text-sm/6">
+                    <label for="comments" class="font-medium text-gray-900 dark:text-white" x-text="$prop('label')"></label>
+                    <p id="comments-description" class="text-gray-500 dark:text-gray-400" x-text="$prop('description')"></p>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <script>
+        return {
+            init() {
+                const el = this.$refs.checkboxButton;
+                el.checked = this.$prop('checked') ? true : false;
+                
+                // Run callback on initialization?
+                // this.toggle(el, this.$prop('on-change'));
+            },
+            
+            toggle(el, callback) {
+                if (callback) {
+                    callback(el.checked);
+                }
+            }
+        }
+    </script>
+</template>

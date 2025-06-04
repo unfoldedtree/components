@@ -320,12 +320,14 @@ function setupCore(G) {
                 let comp = findClosestComponent(el)
                 if (!comp) return null
 
+                // Find the bound value for the given name
                 const value = Alpine.bound(comp, `${name}`, fallback)
 
-                // if null or undefined return the value
+                // If null or undefined return the value
                 if (value === null || value === undefined) return value
 
                 try {
+                    // If the value is a string, we try to evaluate it as a function
                     const func = new Function(`return ${value}`);
 
                     if (typeof func === 'function') {
@@ -333,16 +335,14 @@ function setupCore(G) {
                         // If using the API syntax, instead of vanilla Alpine
                         let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(comp);
 
-                        if (typeof func.call(api) === 'function') {
-                            // If the function returns another function, we call it immediately
-                            return func.call(api);
-                        }
+                        // Only return the result as a function if it is callable
+                        // Otherwise, return the value directly
+                        const result = (typeof func.call(api) === 'function') ? func.call(api) : value;
 
-                        // Otherwise, we just return the result of the function call
-                        return value;
+                        return result;
                     }
                 } catch (e) {
-                    // console.warn(`Error evaluating prop "${name}":`, e);
+                    //
                 }
 
                 return value;

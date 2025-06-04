@@ -1,0 +1,69 @@
+<template 
+    x-component.unwrap="textarea" 
+    x-data x-init="$api && $api.init()"
+    :value="''"
+    :placeholder="'Add your comment...'"
+    :rows="3"
+    :cols="40"
+    :label="''" 
+    :description="''"
+    :disabled="false"
+    :maxlength="500"
+    :on-input="`() => {}`"
+>
+    <div class="flex items-start space-x-4">
+        <div class="shrink-0">
+            <slot name="aside"></slot>
+        </div>
+        <div class="min-w-0 flex-1">
+            <template x-if="$prop('label')">
+                <label for="comment" class="block text-sm/6 font-medium text-gray-900 mb-2 dark:text-white" x-text="$prop('label')"></label>
+            </template>
+            <div class="relative">
+                <div class="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:relative focus-within:outline-none focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-gray-800 dark:outline-gray-700 dark:focus-within:outline-indigo-500">
+                    <textarea 
+                        :rows="$prop('rows')" 
+                        :cols="$prop('cols')"
+                        x-ref="textArea"
+                        name="comment" 
+                        id="comment" 
+                        class="block w-full resize-none bg-transparent px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:text-white dark:placeholder:text-gray-500" 
+                        placeholder="Add your comment..."
+                        x-text="$prop('value')"
+                        @input="$prop('on-input')($event.target.value)"
+                        :disabled="$prop('disabled')"
+                        :maxlength="$prop('maxlength')"
+                    ></textarea>
+                    <!-- Spacer element to match the height of the toolbar -->
+                    <div class="py-2" aria-hidden="true">
+                        <!-- Matches height of button in toolbar (1px border + 36px content height) -->
+                        <div class="py-px">
+                            <div class="h-9"></div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="absolute inset-x-0 bottom-0 flex justify-between py-2 pr-2 pl-3">
+                    <slot name="footer"></slot>
+                </div>
+            </div>
+            <template x-if="$prop('description')">
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" id="comment-description">Write a comment to start the discussion.</p>
+            </template>
+        </div>
+    </div>
+
+    <script>
+        return {
+            init() {
+                const el = this.$refs.textArea;
+            },
+            
+            // input(e, callback) {
+            //     if (callback) {
+            //         callback(e);
+            //     }
+            // }
+        }
+    </script>
+</template>

@@ -111,6 +111,48 @@
             }
           },
           {
+            "name": "Checkbox Example",
+            "entry": "checkbox-example",
+            "description": "Checkbox example demonstrates the usage of the checkbox component. It showcases how to create a simple checkbox that allows you to select or deselect an option.",
+            "path": "checkbox-example",
+            "excludedDirectories": [],
+            "tabId": "checkbox-example",
+            "componentPath": "/checkbox",
+            "componentData": {
+              "name": "Checkbox",
+              "path": "/checkbox",
+              "description": "A simple checkbox component that allows you to select or deselect an option.",
+              "props": [
+                {
+                  "name": "checked",
+                  "type": "boolean",
+                  "description": "If true, the checkbox will be checked.",
+                  "default": "false"
+                },
+                {
+                  "name": "label",
+                  "type": "string",
+                  "description": "The label of the checkbox."
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "description": "A description for the checkbox, displayed below the label."
+                },
+                {
+                  "name": "disabled",
+                  "type": "boolean",
+                  "description": "If true, the checkbox will be disabled."
+                },
+                {
+                  "name": "onChange",
+                  "type": "function",
+                  "description": "Callback function when the checkbox state changes."
+                }
+              ]
+            }
+          },
+          {
             "name": "Counter Example - Advanced",
             "entry": "counters",
             "description": "This is an example of a counter component. It allows you to increment and decrement a value.",
@@ -225,6 +267,106 @@
             "excludedDirectories": [],
             "tabId": "input-example",
             "componentPath": "/input"
+          },
+          {
+            "name": "Textarea Example",
+            "entry": "textarea-example",
+            "description": "Textarea example demonstrates the usage of the textarea component. It showcases how to create a simple textarea that allows you to input multi-line text.",
+            "path": "textarea-example",
+            "excludedDirectories": [],
+            "tabId": "textarea-example",
+            "componentPath": "/textarea",
+            "componentData": {
+              "name": "Textarea",
+              "path": "/textarea",
+              "description": "A simple textarea component that allows you to input multi-line text.",
+              "props": [
+                {
+                  "name": "value",
+                  "type": "string",
+                  "description": "The current value of the textarea.",
+                  "default": ""
+                },
+                {
+                  "name": "placeholder",
+                  "type": "string",
+                  "description": "Placeholder text displayed when the textarea is empty.",
+                  "default": ""
+                },
+                {
+                  "name": "rows",
+                  "type": "number",
+                  "description": "Number of visible text lines for the textarea.",
+                  "default": 3
+                },
+                {
+                  "name": "cols",
+                  "type": "number",
+                  "description": "Number of visible character columns for the textarea.",
+                  "default": 20
+                },
+                {
+                  "name": "disabled",
+                  "type": "boolean",
+                  "description": "If true, the textarea will be disabled.",
+                  "default": false
+                },
+                {
+                  "name": "onChange",
+                  "type": "function",
+                  "description": "Callback function when the value of the textarea changes."
+                },
+                {
+                  "name": "autoResize",
+                  "type": "boolean",
+                  "description": "If true, the textarea will automatically adjust its height based on the content.",
+                  "default": false
+                }
+              ]
+            }
+          },
+          {
+            "name": "Toggle Example",
+            "entry": "toggle-example",
+            "description": "Toggle example demonstrates the usage of the toggle component. It showcases how to create a simple toggle switch that allows you to toggle between two states.",
+            "path": "toggle-example",
+            "excludedDirectories": [],
+            "tabId": "toggle-example",
+            "componentPath": "/toggle",
+            "componentData": {
+              "name": "Toggle",
+              "path": "/toggle",
+              "description": "A simple toggle switch component that allows you to toggle between two states.",
+              "props": [
+                {
+                  "name": "primary",
+                  "type": "boolean",
+                  "description": "If true, the counter will be primary color.",
+                  "default": "false"
+                },
+                {
+                  "name": "label",
+                  "type": "string",
+                  "description": "The label of the dropdown."
+                },
+                {
+                  "name": "options",
+                  "type": "array",
+                  "description": "The options for the dropdown.",
+                  "default": "[]"
+                },
+                {
+                  "name": "selectedOption",
+                  "type": "string",
+                  "description": "The selected option of the dropdown."
+                },
+                {
+                  "name": "onChange",
+                  "type": "function",
+                  "description": "Callback function when the selected option changes."
+                }
+              ]
+            }
           }
         ]
       }

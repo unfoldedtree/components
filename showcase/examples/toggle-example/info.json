@@ -1,0 +1,9 @@
+{
+    "entry": "toggle-example",
+    "name": "Toggle Example",
+    "description": "Toggle example demonstrates the usage of the toggle component. It showcases how to create a simple toggle switch that allows you to toggle between two states.",
+    "path": "toggle-example",
+    "excludedDirectories": [],
+    "tabId": "toggle-example",
+    "componentPath": "/toggle"
+}
