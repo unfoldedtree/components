@@ -80,8 +80,8 @@ function setupCore(G) {
         const _ = $foui._
         const { directive, prefixed, addRootSelector, magic,
             closestDataStack, mergeProxies, initTree, mutateDom, reactive } = Alpine
-        const ATTR_UI = 'v-ui'
-        const ATTR_CLOAK = 'v-cloak'
+        const ATTR_UI = 'foui'
+        const ATTR_CLOAK = 'fo-cloak'
         const DEFAULT_NAMESPACE = 'foui'
 
         const DIR_COMP = prefixed('component')
@@ -345,8 +345,73 @@ function setupCore(G) {
                     //
                 }
 
-                return value;
+                return value
             }
+        })
+
+        directive('model', (el, { expression, value }, { effect, evaluateLater }) => {
+            let evaluate = evaluateLater(expression)
+            effect(() => {
+                evaluate(value => {
+                    if (value === undefined || value === null) return
+                    if (el.tagName.toLowerCase() === 'input' && el.type === 'checkbox') {
+                        el.checked = !!value
+                    } else if (el.tagName.toLowerCase() === 'input' && el.type === 'radio') {
+                        el.checked = (el.value === value)
+                    } else {
+                        el.value = value
+                    }
+
+                    console.log('Model effect', expression, value)
+                })
+            })
+            el.addEventListener('input', () => {
+                let val = el.value
+                console.log('Model input', expression, val)
+
+                if (el.tagName.toLowerCase() === 'input' && el.type === 'checkbox') {
+                    val = el.checked
+                } else if (el.tagName.toLowerCase() === 'input' && el.type === 'radio') {
+                    val = el.checked ? el.value : null
+                }
+                $foui.setHtml(el, val)
+
+                // check if the model expression contains $prop() syntax
+                if (expression.includes('$prop(')) {
+                    // If it does, we assume it's a function call and we evaluate it
+                    let propName = expression.substring(expression.indexOf('(') + 1, expression.indexOf(')'))
+                    let comp = findClosestComponent(el)
+                    
+                    if (!comp) return null
+
+                    if (getParentComponent(comp)) {
+                        comp = getParentComponent(comp)
+                    }
+
+                    // strip any quotes from the propName
+                    propName = propName.replace(/['"]/g, '').trim()
+
+                    const boundVariable = comp.getAttribute(`${prefixed('bind')}:${propName}`) || comp.getAttribute(`:${propName}`) || comp.getAttribute(propName)
+
+                    if (!boundVariable) {
+                        console.warn(`No bound variable found for ${propName} in component ${comp._foui_type}`);
+                        return;
+                    }
+
+                    const api = getApiOf(comp)
+
+                    // check api for the bound variable
+                    if (!api || !api[boundVariable]) {
+                        console.warn(`No API found for ${boundVariable} in component ${comp._foui_type}`);
+                        return;
+                    }
+
+                    api[boundVariable] = val;
+                } else {
+                    // Otherwise, we just set the value
+                    $foui.$data(el, expression, val);
+                }
+            })
         })
 
         directive('shtml', (el, { expression }, { effect, evaluateLater }) => {

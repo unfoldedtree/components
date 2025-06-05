@@ -321,6 +321,12 @@
                   "type": "boolean",
                   "description": "If true, the textarea will automatically adjust its height based on the content.",
                   "default": false
+                },
+                {
+                  "name": "maxLength",
+                  "type": "number",
+                  "description": "Maximum number of characters allowed in the textarea.",
+                  "default": null
                 }
               ]
             }

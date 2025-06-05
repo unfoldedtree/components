@@ -1,6 +1,6 @@
 <template 
     x-component.unwrap="textarea" 
-    x-data x-init="$api && $api.init()"
+    x-init="$api && $api.init()"
     :value="''"
     :placeholder="'Add your comment...'"
     :rows="3"
@@ -29,10 +29,9 @@
                         id="comment" 
                         class="block w-full resize-none bg-transparent px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:text-white dark:placeholder:text-gray-500" 
                         placeholder="Add your comment..."
-                        x-text="$prop('value')"
-                        @input="$prop('on-input')($event.target.value)"
                         :disabled="$prop('disabled')"
                         :maxlength="$prop('maxlength')"
+                        x-model="$prop('value')"
                     ></textarea>
                     <!-- Spacer element to match the height of the toolbar -->
                     <div class="py-2" aria-hidden="true">
@@ -56,14 +55,8 @@
     <script>
         return {
             init() {
-                const el = this.$refs.textArea;
-            },
-            
-            // input(e, callback) {
-            //     if (callback) {
-            //         callback(e);
-            //     }
-            // }
+                const el = this.$refs.textArea
+            }
         }
     </script>
 </template>

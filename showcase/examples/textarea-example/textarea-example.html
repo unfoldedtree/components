@@ -26,7 +26,7 @@
                 </div>
 
                 <div slot="footer" class="w-full flex items-center justify-between">
-                    <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`${usedChars}/${maxLength}`"></span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400" x-text="usedChars"></span>
                     <foui-button :variant="'primary'" :size="'sm'" :on-click="`this.submit`">Post</foui-button>
                 </div>
             </foui-textarea>
@@ -36,27 +36,33 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('textareaExample', () => ({
-                textareaValue: '',
+                textareaValue: 'Test',
                 maxLength: 500,
                 usedChars: 0,
 
                 init() {
-                    // not updating for some reason
-                    this.$watch('textareaValue', (value) => {
-                        console.log(`Textarea value changed: ${value}`);
-                        this.usedChars = value.length;
+                    // console.log('Textarea Example Initialized');
+
+                    this.usedChars = this.getUsedChars();
+
+                    this.$watch('textareaValue', (newValue) => {
+                        this.usedChars = this.getUsedChars();
+                        console.log('Textarea value changed:', newValue);
                     });
                 },
 
                 input(value) {
-                    // console.log(`Input changed: ${value}`);
                     this.textareaValue = value;
-                    // console.log(`Current textarea value: ${this.textareaValue}`);
+                    // console.log(`Textarea value changed: ${this.textareaValue}`);
                 },
 
                 submit() {
                     alert(`Submitted: ${this.textareaValue}`);
                     this.textareaValue = ''; // Clear the textarea after submission
+                },
+
+                getUsedChars() {
+                    return `${this.textareaValue.length}/${this.maxLength}`;
                 }
             }));
         });
