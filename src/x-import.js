@@ -91,7 +91,7 @@ function setupXImport(G) {
                                             document.body.append(elExecute)
                                             if (!wait) process(i + 1)
                                         } else if (elChild.tagName === 'TEMPLATE') {
-                                            elChild.setAttribute('v-cloak', '')
+                                            elChild.setAttribute('fo-cloak', '')
                                             $foui.extractNamespaces(elChild)
                                             $foui.prepareComponents(elChild)
                                             document.body.append(elChild)

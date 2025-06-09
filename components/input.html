@@ -20,7 +20,7 @@
                         :placeholder="$prop('placeholder')" x-ref="input"
                         @input="$prop('on-input')"
                         @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
-                        :value="$prop('value')"
+                        x-model="$prop('value')"
                     />
                     <template x-if="$prop('description') && !$prop('error')">
                         <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" :id="`$prop('label')-description`"

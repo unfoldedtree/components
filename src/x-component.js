@@ -289,12 +289,11 @@ function setupXComponent(G) {
                         el.value = value
                     }
 
-                    console.log('Model effect', expression, value)
+                    // console.log('Model effect', expression, value)
                 })
             })
             el.addEventListener('input', () => {
                 let val = el.value
-                console.log('Model input', expression, val)
 
                 if (el.tagName.toLowerCase() === 'input' && el.type === 'checkbox') {
                     val = el.checked
@@ -328,7 +327,7 @@ function setupXComponent(G) {
                     const api = getApiOf(comp)
 
                     // check api for the bound variable
-                    if (!api || !api[boundVariable]) {
+                    if (!api || api[boundVariable] === undefined) {
                         console.warn(`No API found for ${boundVariable} in component ${comp._foui_type}`);
                         return;
                     }
@@ -410,21 +409,42 @@ ${elScript.innerHTML}
                         if ($foui.config.debug) console.log('Connect ' + this.tagName)
                         mutateDom(() => {
                             const slotContents = {}
+                            const slotOptionContents = {}
                             const defaultSlotContent = []
+
                             _.each(this.childNodes, elChild => {
                                 if (elChild.tagName && elChild.hasAttribute('slot')) {
                                     let slotName = elChild.getAttribute('slot') || ''
                                     let content = elChild.tagName === 'TEMPLATE' ?
                                         elChild.content.cloneNode(true).childNodes :
                                         [elChild.cloneNode(true)]
-                                    if (slotContents[slotName])
+
+                                        console.log('Slot found', slotName, content, elChild)
+
+                                    // check if content has a 'slot-scope' attribute
+                                    if (elChild.hasAttribute(':slot-scope')) {
+                                        let slotScope = elChild.getAttribute(':slot-scope')
+                                        // console.log('Slot scope found', slotScope, slotName, elChild)
+
+                                        // grab this slot from the slotContents
+                                        // find x-for in the in the child and in the slot with slotName
+                                        // push the contents of elChild
+                                        if (slotOptionContents[slotName]) {
+                                            slotOptionContents[slotName].push(...content)
+                                        } else {
+                                            slotOptionContents[slotName] = content
+                                        }
+                                    } else if (slotContents[slotName]) {
+                                        // console.log('Slot content found', slotName, content)
                                         slotContents[slotName].push(...content)
-                                    else
+                                    } else {
                                         slotContents[slotName] = content
+                                    }
                                 } else {
                                     defaultSlotContent.push(elChild.cloneNode(true))
                                 }
                             })
+
                             if (unwrap) {
                                 elComp = el.content.cloneNode(true).firstElementChild
                                 elComp._foui_processing = true
@@ -438,6 +458,31 @@ ${elScript.innerHTML}
                             copyAttributes(el, elComp)
 
                             const elSlots = elComp.querySelectorAll("slot")
+
+                            // get all slots in template tags
+                            const elTemplates = elComp.querySelectorAll("template")
+
+                            _.each(elTemplates, elTemplate => {
+                                // if has attribute x-for, we need to process it
+                                if (elTemplate.hasAttribute('x-for')) {
+                                    // access the innerHTML of the template
+                                    const templateContent = elTemplate.content;
+
+                                    // if the template has a slot, we need to process it
+                                    const templateSlots = templateContent.querySelectorAll("slot");
+                                    // find the slot name in slotOptionContents that matches the template slot
+                                    _.each(templateSlots, templateSlot => {
+                                        const slotName = templateSlot.getAttribute('name') || '';
+
+                                        if (slotOptionContents[slotName]) {
+                                            // replace the template slot with the contents of the slotOptionContents
+                                            templateSlot.replaceWith(...slotOptionContents[slotName]);
+                                            delete slotOptionContents[slotName];
+                                        }
+                                    })
+                                }
+                            })
+
                             _.each(elSlots, elSlot => {
                                 const name = elSlot.getAttribute('name')
 

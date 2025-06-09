@@ -172,6 +172,34 @@
         </script>
     </div>
 
+    <div x-data="xModel">
+        <div class="w-full max-w-xs">
+            <p class="whitespace-nowrap">Input w/Model Binding <span class="text-red-600 font-bold">[Alpine Only Example]</span></p>
+
+            <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
+                <foui-input :label="'Input'" :value="value"></foui-input>
+                <p class="text-gray-400 dark:text-white">
+                    <span>Value: </span>
+                    <span x-text="value"></span>
+                </p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('xModel', () => ({
+                    value: '',
+
+                    init() {
+                        this.$watch('value', (newValue) => {
+                            console.log('Value changed:', newValue);
+                        });
+                    }
+                }))
+            })
+        </script>
+    </div>
+
     <div x-data="{ value: 'Test' }">
         <template x-component="input-with-change" x-init="$api && $api.init()">
             <div>
