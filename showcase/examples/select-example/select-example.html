@@ -16,20 +16,36 @@
 </head>
 
 <body x-cloak x-import="select" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
-    <div class="w-full max-w-xl" x-data="selectExample">
+    <div class="w-full" x-data="selectExample">
         <p>Select</p>
 
-        <div class="p-2 flex gap-2 flex items-start justify-start w-full">
-            <foui-select :options="options" :value="1" :label="'Select a user'" :description="'Choose from the list'" :placeholder="'Select...'" :on-change="`this.onChange`">
-                <div>
-                    Test
+        <div class="p-2 flex gap-2 flex items-start justify-start w-full max-w-xl min-w-xs">
+            <foui-select
+                :options="options" 
+                :selected-option="JSON.stringify(selected)" 
+                :label="'Select a user'" 
+                :description="'Choose from the list'" 
+                :placeholder="'Select...'"
+                :on-change="'this.onChange'"
+            >
+                <div slot="selected-option">
+                    <span class="flex items-center gap-3">
+                        <img :src="selectedOption?.image" alt="" class="size-5 shrink-0 rounded-full">
+                        <span class="block truncate" x-text="selectedOption?.name"></span>
+                    </span>
                 </div>
 
-                <div slot="prepend" :slot-scope="option">
+                <div slot="prepend">
                     <span class="flex items-center gap-3">
                         <img :src="option.image" alt="" class="size-5 shrink-0 rounded-full">
                         <span class="block truncate" x-text="option.name"></span>
                     </span>
+                </div>
+
+                <div slot="selected">
+                    <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                    </svg>
                 </div>
             </foui-select>
         </div>
@@ -38,6 +54,8 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('selectExample', () => ({
+                selected: null, // Default selected option
+
                 options: [
                     { id: 1, name: 'Wade Cooper', image: 'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' },
                     { id: 2, name: 'Tom Cook', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' },
@@ -47,8 +65,13 @@
                 ],
 
                 init() {
-                    //
-                }
+                    this.selected = this.options[0]; // Set default selected option
+                },
+
+                onChange(selected) {
+                    // this.selected = JSON.stringify(selected);
+                    // console.log('Selected option:', this.selected);
+                },
             }));
         });
     </script>

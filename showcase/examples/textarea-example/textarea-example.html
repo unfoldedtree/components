@@ -20,7 +20,7 @@
         <p>Toggle w/Label (Shows Unchecked/Checked Slot States)</p>
 
         <div class="p-2 flex gap-2 flex items-start justify-start w-full">
-            <foui-textarea :on-input="`this.input`" :value="textareaValue">
+            <foui-textarea :on-input="`this.input`" :value="textareaValue" :placeholder="'Add your comment...'">
                 <div slot="aside">
                     <img class="inline-block size-10 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                 </div>
@@ -29,6 +29,10 @@
                     <span class="text-sm text-gray-500 dark:text-gray-400" x-text="usedChars"></span>
                     <foui-button :variant="'primary'" :size="'sm'" :on-click="`this.submit`">Post</foui-button>
                 </div>
+            </foui-textarea>
+
+            <foui-textarea>
+
             </foui-textarea>
         </div>
     </div>
@@ -41,19 +45,12 @@
                 usedChars: 0,
 
                 init() {
-                    // console.log('Textarea Example Initialized');
-
                     this.usedChars = this.getUsedChars();
 
                     this.$watch('textareaValue', (newValue) => {
                         this.usedChars = this.getUsedChars();
                         console.log('Textarea value changed:', newValue);
                     });
-                },
-
-                input(value) {
-                    this.textareaValue = value;
-                    // console.log(`Textarea value changed: ${this.textareaValue}`);
                 },
 
                 submit() {

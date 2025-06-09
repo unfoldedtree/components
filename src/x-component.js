@@ -242,6 +242,32 @@ function setupXComponent(G) {
         //     }
         // })
 
+        // try to make watching props work
+        // magic('watch', el => {
+        //     return (expression, callback) => {
+        //         let comp = findClosestComponent(el)
+        //         if (!comp) return null
+
+        //         // console.log('Magic watch:', expression, 'Component:', comp._foui_type)
+
+        //         // If the expression is a function, we evaluate it
+        //         if (typeof expression === 'function') {
+        //             expression = expression.call(getApiOf(comp))
+        //         }
+
+        //         // If the expression is a string, we evaluate it as an Alpine expression
+        //         if (typeof expression === 'string') {
+        //             const evaluate = Alpine.evaluate.bind(Alpine, comp, expression)
+        //             Alpine.effect(() => {
+        //                 const value = evaluate()
+        //                 callback(value)
+        //             })
+        //         } else {
+        //             console.warn('Magic watch expects a string or function as the first argument')
+        //         }
+        //     }
+        // })
+
         magic('prop', el => {
             return (name, fallback) => {
                 let comp = findClosestComponent(el)
@@ -250,8 +276,22 @@ function setupXComponent(G) {
                 // Find the bound value for the given name
                 const value = Alpine.bound(comp, `${name}`, fallback)
 
+                // console.log('Magic prop:', name, 'Value:', value, 'Component:', comp._foui_type)
+
                 // If null or undefined return the value
                 if (value === null || value === undefined) return value
+
+                // try casting as object
+                try {
+                    const parsedValue = JSON.parse(value);
+                    if (typeof parsedValue === 'object' && parsedValue !== null) {
+                        // console.log('Parsed value:', parsedValue);
+                        return parsedValue;
+                    }
+                } catch (e) {
+                    // If parsing fails, we just return the original value
+                    // console.warn('Failed to parse value as JSON:', value, e);
+                }
 
                 try {
                     // If the value is a string, we try to evaluate it as a function
@@ -409,7 +449,6 @@ ${elScript.innerHTML}
                         if ($foui.config.debug) console.log('Connect ' + this.tagName)
                         mutateDom(() => {
                             const slotContents = {}
-                            const slotOptionContents = {}
                             const defaultSlotContent = []
 
                             _.each(this.childNodes, elChild => {
@@ -419,23 +458,7 @@ ${elScript.innerHTML}
                                         elChild.content.cloneNode(true).childNodes :
                                         [elChild.cloneNode(true)]
 
-                                        console.log('Slot found', slotName, content, elChild)
-
-                                    // check if content has a 'slot-scope' attribute
-                                    if (elChild.hasAttribute(':slot-scope')) {
-                                        let slotScope = elChild.getAttribute(':slot-scope')
-                                        // console.log('Slot scope found', slotScope, slotName, elChild)
-
-                                        // grab this slot from the slotContents
-                                        // find x-for in the in the child and in the slot with slotName
-                                        // push the contents of elChild
-                                        if (slotOptionContents[slotName]) {
-                                            slotOptionContents[slotName].push(...content)
-                                        } else {
-                                            slotOptionContents[slotName] = content
-                                        }
-                                    } else if (slotContents[slotName]) {
-                                        // console.log('Slot content found', slotName, content)
+                                    if (slotContents[slotName]) {
                                         slotContents[slotName].push(...content)
                                     } else {
                                         slotContents[slotName] = content
@@ -474,10 +497,10 @@ ${elScript.innerHTML}
                                     _.each(templateSlots, templateSlot => {
                                         const slotName = templateSlot.getAttribute('name') || '';
 
-                                        if (slotOptionContents[slotName]) {
+                                        if (slotContents[slotName]) {
                                             // replace the template slot with the contents of the slotOptionContents
-                                            templateSlot.replaceWith(...slotOptionContents[slotName]);
-                                            delete slotOptionContents[slotName];
+                                            templateSlot.replaceWith(...slotContents[slotName]);
+                                            // delete slotContents[slotName];
                                         }
                                     })
                                 }
