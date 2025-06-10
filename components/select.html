@@ -13,14 +13,19 @@
         <div class="relative mt-2">
             <button 
                 type="button" 
-                class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" 
+                class="grid w-full cursor-default grid-cols-1 rounded-md ring-1 ring-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-none focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 dark:ring-white/10 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:outline-gray-200 dark:disabled:bg-gray-700 dark:disabled:text-gray-500 dark:disabled:outline-gray-600 rounded-md" 
                 aria-haspopup="listbox" 
+                :disabled="$prop('disabled')"
                 aria-expanded="true" 
                 aria-labelledby="listbox-label"
                 @click="$api.open = !$api.open"
             >
                 <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-                    <slot name="selected-option"></slot>
+                    <slot name="selected-option">
+                        <span class="flex items-center gap-3">
+                            <span class="block truncate" x-text="selectedOption"></span>
+                        </span>
+                    </slot>
                 </span>
             </button>
     
@@ -35,7 +40,7 @@
                 To: "opacity-0"
             -->
             <ul 
-                class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-hidden sm:text-sm" 
+                class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-hidden sm:text-sm dark:bg-gray-800 dark:ring-gray-700 dark:text-white" 
                 tabindex="-1" 
                 role="listbox" 
                 aria-labelledby="listbox-label" 
@@ -50,13 +55,17 @@
                 -->
                 <template x-for="(option, index) in options" :key="option.id" x-cloak>
                     <li 
-                        class="relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none hover:bg-indigo-600 hover:text-white focus:bg-indigo-600 focus:text-white focus:outline-hidden cursor-pointer group" 
+                        class="relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none hover:bg-indigo-600 hover:text-white focus:bg-indigo-600 focus:text-white focus:outline-hidden cursor-pointer group dark:text-white dark:hover:bg-indigo-500 dark:hover:text-white dark:focus:bg-indigo-500 dark:focus:text-white" 
                         id="listbox-option-0" 
                         role="option"
                         @click="$api.handleClick(option)"
                     >
-                        <div class="flex items-center">                            
-                            <slot name="prepend"></slot>
+                        <div class="flex items-center text-gray-900 dark:text-white" :class="{ 'font-semibold': $api.isSelected(option), 'font-normal': !$api.isSelected(option) }">                            
+                            <slot name="option">
+                                <span class="flex items-center gap-3">
+                                    <span class="block truncate" x-text="option"></span>
+                                </span>
+                            </slot>
                             <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                         </div>
                 
