@@ -1,0 +1,99 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="upload" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
+    <div class="w-full max-w-xl" x-data="uploadExample">
+        <p>Upload</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start w-full">
+            <foui-upload
+                :label="'Please select a file to upload'"
+                :description="'You can upload a CSV file up to 5MB.'"
+                :accept="'.csv'"
+                :disabled="false"
+                :error="fileError"
+                :error-message="fileErrorMessage"
+                :on-validate="'this.validateFile'"
+                :on-upload="'this.handleFileUpload'"
+            >
+            </foui-upload>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('uploadExample', () => ({
+                uploadedFile: null,
+                fileError: false,
+                fileErrorMessage: '',
+
+                init() {
+                    // in two seconds, set fileError to true
+                    setTimeout(() => {
+                        this.fileError = true;
+                        this.fileErrorMessage = 'This is a test error message.';
+                    }, 2000);
+
+                    // remove the error after 5 seconds
+                    setTimeout(() => {
+                        this.fileError = false;
+                        this.fileErrorMessage = '';
+                    }, 5000);
+                },
+
+                validateFile(files) {
+                    const file = files[0];
+
+                    try {
+                        // Validate file type
+                        if (file && file.type !== 'text/csv') {
+                            this.fileError = true;
+                            this.fileErrorMessage = 'Invalid file type. Please upload a CSV file.';
+                            return;
+                        }
+
+                        console.log('File size: ', file.size);
+
+                        // make sure file size is less than 5MB
+                        if (file && file.size > 5 * 1024 * 1024) { // 5MB
+                            this.fileError = true;
+                            this.fileErrorMessage = 'File size exceeds the limit of 5MB.';
+
+                            console.error(this.fileErrorMessage, this.fileError);
+
+                            return;
+                        }
+
+                        console.log('File is valid: ', file);
+                        
+                        this.fileError = false;
+                        this.fileErrorMessage = '';
+                    } catch (error) {
+                        console.error('File validation error: ', error);
+                        this.fileError = true;
+                        this.fileErrorMessage = 'An error occurred during file validation.';
+                        return;
+                    }
+                },
+
+                handleFileUpload(event) {
+                    console.log('File upload event triggered: ', event);
+                }
+            }));
+        });
+    </script>
+</body>

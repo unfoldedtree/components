@@ -17,7 +17,15 @@
 
 <body x-cloak x-import="textarea,button" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
     <div class="w-full max-w-xl" x-data="textareaExample">
-        <p>Toggle w/Label (Shows Unchecked/Checked Slot States)</p>
+        <p>Textarea Plain</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start w-full">
+            <foui-textarea></foui-textarea>
+        </div>
+    </div>
+
+    <div class="w-full max-w-xl" x-data="textareaExample">
+        <p>Textarea Using Slots and Alpine</p>
 
         <div class="p-2 flex gap-2 flex items-start justify-start w-full">
             <foui-textarea :on-input="`this.input`" :value="textareaValue" :placeholder="'Add your comment...'">
@@ -29,10 +37,6 @@
                     <span class="text-sm text-gray-500 dark:text-gray-400" x-text="usedChars"></span>
                     <foui-button :variant="'primary'" :size="'sm'" :on-click="`this.submit`">Post</foui-button>
                 </div>
-            </foui-textarea>
-
-            <foui-textarea>
-
             </foui-textarea>
         </div>
     </div>

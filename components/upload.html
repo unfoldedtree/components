@@ -1,0 +1,193 @@
+<template 
+    x-component.unwrap="upload" 
+    x-init="$api && $api.init()"
+    :value="''"
+    :placeholder="''"
+    :rows="3"
+    :cols="40"
+    :label="''" 
+    :description="''"
+    :disabled="false"
+    :max-size="1"
+    :on-upload="`() => {}`"
+    :on-validate="`() => {}`"
+    :error="false"
+    :error-message="''"
+    :required="false"
+    :accept="'*'"
+    :multiple="false"
+>
+    <div class="col-span-full w-full">
+        <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900 dark:text-white" x-text="$prop('label')"></label>
+
+        <div 
+            class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 dark:border-gray-700"
+            :class="{ 'outline outline-2 outline-offset-2 outline-indigo-600': $api.dragging, 'outline outline-2 outline-offset-2 outline-red-600': $prop('error') }"
+            @dragover.stop.prevent="$api.handleDragOver()"
+            @dragleave.stop.prevent="$api.handleDragEnd()"
+            @drop.stop.prevent="$api.handleDrop($event)"
+            x-show="!$api.fileUploaded"
+            x-cloak
+
+        >
+            <div class="text-center">
+                <svg class="mx-auto size-12 text-gray-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                < /svg>
+                <div class="mt-4 flex text-sm/6 text-gray-600 dark:text-gray-400">
+                    <label for="file-upload" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-400">
+                        <span>Upload a file</span>
+                        <input 
+                            id="file-upload" 
+                            name="file-upload" 
+                            type="file" 
+                            class="sr-only"
+                            x-ref="fileUpload"
+                            :multiple="$prop('multiple')"
+                            @change="$api.handleFileUpload($event)"
+                            :accept="$prop('accept')"
+                            :disabled="$prop('disabled')"
+                        >
+                    </label>
+                    <p class="pl-1">or drag and drop</p>
+                </div>
+                <p class="text-xs/5 text-gray-600 dark:text-gray-400" x-text="$prop('description')"></p>
+            </div>
+        </div>
+
+        <div
+            x-show="$api.fileUploaded && $api.fileMeta" 
+            x-cloak
+        >
+            <slot name="file-upload">
+                <div class="mt-2 flex justify-center rounded-lg border border-solid border-gray-900/25 px-3 py-3 dark:border-gray-700">
+                    <div class="flex items-center justify-between rounded-lg bg-gray-900/65 px-2 py-2 w-full dark:bg-gray-700/65">
+                        <div class="flex items-center justify-center gap-2">
+                            <button
+                                @click="$api.clearFile()"
+                                type="button"
+                                class="bg-gray-900/90 cursor-pointer text-white hover:outline-none hover:ring-2 hover:ring-white hover:-ring-offset-2 rounded-full p-1 transition ease-in-out duration-150 dark:bg-gray-700/90 dark:hover:bg-gray-600/90"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                < /svg>
+                            </button>
+                            <div class="flex flex-col">
+                                <div class="text-sm/6 text-white" x-text="$api.fileMeta?.name"></div>
+                                <div class="text-xs/5 text-gray-200" x-text="$api.calculateFileSize($api.fileMeta?.size)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </slot>
+        </div>
+
+        <div 
+            x-show="$prop('error')"
+            x-cloak
+            class="mt-2 text-sm/6 text-red-600 dark:text-red-400"
+        >
+            <span x-text="$prop('error-message')"></span>
+        </div>
+  </div>
+
+    <script>
+        return {
+            dragging: false,
+            fileMeta: null,
+            fileUploaded: false,
+            fileUpload: null,
+
+            init() {
+                this.fileUpload = this.$refs.fileUpload;
+                // this.fileUpload.addEventListener('change', this.handleFileUpload);
+            },
+
+            handleDragOver() {
+                this.$api.dragging = true;
+            },
+
+            handleDragEnd() {
+                this.$api.dragging = false;
+            },
+
+            handleDrop(event) {
+                this.$api.dragging = false;
+
+                const files = event.dataTransfer.files;
+
+                // run on-validate prop if it exists
+                if (typeof this.$prop('on-validate') === 'function') {
+                    console.log('Running on-validate prop: ', files);
+                    this.$prop('on-validate')(files);
+                }
+
+                // check if error prop is true
+                if (this.$prop('error')) {
+                    console.error('File upload error:', this.$prop('error-message'));
+                    return;
+                }
+
+                console.log("Error prop value:", this.$prop('error'), "Error message:", this.$prop('error-message'));
+
+                if (files.length > 0) {
+                    const file = files[0];
+                    this.$api.fileMeta = {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                    this.$api.fileUploaded = true;
+                } else {
+                    this.$api.fileMeta = null;
+                    this.$api.fileUploaded = false;
+                }
+            },
+
+            handleFileUpload(event) {
+                // console.log('File upload event triggered');
+
+                const files = this.$refs.fileUpload.files;
+
+                // run on-validate prop if it exists
+                if (typeof this.$prop('on-validate') === 'function') {
+                    this.$prop('on-validate')(files);
+                }
+
+                console.log("Error prop value:", this.$prop('error'), "Error message:", this.$prop('error-message'));
+
+                // check if error prop is true
+                if (this.$prop('error')) {
+                    console.error('File upload error:', this.$prop('error-message'));
+                    return;
+                }
+                
+                if (files.length > 0) {
+                    const file = files[0];
+                    this.$api.fileMeta = {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                    };
+                    this.$api.fileUploaded = true;
+                } else {
+                    this.$api.fileMeta = null;
+                    this.$api.fileUploaded = false;
+                }
+            },
+
+            clearFile() {
+                this.$refs.fileUpload.value = '';
+                this.$api.fileMeta = null;
+                this.$api.fileUploaded = false;
+            },
+
+            calculateFileSize(size = 0) {
+                if (size < 1024) return `${size} bytes`;
+                else if (size < 1024 * 1024) return `${(size / 1024).toFixed(2)} KB`;
+                else if (size < 1024 * 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+                else return `${(size / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+            }
+        }
+    </script>
+</template>

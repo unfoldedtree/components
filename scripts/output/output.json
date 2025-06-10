@@ -153,6 +153,50 @@
             }
           },
           {
+            "name": "Combobox Example",
+            "entry": "combobox-example",
+            "description": "An example of a combobox component that allows users to select an option from a dropdown or enter a custom value.",
+            "path": "combobox-example",
+            "excludedDirectories": [],
+            "tabId": "combobox-example",
+            "componentPath": "/combobox",
+            "componentData": {
+              "name": "Combobox",
+              "path": "/combobox",
+              "description": "An example of a combobox component that allows users to select an option from a dropdown or enter a custom value.",
+              "props": [
+                {
+                  "name": "options",
+                  "type": "array",
+                  "description": "The options for the combobox dropdown.",
+                  "default": "[]"
+                },
+                {
+                  "name": "selectedOption",
+                  "type": "string",
+                  "description": "The currently selected option of the combobox."
+                },
+                {
+                  "name": "onChange",
+                  "type": "function",
+                  "description": "Callback function when the selected option changes."
+                },
+                {
+                  "name": "placeholder",
+                  "type": "string",
+                  "description": "Placeholder text displayed when no option is selected.",
+                  "default": ""
+                },
+                {
+                  "name": "disabled",
+                  "type": "boolean",
+                  "description": "If true, the combobox will be disabled.",
+                  "default": false
+                }
+              ]
+            }
+          },
+          {
             "name": "Counter Example - Advanced",
             "entry": "counters",
             "description": "This is an example of a counter component. It allows you to increment and decrement a value.",
@@ -414,6 +458,45 @@
                   "name": "onChange",
                   "type": "function",
                   "description": "Callback function when the selected option changes."
+                }
+              ]
+            }
+          },
+          {
+            "name": "Upload Example",
+            "entry": "upload-example",
+            "description": "An example of a file upload component that supports drag-and-drop and progress indication.",
+            "path": "upload-example",
+            "excludedDirectories": [],
+            "tabId": "upload-example",
+            "componentPath": "/upload",
+            "componentData": {
+              "name": "File Upload",
+              "path": "/upload",
+              "description": "A component for uploading files with drag-and-drop support and progress indication.",
+              "props": [
+                {
+                  "name": "accept",
+                  "type": "string",
+                  "description": "Comma-separated list of file types that the upload accepts.",
+                  "default": ""
+                },
+                {
+                  "name": "multiple",
+                  "type": "boolean",
+                  "description": "If true, allows multiple files to be selected.",
+                  "default": false
+                },
+                {
+                  "name": "onUpload",
+                  "type": "function",
+                  "description": "Callback function when files are uploaded."
+                },
+                {
+                  "name": "disabled",
+                  "type": "boolean",
+                  "description": "If true, the upload component will be disabled.",
+                  "default": false
                 }
               ]
             }

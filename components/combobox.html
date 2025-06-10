@@ -1,33 +1,31 @@
 <template 
-    x-component.unwrap="select" 
+    x-component.unwrap="combobox" 
     x-init="$api && $api.init()"
     :options="[]"
     :selected-option="null"
+    :selected-field="null"
     :label="''" 
     :disabled="false"
     :on-change="`() => {}`"
+    :on-filter="`() => {}`"
+    :placeholder="''"
     x-data="{ selectedOption: null }"
 >
     <div class="w-full">
         <label id="listbox-label" class="block text-sm/6 font-medium text-gray-900 dark:text-white" x-text="$prop('label')"></label>
         <div class="relative mt-2">
-            <button 
-                type="button" 
-                class="grid w-full cursor-default grid-cols-1 rounded-md ring-1 ring-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-none focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 dark:ring-white/10 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:outline-gray-200 dark:disabled:bg-gray-700 dark:disabled:text-gray-500 dark:disabled:outline-gray-600 rounded-md" 
-                aria-haspopup="listbox" 
+            <input 
+                id="combobox" type="text" 
+                class="block w-full rounded-md ring-1 ring-gray-300 border-gray-300 bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm/6 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:border-gray-700 dark:focus:ring-indigo-500 dark:ring-white/10 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:outline-gray-200 dark:disabled:bg-gray-700 dark:disabled:text-gray-500 dark:disabled:outline-gray-600" 
+                role="combobox" 
+                aria-controls="options" 
+                aria-expanded="true"
                 :disabled="$prop('disabled')"
-                aria-expanded="true" 
-                aria-labelledby="listbox-label"
+                :placeholder="$prop('placeholder')"
+                :value="$api.value"
+                @input="$api.filterOptions($event.target.value)"
                 @click="$api.open = !$api.open"
             >
-                <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-                    <slot name="selected-option">
-                        <span class="flex items-center gap-3">
-                            <span class="block truncate" x-text="selectedOption"></span>
-                        </span>
-                    </slot>
-                </span>
-            </button>
     
             <!--
                 Select popover, show/hide based on select state.
@@ -40,7 +38,7 @@
                 To: "opacity-0"
             -->
             <ul 
-                class="absolute z-10 mt-1.5 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-hidden sm:text-sm dark:bg-gray-800 dark:ring-gray-700 dark:text-white" 
+                class="absolute z-10 mt-1.5 max-h-80 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-hidden sm:text-sm dark:bg-gray-800 dark:ring-gray-700 dark:text-white" 
                 tabindex="-1" 
                 role="listbox" 
                 aria-labelledby="listbox-label" 
@@ -53,7 +51,7 @@
         
                 Highlighted: "bg-indigo-600 text-white outline-hidden", Not Highlighted: "text-gray-900"
                 -->
-                <template x-for="(option, index) in options" :key="option.id" x-cloak>
+                <template x-for="(option, index) in $prop('options')" :key="option.id" x-cloak>
                     <li 
                         class="relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none hover:bg-indigo-600 hover:text-white focus:bg-indigo-600 focus:text-white focus:outline-hidden cursor-pointer group dark:text-white dark:hover:bg-indigo-500 dark:hover:text-white dark:focus:bg-indigo-500 dark:focus:text-white" 
                         id="listbox-option-0" 
@@ -88,7 +86,15 @@
                     </li>
                 </template>
         
-                <!-- More items... -->
+                <template x-if="$api.filteredOptions.length === 0">
+                    <slot name="no-options">
+                        <li class="relative cursor-default py-2 text-gray-500 select-none text-center">
+                            <span class="block truncate">No options found</span>
+                        </li>
+                    </slot>
+                </template>
+
+                <slot name="footer"></slot>
             </ul>
         </div>
     </div>
@@ -110,6 +116,28 @@
 
             isSelected(option) {
                 return this.selectedOption && this.selectedOption.id === option.id;
+            },
+
+            filterOptions(query) {
+                this.$api.open = true; // Ensure the dropdown is open when filtering
+
+                // Trigger on-filter callback if provided
+                if (typeof this.$prop('on-filter') === 'function') {
+                    this.$prop('on-filter')(query);
+                }
+            },
+
+            get value() {
+                if (this.selectedOption) {
+                    // check if selectedOption is an object and has the selected-field
+                    if (typeof this.selectedOption === 'object' && this.$prop('selected-field') in this.selectedOption) {
+                        return this.selectedOption[this.$prop('selected-field')];
+                    } else {
+                        return this.selectedOption;
+                    }
+                }
+
+                return '';
             },
         }
     </script>
