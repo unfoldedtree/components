@@ -1,0 +1,37 @@
+{
+    "name": "Table",
+    "path": "/table",
+    "description": "A component for displaying data in a tabular format.",
+    "props": [
+        {
+            "name": "data",
+            "type": "Array",
+            "description": "An array of objects representing the rows of the table.",
+            "required": true
+        },
+        {
+            "name": "columns",
+            "type": "Array",
+            "description": "An array of objects defining the columns of the table, each with a 'header' and 'field' property.",
+            "required": true
+        },
+        {
+            "name": "striped",
+            "type": "Boolean",
+            "description": "If true, applies a striped style to the table rows.",
+            "default": false
+        },
+        {
+            "name": "bordered",
+            "type": "Boolean",
+            "description": "If true, applies a border to the table.",
+            "default": false
+        },
+        {
+            "name": "hoverable",
+            "type": "Boolean",
+            "description": "If true, highlights rows on hover.",
+            "default": false
+        }
+    ]
+}

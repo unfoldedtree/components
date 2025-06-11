@@ -22,28 +22,6 @@
         "order": 2,
         "children": [
           {
-            "name": "Accordion Example",
-            "entry": "accordian-example",
-            "description": "This is an example of an accordion component. It allows you to expand and collapse sections of content.",
-            "path": "accordian-example",
-            "excludedDirectories": [],
-            "tabId": "accordian-example",
-            "componentPath": "/accordian",
-            "componentData": {
-              "name": "Accordion",
-              "path": "/accordian",
-              "description": "An accordion component that allows for expandable and collapsible sections.",
-              "props": [
-                {
-                  "name": "primary",
-                  "type": "boolean",
-                  "description": "If true, the accordion will be primary color.",
-                  "default": "false"
-                }
-              ]
-            }
-          },
-          {
             "name": "Alert Example",
             "entry": "alert-example",
             "description": "Alert example demonstrates the usage of the alert component. It showcases how to create alerts with different types, such as success, error, and warning.",
@@ -197,113 +175,6 @@
             }
           },
           {
-            "name": "Counter Example - Advanced",
-            "entry": "counters",
-            "description": "This is an example of a counter component. It allows you to increment and decrement a value.",
-            "path": "counter-advanced",
-            "excludedDirectories": [],
-            "tabId": "counter-advanced",
-            "componentPath": "/counter",
-            "componentData": {
-              "name": "Counter",
-              "path": "/counter",
-              "description": "A simple counter component that allows you to increment and decrement a value.",
-              "props": [
-                {
-                  "name": "primary",
-                  "type": "boolean",
-                  "description": "If true, the counter will be primary color.",
-                  "default": "false"
-                },
-                {
-                  "name": "owner",
-                  "type": "string",
-                  "description": "The owner of the counter."
-                },
-                {
-                  "name": "title",
-                  "type": "string",
-                  "description": "The title of the counter."
-                }
-              ]
-            }
-          },
-          {
-            "name": "Counter Example - Basic",
-            "entry": "counter-api-of",
-            "description": "This example demonstrates a simple counter application using the First Orion UI framework. It showcases the basic functionality of incrementing and decrementing a counter value.",
-            "path": "counter-basic",
-            "excludedDirectories": [],
-            "tabId": "counter-basic",
-            "componentPath": "/counter",
-            "componentData": {
-              "name": "Counter",
-              "path": "/counter",
-              "description": "A simple counter component that allows you to increment and decrement a value.",
-              "props": [
-                {
-                  "name": "primary",
-                  "type": "boolean",
-                  "description": "If true, the counter will be primary color.",
-                  "default": "false"
-                },
-                {
-                  "name": "owner",
-                  "type": "string",
-                  "description": "The owner of the counter."
-                },
-                {
-                  "name": "title",
-                  "type": "string",
-                  "description": "The title of the counter."
-                }
-              ]
-            }
-          },
-          {
-            "name": "Dropdown Example",
-            "entry": "dropdown-example",
-            "description": "This example demonstrates a simple counter application using the First Orion UI framework. It showcases the basic functionality of incrementing and decrementing a counter value.",
-            "path": "dropdown-example",
-            "excludedDirectories": [],
-            "tabId": "dropdown-example",
-            "componentPath": "/dropdown",
-            "componentData": {
-              "name": "Dropdown",
-              "path": "/dropdown",
-              "description": "A simple dropdown component that allows you to select an option from a list.",
-              "props": [
-                {
-                  "name": "primary",
-                  "type": "boolean",
-                  "description": "If true, the counter will be primary color.",
-                  "default": "false"
-                },
-                {
-                  "name": "label",
-                  "type": "string",
-                  "description": "The label of the dropdown."
-                },
-                {
-                  "name": "options",
-                  "type": "array",
-                  "description": "The options for the dropdown.",
-                  "default": "[]"
-                },
-                {
-                  "name": "selectedOption",
-                  "type": "string",
-                  "description": "The selected option of the dropdown."
-                },
-                {
-                  "name": "onChange",
-                  "type": "function",
-                  "description": "Callback function when the selected option changes."
-                }
-              ]
-            }
-          },
-          {
             "name": "Input Example",
             "entry": "input-example",
             "description": "Input example demonstrates the usage of the input component. It showcases how to create different types of inputs, such as text, password, and email.",
@@ -351,6 +222,52 @@
                   "name": "disabled",
                   "type": "boolean",
                   "description": "If true, the dropdown will be disabled.",
+                  "default": false
+                }
+              ]
+            }
+          },
+          {
+            "name": "Table Example",
+            "entry": "table-example",
+            "description": "An example showcasing the use of a table component to display data in a structured format.",
+            "path": "table-example",
+            "excludedDirectories": [],
+            "tabId": "table-example",
+            "componentPath": "/table",
+            "componentData": {
+              "name": "Table",
+              "path": "/table",
+              "description": "A component for displaying data in a tabular format.",
+              "props": [
+                {
+                  "name": "data",
+                  "type": "Array",
+                  "description": "An array of objects representing the rows of the table.",
+                  "required": true
+                },
+                {
+                  "name": "columns",
+                  "type": "Array",
+                  "description": "An array of objects defining the columns of the table, each with a 'header' and 'field' property.",
+                  "required": true
+                },
+                {
+                  "name": "striped",
+                  "type": "Boolean",
+                  "description": "If true, applies a striped style to the table rows.",
+                  "default": false
+                },
+                {
+                  "name": "bordered",
+                  "type": "Boolean",
+                  "description": "If true, applies a border to the table.",
+                  "default": false
+                },
+                {
+                  "name": "hoverable",
+                  "type": "Boolean",
+                  "description": "If true, highlights rows on hover.",
                   "default": false
                 }
               ]

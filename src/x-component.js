@@ -277,6 +277,8 @@ function setupXComponent(G) {
                 // Find the bound value for the given name
                 const value = Alpine.bound(comp, `${name}`, fallback)
 
+                // console.log('Magic prop:', name, 'Value:', value, 'Component:', comp._foui_type)
+
                 // If null or undefined return the value
                 if (value === null || value === undefined) return value
 

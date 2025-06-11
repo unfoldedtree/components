@@ -1,0 +1,9 @@
+{
+    "entry": "table-example",
+    "name": "Table Example",
+    "description": "An example showcasing the use of a table component to display data in a structured format.",
+    "path": "table-example",
+    "excludedDirectories": [],
+    "tabId": "table-example",
+    "componentPath": "/table"
+}

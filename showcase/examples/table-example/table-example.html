@@ -1,0 +1,40 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="table,button" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
+    <div class="w-full" x-data="tableExample">
+        <p>Textarea Using Slots and Alpine</p>
+
+        <div class="p-2 flex gap-2 flex items-start justify-start w-full">
+            <foui-table 
+                
+            >
+            </foui-table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('tableExample', () => ({
+
+                init() {
+                    //
+                },
+            }));
+        });
+    </script>
+</body>
