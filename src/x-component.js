@@ -271,12 +271,11 @@ function setupXComponent(G) {
         magic('prop', el => {
             return (name, fallback) => {
                 let comp = findClosestComponent(el)
+
                 if (!comp) return null
 
                 // Find the bound value for the given name
                 const value = Alpine.bound(comp, `${name}`, fallback)
-
-                // console.log('Magic prop:', name, 'Value:', value, 'Component:', comp._foui_type)
 
                 // If null or undefined return the value
                 if (value === null || value === undefined) return value
@@ -285,12 +284,10 @@ function setupXComponent(G) {
                 try {
                     const parsedValue = JSON.parse(value);
                     if (typeof parsedValue === 'object' && parsedValue !== null) {
-                        // console.log('Parsed value:', parsedValue);
                         return parsedValue;
                     }
                 } catch (e) {
                     // If parsing fails, we just return the original value
-                    // console.warn('Failed to parse value as JSON:', value, e);
                 }
 
                 try {

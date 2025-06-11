@@ -27,19 +27,12 @@
                 :label="'Select a user'" 
                 :description="'Choose from the list'" 
                 :placeholder="'Select...'"
-                :on-change="'this.onChange'"
-                :on-filter="'this.onFilter'"
+                :on-change="'(args) => this.onChange(args)'"
+                :on-filter="'(args) => this.onFilter(args)'"
                 :show-load-more="showLoadMore"
-                :load-more="'this.loadMore'"
+                :load-more="'(args) => this.loadMore(args)'"
                 :loading-more="loadingMore"
             >
-                <!-- <div slot="selected-option">
-                    <span class="flex items-center gap-3">
-                        <img :src="selectedOption?.image" alt="" class="size-5 shrink-0 rounded-full">
-                        <span class="block truncate" x-text="selectedOption?.name"></span>
-                    </span>
-                </div> -->
-
                 <div slot="option">
                     <span class="flex items-center gap-3">
                         <img :src="option.image" class="size-5 shrink-0 rounded-full">
@@ -105,25 +98,34 @@
                     // Value of the input is the selected-field, but with the onChange callback, we can handle the selected option
                     // Here you can set a variable to any attribute (such as id) or perform any action with the selected option
                     console.log('Selected option:', selected);
+                    this.selected = JSON.stringify(selected); // Parse the selected option from JSON string
+                    console.log('Selected option:', this.selected);
+                    console.log(this.options)
                 },
 
                 onFilter(query) {
+                    console.log('onFilter called with query:', query);
                     // Filter options based on the query
-                    console.log(this.options, this.filteredOptions);
+                    console.log('Filtering options with query:', query, this.options, this.filteredOptions);
 
                     if (!query) {
                         this.filtered = false;
                         this.filteredOptions = this.options; // Reset to all options if query is empty
                     } else {
                         this.filtered = true;
-                        this.filteredOptions = this.options.filter(option => 
+                        this.filteredOptions = this.options?.filter(option => 
                             option.name.toLowerCase().includes(query.toLowerCase())
                         ); // Filter options based on the query
                     }
                 },
 
                 loadMore() {
+                    console.log(this.loadingMore)
                     this.loadingMore = true;
+
+                    // options is accessible in the callback here, why not in onFilter?
+                    console.log('Loading more options...', this.options);
+
                     setTimeout(() => {
                         const user1 = this.options.length + 1;
                         const user2 = this.options.length + 2;

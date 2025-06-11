@@ -26,7 +26,7 @@
                 :label="'Select a user'" 
                 :description="'Choose from the list'" 
                 :placeholder="'Select...'"
-                :on-change="'this.onChange'"
+                :on-change="'(args) => this.onChange(args)'"
             >
                 <div slot="selected-option">
                     <span class="flex items-center gap-3">
@@ -69,8 +69,7 @@
                 },
 
                 onChange(selected) {
-                    // this.selected = JSON.stringify(selected);
-                    // console.log('Selected option:', this.selected);
+                    this.selected = JSON.stringify(selected);
                 },
             }));
         });

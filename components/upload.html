@@ -22,7 +22,7 @@
 
         <div 
             class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 dark:border-gray-700"
-            :class="{ 'outline outline-2 outline-offset-2 outline-indigo-600': $api.dragging, 'outline outline-2 outline-offset-2 outline-red-600': $prop('error') }"
+            :class="{ 'outline outline-2 outline-offset-2 outline-indigo-600': $api.dragging }"
             @dragover.stop.prevent="$api.handleDragOver()"
             @dragleave.stop.prevent="$api.handleDragEnd()"
             @drop.stop.prevent="$api.handleDrop($event)"
@@ -60,8 +60,14 @@
             x-cloak
         >
             <slot name="file-upload">
-                <div class="mt-2 flex justify-center rounded-lg border border-solid border-gray-900/25 px-3 py-3 dark:border-gray-700">
-                    <div class="flex items-center justify-between rounded-lg bg-gray-900/65 px-2 py-2 w-full dark:bg-gray-700/65">
+                <div 
+                    class="mt-2 flex justify-center rounded-lg border border-solid border-gray-900/25 px-3 py-3 dark:border-gray-700"
+                    :class="{ '!border-2 !border-red-600/65': $prop('error') }"
+                >
+                    <div 
+                        class="flex items-center justify-between rounded-lg bg-gray-900/65 px-2 py-2 w-full dark:bg-gray-700/65"
+                        :class="{ '!bg-red-900/25 dark:!bg-red-500/45': $prop('error') }"
+                    >
                         <div class="flex items-center justify-center gap-2">
                             <button
                                 @click="$api.clearFile()"
@@ -83,7 +89,7 @@
         </div>
 
         <div 
-            x-show="$prop('error')"
+            x-show="$prop('error') && $api.fileUploaded"
             x-cloak
             class="mt-2 text-sm/6 text-red-600 dark:text-red-400"
         >
@@ -116,19 +122,7 @@
 
                 const files = event.dataTransfer.files;
 
-                // run on-validate prop if it exists
-                if (typeof this.$prop('on-validate') === 'function') {
-                    console.log('Running on-validate prop: ', files);
-                    this.$prop('on-validate')(files);
-                }
-
-                // check if error prop is true
-                if (this.$prop('error')) {
-                    console.error('File upload error:', this.$prop('error-message'));
-                    return;
-                }
-
-                console.log("Error prop value:", this.$prop('error'), "Error message:", this.$prop('error-message'));
+                this.$prop('on-validate')(files);
 
                 if (files.length > 0) {
                     const file = files[0];
@@ -149,18 +143,7 @@
 
                 const files = this.$refs.fileUpload.files;
 
-                // run on-validate prop if it exists
-                if (typeof this.$prop('on-validate') === 'function') {
-                    this.$prop('on-validate')(files);
-                }
-
-                console.log("Error prop value:", this.$prop('error'), "Error message:", this.$prop('error-message'));
-
-                // check if error prop is true
-                if (this.$prop('error')) {
-                    console.error('File upload error:', this.$prop('error-message'));
-                    return;
-                }
+                this.$prop('on-validate')(files);
                 
                 if (files.length > 0) {
                     const file = files[0];

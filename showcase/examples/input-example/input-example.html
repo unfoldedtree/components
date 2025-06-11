@@ -129,6 +129,8 @@
                         // Simulate error condition
                         // If value is not an email, set error to true
                         this.error = this.value && (!this.value.includes('@') || !this.value.includes('.'));
+
+                        console.log('Error state:', this.error);
                     },
                 }))
             })

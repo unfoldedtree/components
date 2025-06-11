@@ -27,8 +27,8 @@
                 :disabled="false"
                 :error="fileError"
                 :error-message="fileErrorMessage"
-                :on-validate="'this.validateFile'"
-                :on-upload="'this.handleFileUpload'"
+                :on-validate="'(args) => this.validateFile(args)'"
+                :on-upload="'(args) => this.handleFileUpload(args)'"
             >
             </foui-upload>
         </div>
@@ -42,17 +42,7 @@
                 fileErrorMessage: '',
 
                 init() {
-                    // in two seconds, set fileError to true
-                    setTimeout(() => {
-                        this.fileError = true;
-                        this.fileErrorMessage = 'This is a test error message.';
-                    }, 2000);
-
-                    // remove the error after 5 seconds
-                    setTimeout(() => {
-                        this.fileError = false;
-                        this.fileErrorMessage = '';
-                    }, 5000);
+                    //
                 },
 
                 validateFile(files) {
