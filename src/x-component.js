@@ -315,6 +315,47 @@ function setupXComponent(G) {
             }
         })
 
+        magic('slot', el => {
+            return (name, fallback) => {
+                let comp = findClosestComponent(el)
+                if (!comp) return null
+
+                // get original template for comp
+                const api = getApiOf(comp)
+
+                // console.log('Magic slot:', name, 'Element:', el, 'Component:', comp._foui_type, 'API:', api);
+
+                // remove $slot prefix if it exists
+                console.log('Magic slot name:', name, 'Fallback:', fallback);
+                if (name.startsWith('$slot(') && name.endsWith(')')) {
+                    name = name.substring(6, name.length - 1).trim()
+                }
+
+                $foui.nextTick(() => {
+                    // look for el in comp template with slot attribute that equals name
+                    const slotTemplateContainer = comp.parentNode.querySelector(`${comp.tagName} > template[name="slots"]`)
+
+                    // console.log('Slot template container:', slotTemplateContainer, "in Element:", el);
+
+                    if (slotTemplateContainer) {
+                        const slotContents = slotTemplateContainer.content.querySelectorAll(`[slot="${name}"]`)
+
+                        console.log('Slot contents in Magic:', comp.tagName, slotContents, slotTemplateContainer.parentNode, el, name)
+
+                        if (slotContents.length > 0) {
+                            // Replace el's content with the slot contents, still just return name
+                            const slotContent = Array.from(slotContents).map(el => el.cloneNode(true));
+                            
+                            const newHtml = slotContent.map(el => el.outerHTML).join('');
+                            $foui.setHtml(el, newHtml);
+                        }
+                    }
+                });
+
+                return name
+            }
+        })
+
         directive('model', (el, { expression, value }, { effect, evaluateLater }) => {
             let evaluate = evaluateLater(expression)
             effect(() => {
@@ -388,7 +429,7 @@ function setupXComponent(G) {
             })
         })
 
-        directive('component', (el, { expression, value, modifiers }, { cleanup }) => {
+        directive('component', (el, { expression, value, modifiers }, { effect, evaluateLater, cleanup }) => {
             if (el.tagName.toLowerCase() !== 'template') {
                 return console.warn('x-component can only be used on a <template> tag', el)
             }
@@ -481,29 +522,80 @@ ${elScript.innerHTML}
 
                             const elSlots = elComp.querySelectorAll("slot")
 
-                            // get all slots in template tags
-                            const elTemplates = elComp.querySelectorAll("template")
+                            console.log("Slot Contents:", slotContents, el);
 
-                            _.each(elTemplates, elTemplate => {
-                                // if has attribute x-for, we need to process it
-                                if (elTemplate.hasAttribute('x-for')) {
-                                    // access the innerHTML of the template
-                                    const templateContent = elTemplate.content;
+                            // add a hidden template to elComp
+                            const elHiddenTemplate = document.createElement('template')
+                            // add name slots
+                            elHiddenTemplate.setAttribute('name', 'slots')
 
-                                    // if the template has a slot, we need to process it
-                                    const templateSlots = templateContent.querySelectorAll("slot");
-                                    // find the slot name in slotOptionContents that matches the template slot
-                                    _.each(templateSlots, templateSlot => {
-                                        const slotName = templateSlot.getAttribute('name') || '';
+                            // create a div 
+                            const elHiddenDiv = document.createElement('div')
 
-                                        if (slotContents[slotName]) {
-                                            // replace the template slot with the contents of the slotOptionContents
-                                            templateSlot.replaceWith(...slotContents[slotName]);
-                                            // delete slotContents[slotName];
-                                        }
-                                    })
-                                }
+                            _.each(slotContents, contents => {
+                                // add contents to the hidden template
+                                _.each(contents, content => {
+                                    if (content.tagName && content.tagName.toLowerCase() === 'template') {
+                                        elHiddenDiv.append(content.content.cloneNode(true))
+                                    } else {
+                                        elHiddenDiv.append(content)
+                                    }
+                                })
                             })
+
+                            elHiddenTemplate.content.appendChild(elHiddenDiv)
+                            elComp.append(elHiddenTemplate)
+
+                            // We need this to be able to process nested templates too, recursion?
+                            // get all slots in template tags
+                            function processTemplates(elContainer) {
+                                const elTemplates = elContainer.querySelectorAll("template");
+
+                                _.each(elTemplates, elTemplate => {
+                                    // if has attribute x-for, we need to process it
+                                    if (elTemplate.hasAttribute('x-for')) {
+                                        // access the innerHTML of the template
+                                        const templateContent = elTemplate.content;
+
+                                        // if the template has a slot, we need to process it
+                                        const templateSlots = templateContent.querySelectorAll("slot");
+
+                                        // console.log("Template slots:", templateSlots);
+
+                                        // find the slot name in slotOptionContents that matches the template slot
+                                        _.each(templateSlots, templateSlot => {
+                                            effect(() => {
+                                                const slotName = templateSlot.getAttribute(`${prefixed('bind')}:name`) || templateSlot.getAttribute(':name') || templateSlot.getAttribute('name')
+
+                                                const foundSlot = slotContents[slotName]
+
+                                                if (foundSlot) {
+                                                    templateSlot.replaceWith(...foundSlot);
+                                                    templateSlot.remove();
+                                                } else {
+                                                    // // If no slot found, wrap the name in the $slot magic
+                                                    // console.log(`No slot found for ${slotName} in template, wrapping with magic.`);
+
+                                                    // // remove the name attribute from the slot
+                                                    // templateSlot.removeAttribute('name');
+                                                    // templateSlot.removeAttribute(`${prefixed('bind')}:name`);
+                                                    // templateSlot.removeAttribute(':name');
+
+                                                    // // replace the slot name attribute with the magic, needs to be in an template string format that is not evaluated here but in the magic
+                                                    // const slotNameWithMagic = "`$slot('" + slotName + "')`";
+                                                    
+                                                    // templateSlot.setAttribute(`${prefixed('bind')}:name`, slotNameWithMagic);
+                                                }
+                                            })
+                                        });
+
+                                        // Recursively process nested templates
+                                        processTemplates(templateContent);
+                                    }
+                                });
+                            }
+
+                            processTemplates(elComp);
 
                             _.each(elSlots, elSlot => {
                                 const name = elSlot.getAttribute('name')
@@ -517,6 +609,7 @@ ${elScript.innerHTML}
                                 elSlot.after(...elsToAppend)
                                 elSlot.remove()
                             })
+
                             if (unwrap && isComponent(elComp)) return
 
                             elComp._foui_type = expression
