@@ -32,21 +32,20 @@
     x-cloak
     x-init="$api && $api.init()"
 >
-    <div class="bg-gray-900 py-10">
+    <div class="bg-gray-900 py-10" x-import="input">
         <!-- <h2 class="px-4 text-base/7 font-semibold text-white sm:px-6 lg:px-8">Latest activity</h2> -->
         <div class="sm:flex sm:items-center px-4 text-base/7 font-semibold sm:px-6 lg:px-8">
             <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold text-gray-900 dark:text-white">Users</h1>
-            <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">A list of all the users in your account including their name, title, email and role.</p>
+                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Users</h1>
+                <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">A list of all the users in your account including their name, title, email and role.</p>
+                <p x-text="$prop('search-placeholder')"></p>
             </div>
-            <!-- <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <foui-button 
-                size="xl" 
-                @click="$api.addUser()"
-            >
-                Add user
-            </foui-button>
-            </div> -->
+            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <foui-input
+                    :placeholder="$prop('search-placeholder')"
+                    :on-input="`(e) => this.$prop('on-search')(e.target.value)`"
+                ></foui-input>
+            </div>
         </div>
         <table class="mt-6 w-full text-left whitespace-nowrap px-4 sm:px-6 lg:px-8">
         <colgroup>
@@ -71,10 +70,6 @@
                 >
                     <template x-for="column in $prop('columns')" :key="column.key">
                         <td class="px-3 py-2">
-                            <!-- <slot :name="$slot(`column-${column.key}`)">
-                                <span x-text="item[column.key]"></span>
-                            </slot> -->
-
                             <slot name="column-${column.key}">
                                 <span x-text="item[column.key]"></span>
                             </slot>

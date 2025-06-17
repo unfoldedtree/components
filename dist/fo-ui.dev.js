@@ -374,6 +374,8 @@ function setupCore(G) {
                         // If using the API syntax, instead of vanilla Alpine
                         let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(comp);
 
+                        console.log('Magic prop function:', name, 'Value:', value, 'Component:', comp._foui_type, "API:", api);
+
                         // Only return the result as a function if it is callable
                         // Otherwise, return the value directly
                         const result = (typeof func.call(api) === 'function') ? func.call(api) : value;
@@ -583,27 +585,29 @@ ${elScript.innerHTML}
 
                             const elSlots = elComp.querySelectorAll("slot")
 
-                            // add a hidden template to elComp
-                            const elHiddenTemplate = document.createElement('template')
-                            // add name slots
-                            elHiddenTemplate.setAttribute('name', 'slots')
+                            if (Object.keys(slotContents).length > 0) {
+                                // add a hidden template to elComp
+                                const elHiddenTemplate = document.createElement('template')
+                                // add name slots
+                                elHiddenTemplate.setAttribute('name', 'slots')
 
-                            // create a div 
-                            const elHiddenDiv = document.createElement('div')
+                                // create a div 
+                                const elHiddenDiv = document.createElement('div')
 
-                            _.each(slotContents, contents => {
-                                // add contents to the hidden template
-                                _.each(contents, content => {
-                                    if (content.tagName && content.tagName.toLowerCase() === 'template') {
-                                        elHiddenDiv.append(content.content.cloneNode(true))
-                                    } else {
-                                        elHiddenDiv.append(content)
-                                    }
+                                _.each(slotContents, contents => {
+                                    // add contents to the hidden template
+                                    _.each(contents, content => {
+                                        if (content.tagName && content.tagName.toLowerCase() === 'template') {
+                                            elHiddenDiv.append(content.content.cloneNode(true))
+                                        } else {
+                                            elHiddenDiv.append(content)
+                                        }
+                                    })
                                 })
-                            })
 
-                            elHiddenTemplate.content.appendChild(elHiddenDiv)
-                            elComp.append(elHiddenTemplate)
+                                elHiddenTemplate.content.appendChild(elHiddenDiv)
+                                elComp.append(elHiddenTemplate)
+                            }
 
                             // We need this to be able to process nested templates too, recursion?
                             // get all slots in template tags

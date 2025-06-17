@@ -22,9 +22,11 @@
 
         <div class="p-2 flex gap-2 flex items-start justify-start w-full">
             <foui-table
-                :data="data"
+                :data="filteredData"
                 :columns="columns"
                 :row-key="'id'"
+                :on-search="'(e) => this.filterData(e)'"
+                :search-placeholder="'Search...'"
             >
                 <div slot="column-status">
                     <span
@@ -84,9 +86,23 @@
                     { key: 'actions', label: 'Actions' }
                 ],
 
+                filteredData: [],
+
                 init() {
-                    //
+                    this.filteredData = this.data; // Initialize filtered data
                 },
+
+                filterData(searchTerm) {
+                    if (!searchTerm) {
+                        this.filteredData = this.data;
+                        return;
+                    }
+                    this.filteredData = this.data.filter(item => 
+                        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        item.role.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
             }));
         });
     </script>
