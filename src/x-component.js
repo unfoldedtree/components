@@ -323,24 +323,12 @@ function setupXComponent(G) {
                 // get original template for comp
                 const api = getApiOf(comp)
 
-                // console.log('Magic slot:', name, 'Element:', el, 'Component:', comp._foui_type, 'API:', api);
-
-                // remove $slot prefix if it exists
-                console.log('Magic slot name:', name, 'Fallback:', fallback);
-                if (name.startsWith('$slot(') && name.endsWith(')')) {
-                    name = name.substring(6, name.length - 1).trim()
-                }
-
                 $foui.nextTick(() => {
                     // look for el in comp template with slot attribute that equals name
                     const slotTemplateContainer = comp.parentNode.querySelector(`${comp.tagName} > template[name="slots"]`)
 
-                    // console.log('Slot template container:', slotTemplateContainer, "in Element:", el);
-
                     if (slotTemplateContainer) {
                         const slotContents = slotTemplateContainer.content.querySelectorAll(`[slot="${name}"]`)
-
-                        console.log('Slot contents in Magic:', comp.tagName, slotContents, slotTemplateContainer.parentNode, el, name)
 
                         if (slotContents.length > 0) {
                             // Replace el's content with the slot contents, still just return name
@@ -522,8 +510,6 @@ ${elScript.innerHTML}
 
                             const elSlots = elComp.querySelectorAll("slot")
 
-                            console.log("Slot Contents:", slotContents, el);
-
                             // add a hidden template to elComp
                             const elHiddenTemplate = document.createElement('template')
                             // add name slots
@@ -573,18 +559,16 @@ ${elScript.innerHTML}
                                                     templateSlot.replaceWith(...foundSlot);
                                                     templateSlot.remove();
                                                 } else {
-                                                    // // If no slot found, wrap the name in the $slot magic
-                                                    // console.log(`No slot found for ${slotName} in template, wrapping with magic.`);
+                                                    // If no slot found, wrap the name in the $slot magic to see if can be evaluated after dom rendering
+                                                    // remove the name attribute from the slot
+                                                    templateSlot.removeAttribute('name');
+                                                    templateSlot.removeAttribute(`${prefixed('bind')}:name`);
+                                                    templateSlot.removeAttribute(':name');
 
-                                                    // // remove the name attribute from the slot
-                                                    // templateSlot.removeAttribute('name');
-                                                    // templateSlot.removeAttribute(`${prefixed('bind')}:name`);
-                                                    // templateSlot.removeAttribute(':name');
-
-                                                    // // replace the slot name attribute with the magic, needs to be in an template string format that is not evaluated here but in the magic
-                                                    // const slotNameWithMagic = "`$slot('" + slotName + "')`";
+                                                    // replace the slot name attribute with the magic, needs to be in an template string format that is not evaluated here but in the magic
+                                                    const slotNameWithMagic = "$slot(`" + slotName + "`)";
                                                     
-                                                    // templateSlot.setAttribute(`${prefixed('bind')}:name`, slotNameWithMagic);
+                                                    templateSlot.setAttribute(`${prefixed('bind')}:name`, slotNameWithMagic);
                                                 }
                                             })
                                         });
