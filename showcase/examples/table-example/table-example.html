@@ -25,7 +25,7 @@
                 :data="filteredData"
                 :columns="columns"
                 :row-key="'id'"
-                :on-search="'(e) => this.filterData(e)'"
+                :on-search="`filterData($event)`"
                 :search-placeholder="'Search...'"
             >
                 <div slot="column-status">
@@ -92,7 +92,9 @@
                     this.filteredData = this.data; // Initialize filtered data
                 },
 
-                filterData(searchTerm) {
+                filterData(event) {
+                    const searchTerm = event?.target?.value?.toLowerCase() || '';
+
                     if (!searchTerm) {
                         this.filteredData = this.data;
                         return;

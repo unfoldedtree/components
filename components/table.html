@@ -12,7 +12,7 @@
     :on-filter="`() => {}`"
     :on-sort="`() => {}`"
     :on-page-change="`() => {}`"
-    :on-search="`() => {}`"
+    :on-search="`(e) => {}`"
     :page-size="10"
     :page="1"
     :total="0"
@@ -43,7 +43,7 @@
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <foui-input
                     :placeholder="$prop('search-placeholder')"
-                    :on-input="`(e) => this.$prop('on-search')(e.target.value)`"
+                    :on-input="`$prop('on-search')`"
                 ></foui-input>
             </div>
         </div>

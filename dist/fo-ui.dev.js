@@ -350,7 +350,7 @@ function setupCore(G) {
                 // Find the bound value for the given name
                 const value = Alpine.bound(comp, `${name}`, fallback)
 
-                // console.log('Magic prop:', name, 'Value:', value, 'Component:', comp._foui_type)
+                console.log('Magic prop:', name, 'Value:', value, 'Component:', comp._foui_type)
 
                 // If null or undefined return the value
                 if (value === null || value === undefined) return value
@@ -379,8 +379,13 @@ function setupCore(G) {
                         if (/^\d+$/.test(p1)) return p1 // numbers
 
                         // check that the variables or methods exist in the api
-                        if (api && (p1 in api)) {
+                        if (api && ((p1 in api) || (p1.startsWith('$') && !p1.startsWith('$event')))) {
                             console.log('Magic prop function variable/method:', p1, 'found in API');
+
+                            if (p1.startsWith('this.')) {
+                                return p1
+                            }
+
                             return `this.${p1}`
                         } else {
                             console.log('Magic prop function variable/method:', p1, 'NOT found in API');
@@ -391,26 +396,30 @@ function setupCore(G) {
                         // return `this.${p1}`
                     })
 
+                    // with ...args to allow passing parameters
+
 
                     if (!funcStr.startsWith('(') && !funcStr.includes('=>')) {                                 
-                        funcStr = `() => ${funcStr}`
+                        // with ...args to allow passing parameters
+                        funcStr = `($event, args) => { return ${funcStr} }`
                     }
+
+                    // inject event in the anonymous function if $event is used in the function string
+                    // if (funcStr.includes('$event')) {
+                    //     if (funcStr.startsWith('() =>')) {
+                    //         funcStr = funcStr.replace('() =>', '($event) =>')
+                    //     }
+                    // }
 
                     const func = new Function(`return ${funcStr}`)
 
-                    console.log('Magic prop function string:', funcStr, func, typeof func);
+                    // Only return the result as a function if it is callable
+                    // Otherwise, return the value directly
+                    const result = (typeof func.call(api) === 'function') ? func.call(api) : value;
 
-                    if (typeof func === 'function') {
-                        console.log('Magic prop function:', name, 'Value:', value, 'Component:', comp._foui_type, "API:", api, typeof func.call(api) === 'function');
+                    console.log('Magic prop result:', result, typeof result);
 
-                        // Only return the result as a function if it is callable
-                        // Otherwise, return the value directly
-                        const result = (typeof func.call(api) === 'function') ? func.call(api) : value;
-
-                        console.log('Magic prop result:', result(), typeof result);
-
-                        return result;
-                    }
+                    return result;
                 } catch (e) {
                     console.warn('Magic prop function evaluation error:', e)
                 }
@@ -439,6 +448,9 @@ function setupCore(G) {
                             const slotContent = Array.from(slotContents).map(el => el.cloneNode(true));
                             
                             const newHtml = slotContent.map(el => el.outerHTML).join('');
+
+                            // console.log('Magic slot:', name, 'Component:', comp._foui_type, 'Found slot content:', newHtml);
+
                             $foui.setHtml(el, newHtml);
                         }
                     }
