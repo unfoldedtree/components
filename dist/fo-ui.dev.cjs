@@ -355,6 +355,8 @@ function setupCore(G) {
                 // If null or undefined return the value
                 if (value === null || value === undefined) return value
 
+                console.log('Magic prop raw value:', name, 'Value:', value, 'Component:', comp._foui_type);
+
                 // try casting as object
                 try {
                     const parsedValue = JSON.parse(value);
@@ -369,12 +371,14 @@ function setupCore(G) {
                     // If the value is a string, we try to evaluate it as a function
                     const func = new Function(`return ${value}`);
 
+                    console.log('Magic prop function candidate:', name, 'Value:', value, 'Component:', comp._foui_type, "Function:", func);
+
                     if (typeof func === 'function') {
                         // This should make sure that the function is called in the context of the component
                         // If using the API syntax, instead of vanilla Alpine
                         let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(comp);
 
-                        console.log('Magic prop function:', name, 'Value:', value, 'Component:', comp._foui_type, "API:", api);
+                        // console.log('Magic prop function:', name, 'Value:', value, 'Component:', comp._foui_type, "API:", api);
 
                         // Only return the result as a function if it is callable
                         // Otherwise, return the value directly

@@ -47,7 +47,7 @@
                         <foui-button 
                             size="sm" 
                             variant="primary"
-                            @click="() => { console.log('Edit', item) }"
+                            :on-click="'(item) => this.editItem(item)'"
                         >
                             Edit
                         </foui-button>
@@ -55,7 +55,7 @@
                         <foui-button 
                             size="sm" 
                             variant="danger"
-                            @click="() => { console.log('Delete', item) }"
+                            :on-click="`(item) => this.deleteItem(${ JSON.stringify(item) } )`"
                         >
                             Delete
                         </foui-button>
@@ -102,6 +102,16 @@
                         item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                         item.role.toLowerCase().includes(searchTerm.toLowerCase())
                     );
+                },
+
+                editItem(item) {
+                    console.log('Edit item:', item);
+                    // Implement edit logic here
+                },
+
+                deleteItem(item) {
+                    console.log('Delete item:', item);
+                    // Implement delete logic here
                 }
             }));
         });
