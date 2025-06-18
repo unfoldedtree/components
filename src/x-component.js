@@ -282,8 +282,6 @@ function setupXComponent(G) {
                 // If null or undefined return the value
                 if (value === null || value === undefined) return value
 
-                console.log('Magic prop raw value:', name, 'Value:', value, 'Component:', comp._foui_type);
-
                 // try casting as object
                 try {
                     const parsedValue = JSON.parse(value);
@@ -295,26 +293,53 @@ function setupXComponent(G) {
                 }
 
                 try {
-                    // If the value is a string, we try to evaluate it as a function
-                    const func = new Function(`return ${value}`);
+                    // This should make sure that the function is called in the context of the component
+                    // If using the API syntax, instead of vanilla Alpine
+                    let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(comp);
 
-                    console.log('Magic prop function candidate:', name, 'Value:', value, 'Component:', comp._foui_type, "Function:", func);
+                    // try converting to anonymous function by adding parentheses and arrow, if not already
+                    // and add "this." to all variables and functions to make sure they are called in the context of the component
+                    let funcStr = value.trim()
+
+                    funcStr = funcStr.replace(/([a-zA-Z_$][0-9a-zA-Z_$]*)/g, (match, p1) => {
+                        if (['true', 'false', 'null', 'undefined'].includes(p1)) return p1
+                        if (/^\d+$/.test(p1)) return p1 // numbers
+
+                        // check that the variables or methods exist in the api
+                        if (api && (p1 in api)) {
+                            console.log('Magic prop function variable/method:', p1, 'found in API');
+                            return `this.${p1}`
+                        } else {
+                            console.log('Magic prop function variable/method:', p1, 'NOT found in API');
+                        }
+
+                        return match
+
+                        // return `this.${p1}`
+                    })
+
+
+                    if (!funcStr.startsWith('(') && !funcStr.includes('=>')) {                                 
+                        funcStr = `() => ${funcStr}`
+                    }
+
+                    const func = new Function(`return ${funcStr}`)
+
+                    console.log('Magic prop function string:', funcStr, func, typeof func);
 
                     if (typeof func === 'function') {
-                        // This should make sure that the function is called in the context of the component
-                        // If using the API syntax, instead of vanilla Alpine
-                        let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(comp);
-
-                        // console.log('Magic prop function:', name, 'Value:', value, 'Component:', comp._foui_type, "API:", api);
+                        console.log('Magic prop function:', name, 'Value:', value, 'Component:', comp._foui_type, "API:", api, typeof func.call(api) === 'function');
 
                         // Only return the result as a function if it is callable
                         // Otherwise, return the value directly
                         const result = (typeof func.call(api) === 'function') ? func.call(api) : value;
 
+                        console.log('Magic prop result:', result(), typeof result);
+
                         return result;
                     }
                 } catch (e) {
-                    //
+                    console.warn('Magic prop function evaluation error:', e)
                 }
 
                 return value

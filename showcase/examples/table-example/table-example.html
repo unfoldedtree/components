@@ -47,7 +47,7 @@
                         <foui-button 
                             size="sm" 
                             variant="primary"
-                            :on-click="'(item) => this.editItem(item)'"
+                            :on-click="'(item) => console.log(item)'"
                         >
                             Edit
                         </foui-button>
@@ -55,7 +55,7 @@
                         <foui-button 
                             size="sm" 
                             variant="danger"
-                            :on-click="`(item) => this.deleteItem(${ JSON.stringify(item) } )`"
+                            :on-click="`deleteItem(item)`"
                         >
                             Delete
                         </foui-button>
