@@ -369,11 +369,16 @@ function setupCore(G) {
                     let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(comp);
                     let funcStr = value.trim()
                     let hasFunc = false
+                    let isAnonymousFunction = false
 
                     // Check if the value is an empty anonymous function
                     if (funcStr === '() => {}' || funcStr === 'function() {}') {
                         // If it is hasFunc is true, so we can continue processing. It will just end up executing an empty function
                         hasFunc = true
+                        isAnonymousFunction = true
+                    } else if ((funcStr.startsWith('(') && funcStr.includes(') =>')) || (funcStr.startsWith('function') && funcStr.endsWith('}'))) {
+                        // If it is a function, we need to check if it is an anonymous function
+                        isAnonymousFunction = true
                     }
 
                     funcStr = funcStr.replace(/([a-zA-Z_$][0-9a-zA-Z_$]*)/g, (match, p1) => {
@@ -400,6 +405,20 @@ function setupCore(G) {
                         } else if (funcStr.includes(`(${p1})`) || funcStr.includes(`,${p1})`) || funcStr.includes(`, ${p1})`)) { // Evaluate the args in the context of the component
                             hasFunc = true
 
+                            // if is an anonymous function, we check if p1 exists in the args that are passed to the function
+                            if (isAnonymousFunction) {
+                                // parse args out of the function definition
+                                const argsMatch = funcStr.match(/^\(?\s*([a-zA-Z_$][0-9a-zA-Z_$,\s]*)\)?\s*=>/)
+                                if (argsMatch && argsMatch[1]) {
+                                    const args = argsMatch[1].split(',').map(arg => arg.trim())
+                                    if (args.includes(p1)) {
+                                        return p1 // If p1 is in the args, we just return it
+                                    }
+                                }
+
+                                // console.log("Anonymous function args:", argsMatch, "Function string:", funcStr);
+                            }
+
                             return Alpine.evaluate(el, p1) ? JSON.stringify(Alpine.evaluate(el, p1)) : p1
                         }
 
@@ -412,6 +431,7 @@ function setupCore(G) {
                         funcStr = `(...args) => { return ${funcStr} }`
                     }
 
+                    console.log('Magic prop:', name, 'Component:', comp._foui_type, 'Evaluated function string:', funcStr, "Has function:", hasFunc);
 
                     if (!hasFunc) {
                         // If no function found, we just return the value

@@ -20,7 +20,7 @@
         <p>Toggle w/Label (Shows Unchecked/Checked Slot States)</p>
 
         <div class="p-2 flex gap-2 flex items-start justify-start w-full">
-            <foui-toggle :label="'Username'" :description="'Please select a username for your account'" :selected="selected" :on-change="`(value) => { this.selected = value; console.log('Toggle changed:', value); }`">
+            <foui-toggle :label="'Username'" :description="'Please select a username for your account'" :selected="selected" :on-change="`(value) => { this.selected = value; console.log('Toggle changed: ' + value + ', Selected: ' + this.selected); }`">
                 <span slot="unchecked">
                     <svg class="size-3 text-gray-400" fill="none" viewBox="0 0 12 12">
                         <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -34,5 +34,7 @@
                 </span>
             </foui-toggle>
         </div>
+
+        <span x-text="selected"></span>
     </div>
 </body>
