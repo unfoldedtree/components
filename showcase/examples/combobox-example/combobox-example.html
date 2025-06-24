@@ -22,15 +22,15 @@
         <div class="p-2 flex gap-2 flex items-start justify-start w-full max-w-xl min-w-xs">
             <foui-combobox
                 :options="filteredOptions" 
-                :selected-option="JSON.stringify(selected)"
+                :selected-option="selected"
                 :selected-field="'name'"
                 :label="'Select a user'" 
                 :description="'Choose from the list'" 
                 :placeholder="'Select...'"
-                :on-change="'(args) => this.onChange(args)'"
-                :on-filter="'(args) => this.onFilter(args)'"
+                :on-change="'onChange'"
+                :on-filter="'onFilter'"
                 :show-load-more="showLoadMore"
-                :load-more="'(args) => this.loadMore(args)'"
+                :load-more="'loadMore'"
                 :loading-more="loadingMore"
             >
                 <div slot="option">
@@ -98,7 +98,7 @@
                     // Value of the input is the selected-field, but with the onChange callback, we can handle the selected option
                     // Here you can set a variable to any attribute (such as id) or perform any action with the selected option
                     console.log('Selected option:', selected);
-                    this.selected = JSON.stringify(selected); // Parse the selected option from JSON string
+                    this.selected = selected; // Parse the selected option from JSON string
                     console.log('Selected option:', this.selected);
                     console.log(this.options)
                 },

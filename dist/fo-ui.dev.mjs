@@ -350,8 +350,6 @@ function setupCore(G) {
                 // Find the bound value for the given name
                 const value = Alpine.bound(comp, `${name}`, fallback)
 
-                console.log('Magic prop:', name, 'Value:', value, 'Component:', comp._foui_type)
-
                 // If null or undefined return the value
                 if (value === null || value === undefined) return value
 
@@ -370,9 +368,16 @@ function setupCore(G) {
                     // If using the API syntax, instead of vanilla Alpine
                     let api = getParentComponent(comp) ? getApiOf(getParentComponent(comp)) : getApiOf(comp);
 
+                    console.log("API: ", api)
+
                     // try converting to anonymous function by adding parentheses and arrow, if not already
                     // and add "this." to all variables and functions to make sure they are called in the context of the component
                     let funcStr = value.trim()
+
+                    console.log('Magic prop function string before processing:', funcStr);
+
+                    const event = el._x_dataStack && el._x_dataStack[0] && el._x_dataStack[0].$event
+                    console.log('Magic prop function event:', event);
 
                     funcStr = funcStr.replace(/([a-zA-Z_$][0-9a-zA-Z_$]*)/g, (match, p1) => {
                         if (['true', 'false', 'null', 'undefined'].includes(p1)) return p1
@@ -380,46 +385,67 @@ function setupCore(G) {
 
                         // check that the variables or methods exist in the api
                         if (api && ((p1 in api) || (p1.startsWith('$') && !p1.startsWith('$event')))) {
-                            console.log('Magic prop function variable/method:', p1, 'found in API');
+                            console.log('Magic prop function variable/method:', p1, 'found in API. Match :', match);
+
+                            // if (p1.startsWith('$prop')) {
+                            //     return Alpine.evaluate(el, p1) ? JSON.stringify(Alpine.evaluate(el, p1)) : p1
+                            // }
+
+                            if (typeof api[p1] === 'function') {
+                                // add () if not already present
+                                if (!funcStr.includes(`${p1}(`)) {
+                                    // TODO - pass in the params that were evaluated in the original string
+                                    p1 = `${p1}(...args)`
+                                }
+                            }
 
                             if (p1.startsWith('this.')) {
+                                return p1
+                            } else if (funcStr.includes(`this.${p1}`)) {
                                 return p1
                             }
 
                             return `this.${p1}`
+                        } else if (funcStr.includes(`(${p1})`) || funcStr.includes(`,${p1})`) || funcStr.includes(`, ${p1})`)) {
+                            console.log('We need to find a way to resolve function parameters:', p1);
+
+                            return Alpine.evaluate(el, p1) ? JSON.stringify(Alpine.evaluate(el, p1)) : p1
                         } else {
-                            console.log('Magic prop function variable/method:', p1, 'NOT found in API');
+                            // console.log('Magic prop function variable/method:', p1, 'NOT found in API');
                         }
 
                         return match
-
-                        // return `this.${p1}`
                     })
 
+                    //funcStr = Alpine.evaluate(el, funcStr)
+
                     // with ...args to allow passing parameters
-
-
                     if (!funcStr.startsWith('(') && !funcStr.includes('=>')) {                                 
-                        // with ...args to allow passing parameters
-                        funcStr = `($event, args) => { return ${funcStr} }`
+                        // How to get args passed to the function?
+                        funcStr = `(...args) => { return ${funcStr} }`
                     }
 
-                    // inject event in the anonymous function if $event is used in the function string
-                    // if (funcStr.includes('$event')) {
-                    //     if (funcStr.startsWith('() =>')) {
-                    //         funcStr = funcStr.replace('() =>', '($event) =>')
-                    //     }
-                    // }
+                    // // console.log('Magic prop function string:', funcStr);
 
-                    const func = new Function(`return ${funcStr}`)
+                    const func = new Function(`{ return ${funcStr} }`)
 
-                    // Only return the result as a function if it is callable
-                    // Otherwise, return the value directly
+                    console.log('Magic prop function:', func);
+
+                    // // Only return the result as a function if it is callable
+                    // // Otherwise, return the value directly
                     const result = (typeof func.call(api) === 'function') ? func.call(api) : value;
 
-                    console.log('Magic prop result:', result, typeof result);
+                    // // For some reason the result(), is what makes this work, not sure why
+                    console.log('Magic prop result type:', typeof result, result);
+                    console.log('Magic prop result:', result());
 
-                    return result;
+                    // const test = Alpine.evaluate(el, value.trim())
+
+                    // console.log('Magic prop test:', test);
+
+                    // return test
+
+                    return result
                 } catch (e) {
                     console.warn('Magic prop function evaluation error:', e)
                 }

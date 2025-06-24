@@ -106,11 +106,12 @@
             init() {
                 const el = this.$refs.selectElement;
                 this.selectedOption = this.$prop('selected-option')
+                console.log('Default selected option:', this.selectedOption);
             },
 
             handleClick(option) {
                 this.selectedOption = option;
-                this.$prop('selected-option', JSON.stringify(option));
+                this.$prop('selected-option', option);
                 this.$prop('on-change')(option)
             },
 

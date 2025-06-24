@@ -22,11 +22,11 @@
         <div class="p-2 flex gap-2 flex items-start justify-start w-full max-w-xl min-w-xs">
             <foui-select
                 :options="options" 
-                :selected-option="JSON.stringify(selected)" 
+                :selected-option="'selected'" 
                 :label="'Select a user'" 
                 :description="'Choose from the list'" 
                 :placeholder="'Select...'"
-                :on-change="'onChange(args)'"
+                :on-change="'onChange'"
             >
                 <div slot="selected-option">
                     <span class="flex items-center gap-3">
@@ -65,12 +65,14 @@
                 ],
 
                 init() {
+                    console.log('Select component initialized: ', this.options);
                     this.selected = this.options[0]; // Set default selected option
+                    console.log('Default selected option:', this.selected);
                 },
 
                 onChange(selected) {
-                    this.selected = JSON.stringify(selected);
-                    console.log('Selected option:', selected);
+                    this.selected = selected;
+                    console.log('Selected option TEST:', selected);
                 },
             }));
         });
