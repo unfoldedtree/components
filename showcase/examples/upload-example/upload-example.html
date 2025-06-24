@@ -27,8 +27,8 @@
                 :disabled="false"
                 :error="fileError"
                 :error-message="fileErrorMessage"
-                :on-validate="'(args) => this.validateFile(args)'"
-                :on-upload="'(args) => this.handleFileUpload(args)'"
+                :on-validate="'validateFile'"
+                :on-upload="'handleFileUpload'"
             >
             </foui-upload>
         </div>

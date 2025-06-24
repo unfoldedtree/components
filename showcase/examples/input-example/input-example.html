@@ -104,7 +104,7 @@
             <p class="whitespace-nowrap">Input w/Error Message <span class="text-red-600 font-bold">[Alpine Only Example]</span></p>
 
             <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
-                <foui-input :label="'Email'" :value="value" :placeholder="'Enter an email'" :description="'We only use this for spam.'" :error="error" :errorMessage="'Not a valid email address.'" :on-input="`(e) => this.handleInputChange(e)`"></foui-input>
+                <foui-input :label="'Email'" :value="value" :placeholder="'Enter an email'" :description="'We only use this for spam.'" :error="error" :errorMessage="'Not a valid email address.'" :on-input="`handleInputChange`"></foui-input>
             </div>
         </div>
 
@@ -144,7 +144,7 @@
             <p class="whitespace-nowrap">Input w/On Input Event <span class="text-red-600 font-bold">[Alpine Only Example]</span></p>
 
             <div class="p-2 flex gap-2 flex flex-col items-start justify-start gap-x-5">
-                <foui-input :label="'Input'" :value="value" :on-input="`this.handleInputChange`"></foui-input>
+                <foui-input :label="'Input'" :value="value" :on-input="`handleInputChange`"></foui-input>
                 <p class="text-gray-400 dark:text-white">
                     <span>Value: </span>
                     <span x-text="value"></span>
@@ -202,7 +202,7 @@
         </script>
     </div>
 
-    <div x-data="{ value: 'Test' }">
+    <!-- <div x-data="{ value: 'Test' }">
         <template x-component="input-with-change" x-init="$api && $api.init()">
             <div>
                 <p class="whitespace-nowrap">Input w/On Change Event <span class="text-red-600 font-bold">[FOUI API Example]</span></p>
@@ -234,5 +234,5 @@
         </template>
 
         <foui-input-with-change></foui-input-with-change>
-    </div>
+    </div> -->
 </body>
