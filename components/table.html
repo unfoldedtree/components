@@ -2,9 +2,10 @@
     x-component.unwrap="table" 
     x-init="$api && $api.init()"
     :value="''"
+    :show-column-labels="true"
     :columns="[]"
     :data="[]"
-    :row-key="'id'"
+    :row-key="null"
     :on-change="`() => {}`"
     :on-row-click="`() => {}`"
     :on-row-select="`() => {}`"
@@ -12,7 +13,7 @@
     :on-filter="`() => {}`"
     :on-sort="`() => {}`"
     :on-page-change="`() => {}`"
-    :on-search="`(e) => {}`"
+    :on-search="`() => {}`"
     :page-size="10"
     :page="1"
     :total="0"
@@ -26,59 +27,81 @@
     :searchable="false"
     :search-placeholder="'Search...'"
     :search-value="''"
+    :label="null"
+    :description="null"
     x-data="{ selectedRow: null }"
     x-ref="table"
     class="w-full max-w-7xl"
     x-cloak
     x-init="$api && $api.init()"
 >
-    <div class="bg-gray-900 py-10" x-import="input">
-        <!-- <h2 class="px-4 text-base/7 font-semibold text-white sm:px-6 lg:px-8">Latest activity</h2> -->
-        <div class="sm:flex sm:items-center px-4 text-base/7 font-semibold sm:px-6 lg:px-8">
-            <div class="sm:flex-auto">
-                <h1 class="text-base font-semibold text-gray-900 dark:text-white">Users</h1>
-                <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">A list of all the users in your account including their name, title, email and role.</p>
-                <p x-text="$prop('search-placeholder')"></p>
+    <div 
+        class="bg-gray-900" 
+        x-import="input"
+    >   
+        <div :class="{ 'py-10': !!$prop('label') || !!$prop('description') }" >
+            <div class="sm:flex sm:items-center px-4 text-base/7 font-semibold sm:px-6 lg:px-8">
+                <div class="sm:flex-auto flex flex-col gap-y-1" x-show="$prop('label') || $prop('description')" x-cloak>
+                    <h1 class="text-base font-semibold text-gray-900 dark:text-white" x-text="$prop('label')" x-show="$prop('label')" x-cloak></h1>
+                    <p class="text-sm text-gray-700 dark:text-gray-400" x-text="$prop('description')" x-show="$prop('description')" x-cloak></p>
+                </div>
+                <div 
+                    class="mt-4 sm:mt-0 sm:flex-none ml-auto" 
+                    :class="{ 
+                        'sm:!ml-16': !!$prop('label') || !!$prop('description'),
+                    }"
+                    x-show="$prop('searchable')"
+                    x-cloak
+                >
+                    <foui-input
+                        :placeholder="`$prop('search-placeholder')`"
+                        :on-input="`$prop('on-search')`"
+                    ></foui-input>
+                </div>
             </div>
-            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <foui-input
-                    :placeholder="$prop('search-placeholder')"
-                    :on-input="`$prop('on-search')`"
-                ></foui-input>
+            <table 
+                class="w-full text-left whitespace-nowrap px-4 sm:px-6 lg:px-8"
+                :class="{ 'mt-6': !!$prop('label') || !!$prop('description') }"
+            >
+                <!-- <colgroup>
+                    <col class="w-full sm:w-4/12">
+                    <col class="lg:w-4/12">
+                    <col class="lg:w-2/12">
+                    <col class="lg:w-1/12">
+                    <col class="lg:w-1/12">
+                </colgroup> -->
+                <thead class="border-b border-white/10 text-sm/6 text-white" x-show="$prop('show-column-labels')" x-cloak>
+                    <tr>
+                    <template x-for="column in $prop('columns')" :key="column.key">
+                        <th class="px-3 py-2 font-semibold text-left" x-text="column.label"></th>
+                    </template>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <template 
+                        x-for="(item, index) in $prop('data')"
+                        :key="$api.rowKey(item)"
+                    >
+                        <tr 
+                            class="hover:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer"
+                            :class="{ 'bg-gray-800 dark:bg-gray-700': $api.selectedRow && $api.selectedRow[$prop('row-key')] === item[$prop('row-key')] }"
+                        >
+                            <template x-for="(column, index) in $prop('columns')" :key="column.key">
+                                <td class="px-3 py-2">
+                                    <slot name="column-${column.key}">
+                                        <span x-text="item[column.key] || item"></span>
+                                    </slot>
+                                </td>
+                            </template>
+                        </tr>
+                    </template>  
+                </tbody>
+            </table>
+
+            <div class="border-t border-white/10 text-sm/6 text-white">
+                <slot name="footer"></slot>
             </div>
         </div>
-        <table class="mt-6 w-full text-left whitespace-nowrap px-4 sm:px-6 lg:px-8">
-        <colgroup>
-            <col class="w-full sm:w-4/12">
-            <col class="lg:w-4/12">
-            <col class="lg:w-2/12">
-            <col class="lg:w-1/12">
-            <col class="lg:w-1/12">
-        </colgroup>
-        <thead class="border-b border-white/10 text-sm/6 text-white">
-            <tr>
-            <template x-for="column in $prop('columns')" :key="column.key">
-                <th class="px-3 py-2 font-semibold text-left" x-text="column.label"></th>
-            </template>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-white/5">
-            <template x-for="(item, index) in $prop('data')" :key="item[$prop('row-key')]">
-                <tr 
-                    class="hover:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer" 
-                    :class="{ 'bg-gray-800 dark:bg-gray-700': $api.selectedRow && $api.selectedRow[$prop('row-key')] === item[$prop('row-key')] }"
-                >
-                    <template x-for="column in $prop('columns')" :key="column.key">
-                        <td class="px-3 py-2">
-                            <slot name="column-${column.key}">
-                                <span x-text="item[column.key]"></span>
-                            </slot>
-                        </td>
-                    </template>
-                </tr>
-            </template>  
-        </tbody>
-        </table>
     </div>    
 
     <script>
@@ -90,6 +113,14 @@
                 const data = this.$prop('data')
 
                 console.log('Data:', data)
+
+                this.$watch('$prop("data")', (newData) => {
+                    console.log('Data changed:', newData)
+                })
+            },
+
+            rowKey(item) {
+                return this.$prop('row-key') && item[this.$prop('row-key')] ? item[this.$prop('row-key')] : item
             },
         }
     </script>

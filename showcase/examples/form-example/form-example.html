@@ -1,0 +1,368 @@
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <script>
+        $foui.config.importMap = {
+            "*": '../../../components/${component}.html'
+        }
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-cloak x-import="input,upload,button,combobox,toggle,table" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
+    <div class="w-full max-w-xl mx-auto p-2 flex gap-y-4 flex flex-col items-start justify-start w-full" x-data="formExample">
+        <p class="whitespace-nowrap">Form w/Validation <span class="text-red-600 font-bold">[Alpine Only Example]</span></p>
+
+        <foui-input 
+            :label="'Name'" 
+            :value="name" 
+            :placeholder="'Max 32 characters'"
+            :description="'This is the what will be displayed to the recipient of the phone call.'" 
+            :on-input="`handleEmailChange`"
+        ></foui-input>
+
+        <foui-input 
+            :label="'Short Name'" 
+            :value="shortName" 
+            :placeholder="'Max 15 characters'"
+            :description="'This is the what will be displayed on carriers that limit to 15 characters.'"
+            :error="shortName" 
+            :errorMessage="'Not a valid email address.'" 
+        ></foui-input>
+
+        <foui-combobox
+            :label="'Call Purpose'"
+            :description="'Select the purpose of the call.'"
+            :options="callPurposes"
+            :selected-option="null"
+            :placeholder="'Select a purpose...'"
+        >
+        </foui-combobox>
+
+        <foui-upload
+            class="mt-4"
+            :label="'Phone Number Upload'"
+            :description="'You can upload a CSV file up to 5MB.'"
+            :accept="'.csv'"
+            :disabled="false"
+            :error="fileError"
+            :error-message="fileErrorMessage"
+            :on-validate="'validateFile'"
+            :on-upload="'processFile'"
+            :on-clear="'clearFile'"
+        >
+            <!-- Div with foui-button to clear file upload and foui-table of upload numbers -->
+            <div slot="file-upload">
+                <div class="w-full">
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="text-sm/6 text-gray-400" x-text="`Phone Numbers To Add: ${phoneNumbersToAdd.length}`"></p>
+
+                        <foui-button
+                            :size="'sm'" 
+                            :on-click="'clearUploadedFileInAPI'"
+                        >
+                            Clear File
+                        </foui-button>
+                    </div>
+
+                    <foui-table
+                        :data="filteredPhoneNumbers"
+                        :columns="columns"
+                        :row-key="'phoneNumber'"
+                        :show-column-labels="false"
+                    >
+
+                        <div class="flex w-full items-center justify-between" slot="column-phoneNumber">
+                            <span class="text-sm/6 text-gray-200" x-text="formatPhoneNumberForDisplay(item)"></span>
+                            <foui-button
+                                class="ml-2"
+                                :size="'xs'" 
+                                variant="danger"
+                                :on-click="`removePhoneNumber(item)`"
+                            >
+                                Remove
+                            </foui-button>
+                        </div>
+
+                        <div slot="footer">
+                            <div class="flex items-center justify-between px-4 py-2">
+                                <foui-button
+                                    :size="'sm'" 
+                                    :on-click="'previousPage'"
+                                    :disabled="currentPage === 1"
+                                >
+                                    Previous
+                                </foui-button>
+
+                                <span class="text-sm/6 text-gray-400" x-text="`Page ${currentPage} of ${totalPages}`"></span>
+
+                                <foui-button
+                                    :size="'sm'" 
+                                    :on-click="'nextPage'"
+                                    :disabled="currentPage >= totalPages"
+                                >
+                                    Next
+                                </foui-button>
+                            </div>
+                        </div>
+
+                    </foui-table>
+                </div>
+            </div>
+        </foui-upload>
+
+        <!-- Why is on-change evaluating as a string here, but in toggle example it works as a function??? -->
+        <foui-toggle
+            class="mt-4"
+            :label="'Status'" 
+            :description="'Toggle the overall branding state for the content.'" 
+            :toggled="enabled" 
+            :on-change="`(value) => { this.enabled = value; console.log('Toggle changed: ' + value + ', Enabled: ' + this.enabled); }`"
+        >
+            <span slot="unchecked">
+                <svg class="size-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+                    <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </span>
+
+            <span slot="checked">
+                <svg class="size-3 text-indigo-600" fill="currentColor" viewBox="0 0 12 12">
+                    <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                </svg>
+            </span>
+        </foui-toggle>
+
+        <foui-button 
+            :size="'xl'" 
+            class="ml-auto"
+            :loading="loading"
+            :disabled="loading"
+            :type="'submit'"
+            :on-click="'submitForm'"
+        >
+            Submit
+        </foui-button>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('formExample', () => ({
+                uploadedFile: null,
+                fileError: false,
+                fileErrorMessage: '',
+                name: '',
+                shortName: '',
+                phoneNumbersToAdd: [],
+                enabled: true,
+                currentPage: 1,
+                pageLength: 10,
+
+                get totalPages() {
+                    // Assuming each page shows 50 phone numbers
+                    return Math.ceil(this.phoneNumbersToAdd.length / this.pageLength);
+                },
+
+                get filteredPhoneNumbers() {
+                    // Return the phone numbers for the current page
+                    const start = (this.currentPage - 1) * this.pageLength;
+                    const end = start + this.pageLength;
+                    return this.phoneNumbersToAdd.slice(start, end);
+                },
+
+                columns: [
+                    { label: 'Phone Number', key: 'phoneNumber' }
+                ],
+
+                shortNameError: false,
+                loading: false,
+                callPurposes: [
+                    'Marketing',
+                    'Sales',
+                    'Support',
+                    'Other'
+                ],
+
+                init() {
+                    //
+                },
+
+                handleEmailChange(event) {
+                    // console.log('Callback value:', event.target.value);
+                    // this.value = event.target.value;
+
+                    // Simulate error condition
+                    // If value is not an email, set error to true
+                    this.emailError = this.email && (!this.email.includes('@') || !this.email.includes('.'));
+                },
+
+                nextPage() {
+                    // show next 50 phone numbers
+                    if (this.currentPage < this.totalPages) {
+                        this.currentPage++;
+                    }
+                },
+
+                previousPage() {
+                    // show previous 50 phone numbers
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                    }
+                },
+
+                submitForm() {
+                    this.loading = true;
+
+                    // Simulate form submission
+                    setTimeout(() => {
+                        alert('Form submitted with:', {
+                            name: this.name,
+                            shortName: this.shortName,
+                            enabled: this.enabled,
+                            uploadedFile: this.uploadedFile
+                        });
+
+                        this.loading = false;
+                    }, 2000);
+                },
+
+                formatPhoneNumberForSubmission(phoneNumber) {
+                    // remove all spaces, dashes, and parentheses then add a plus sign to the front if it doesn't exist
+                    return phoneNumber.replace(/[\s()-]/g, '').replace(/^(?!\+)/, '+')
+                },
+
+                formatPhoneNumberForDisplay(phoneNumber) {
+                    // format the phone number from "+xxxxxxxxxxx" to "x (xxx) xxx-xxxx"
+                    return phoneNumber.replace(/^\+(\d{1})(\d{3})(\d{3})(\d{4})$/, '$1 ($2) $3-$4')
+                },
+
+                isValidPhoneNumber(phoneNumber) {
+                    // Check if the phone number is 11 digits long and starts with a + sign
+                    return /^\+\d{11}$/.test(phoneNumber)
+                },
+
+                removePhoneNumber(phoneNumber) {
+                    this.phoneNumbersToAdd = this.phoneNumbersToAdd.filter(num => num !== phoneNumber)
+                },
+
+                processFile(file) {
+                    try {
+                        const fileReader = new FileReader()
+                        console.log("File: ", file)
+                        fileReader.onload = (e) => {
+                            if (fileReader.readyState === FileReader.DONE) {
+                                // console.log("File Reader Result: ", fileReader.result)
+                                const text = fileReader.result
+                                const allParts = this.removeExportHeaders(text.trim().split(/[\n]/))
+                                // console.log(`parts: `, allParts);
+                                const strings = new Set()
+
+                                for (const part of allParts) {
+                                    if (part === '') {
+                                        continue
+                                    }
+
+                                    const splitpart = part.split(/[,|\n]/)
+                                    const phoneNumber = splitpart[0].trim()
+
+                                    const formattedNumber =  this.formatPhoneNumberForSubmission(phoneNumber)
+
+                                    if (this.isValidPhoneNumber(formattedNumber)) {
+                                        strings.add(formattedNumber)
+                                    } else {
+                                        strings.clear()
+                                        // TODO - Toast error to user
+                                        break
+                                    }
+                                }
+
+                                console.log(`strings: `, strings);
+
+                                const stringNumbers = Array.from(strings.values())
+                                console.log(`stringNumbers: `, stringNumbers);
+                                this.phoneNumbersToAdd = stringNumbers
+                                // this.filteredPhoneNumbers = stringNumbers
+                            }
+                        }
+
+                        fileReader.readAsText(file)
+                    } catch (e) {
+                        console.error(e)
+                        this.phoneNumbersToAdd = []
+                        // this.filteredPhoneNumbers = []
+                    }
+                },
+
+                removeExportHeaders(allParts) {
+                    if (allParts.length > 0 && allParts[0].includes('Reseller ID')) {
+                        const resellerId = allParts.shift()
+                        console.log("Stripping Header: ", resellerId)
+                        if (allParts.length > 0 && allParts[0].includes('Business ID')) {
+                            const businessId = allParts.shift()
+                            console.log("Stripping Header: ", businessId)
+                            if (allParts.length > 0 && allParts[0].includes('Business Unit ID')) {
+                                const businessUnitId = allParts.shift()
+                                console.log("Stripping Header: ", businessUnitId)
+                                if (allParts.length > 0 && allParts[0].includes('Program ID')) {
+                                    const programId = allParts.shift()
+                                    console.log("Stripping Header: ", programId)
+                                }
+                            }
+                        }
+                    }
+
+                    return allParts
+                },
+
+                validateFile(files) {
+                    const file = files[0];
+
+                    try {
+                        // Validate file type
+                        if (file && file.type !== 'text/csv') {
+                            this.fileError = true;
+                            this.fileErrorMessage = 'Invalid file type. Please upload a CSV file.';
+                            return;
+                        }
+
+                        console.log('File size: ', file.size);
+
+                        // make sure file size is less than 5MB
+                        if (file && file.size > 5 * 1024 * 1024) { // 5MB
+                            this.fileError = true;
+                            this.fileErrorMessage = 'File size exceeds the limit of 5MB.';
+
+                            console.error(this.fileErrorMessage, this.fileError);
+
+                            return;
+                        }
+
+                        console.log('File is valid: ', file);
+                        
+                        this.fileError = false;
+                        this.fileErrorMessage = '';
+                    } catch (error) {
+                        console.error('File validation error: ', error);
+                        this.fileError = true;
+                        this.fileErrorMessage = 'An error occurred during file validation.';
+                        return;
+                    }
+                },
+
+                clearFile() {
+                    this.uploadedFile = null;
+                    this.fileError = false;
+                    this.fileErrorMessage = '';
+                    this.phoneNumbersToAdd = [];
+                    // this.filteredPhoneNumbers = [];
+                    this.currentPage = 1;
+                }
+            }));
+        });
+    </script>
+</body>

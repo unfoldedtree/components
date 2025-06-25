@@ -6,7 +6,8 @@
     :rounded="false"
     :disabled="false"
     :loading="false"
-    :on-click="`(e) => {}`"
+    :on-click="`() => {}`"
+    :on-change="`() => {}`"
     x-init="$api && $api.init()"
     x-data="{ classList: '', loadingSize: '' }"
 >

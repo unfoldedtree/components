@@ -11,6 +11,7 @@
     :max-size="1"
     :on-upload="`() => {}`"
     :on-validate="`() => {}`"
+    :on-clear="`() => {}`"
     :error="false"
     :error-message="''"
     :required="false"
@@ -62,15 +63,15 @@
             <slot name="file-upload">
                 <div 
                     class="mt-2 flex justify-center rounded-lg border border-solid border-gray-900/25 px-3 py-3 dark:border-gray-700"
-                    :class="{ '!border-2 !border-red-600/65': $prop('error') }"
+                    :class="{ '!border-2 !border-red-600/65': $prop('error'), '!border-2 !border-green-600/65': !$prop('error') }"
                 >
                     <div 
                         class="flex items-center justify-between rounded-lg bg-gray-900/65 px-2 py-2 w-full dark:bg-gray-700/65"
-                        :class="{ '!bg-red-900/25 dark:!bg-red-500/45': $prop('error') }"
+                        :class="{ '!bg-red-900/25 dark:!bg-red-500/45': $prop('error'), '!bg-green-900/25 dark:!bg-green-500/45': !$prop('error') }"
                     >
                         <div class="flex items-center justify-center gap-2">
                             <button
-                                @click="$api.clearFile()"
+                                @click="$api.clearUploadedFileInAPI()"
                                 type="button"
                                 class="bg-gray-900/90 cursor-pointer text-white hover:outline-none hover:ring-2 hover:ring-white hover:-ring-offset-2 rounded-full p-1 transition ease-in-out duration-150 dark:bg-gray-700/90 dark:hover:bg-gray-600/90"
                             >
@@ -138,14 +139,14 @@
                 }
             },
 
-            handleFileUpload(event) {
+            async handleFileUpload(event) {
                 // console.log('File upload event triggered');
 
                 const files = this.$refs.fileUpload.files;
 
-                this.$prop('on-validate')(files);
+                await this.$prop('on-validate')(files);
                 
-                if (files.length > 0) {
+                if (files.length > 0 && !this.$prop('error')) {
                     const file = files[0];
                     this.$api.fileMeta = {
                         name: file.name,
@@ -153,16 +154,20 @@
                         type: file.type,
                     };
                     this.$api.fileUploaded = true;
+
+                    this.$prop('on-upload')(file);
                 } else {
                     this.$api.fileMeta = null;
                     this.$api.fileUploaded = false;
                 }
             },
 
-            clearFile() {
+            clearUploadedFileInAPI() {
                 this.$refs.fileUpload.value = '';
                 this.$api.fileMeta = null;
                 this.$api.fileUploaded = false;
+
+                this.$prop('on-clear')();
             },
 
             calculateFileSize(size = 0) {

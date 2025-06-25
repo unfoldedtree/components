@@ -378,6 +378,7 @@ function setupCore(G) {
                         isAnonymousFunction = true
                     } else if ((funcStr.startsWith('(') && funcStr.includes(') =>')) || (funcStr.startsWith('function') && funcStr.endsWith('}'))) {
                         // If it is a function, we need to check if it is an anonymous function
+                        hasFunc = true
                         isAnonymousFunction = true
                     }
 
@@ -385,9 +386,23 @@ function setupCore(G) {
                         if (['true', 'false', 'null', 'undefined'].includes(p1)) return p1
                         if (/^\d+$/.test(p1)) return p1 // numbers
 
+                        // If is an anonymous function, we check if p1 exists in the args that are passed to the function.
+                        // If it does then we just return p1, because it is already in the context of the component
+                        // And does not need to be evaluated further with Alpine.evaluate
+                        if (isAnonymousFunction) {
+                            // Parse args out of the function definition
+                            const argsMatch = funcStr.match(/^\(?\s*([a-zA-Z_$][0-9a-zA-Z_$,\s]*)\)?\s*=>/)
+
+                            if (argsMatch && argsMatch[1]) {
+                                const args = argsMatch[1].split(',').map(arg => arg.trim())
+                                if (args.includes(p1)) {
+                                    return p1 // If p1 is in the args, we just return it
+                                }
+                            }
+                        }
+
                         // Check that the variables or methods exist in the api
                         if (api && ((p1 in api) || (p1.startsWith('$') && !p1.startsWith('$event')))) {
-
                             if (typeof api[p1] === 'function') {
                                 // Add () if not already present
                                 if (!funcStr.includes(`${p1}(`)) {
@@ -405,20 +420,6 @@ function setupCore(G) {
                         } else if (funcStr.includes(`(${p1})`) || funcStr.includes(`,${p1})`) || funcStr.includes(`, ${p1})`)) { // Evaluate the args in the context of the component
                             hasFunc = true
 
-                            // if is an anonymous function, we check if p1 exists in the args that are passed to the function
-                            if (isAnonymousFunction) {
-                                // parse args out of the function definition
-                                const argsMatch = funcStr.match(/^\(?\s*([a-zA-Z_$][0-9a-zA-Z_$,\s]*)\)?\s*=>/)
-                                if (argsMatch && argsMatch[1]) {
-                                    const args = argsMatch[1].split(',').map(arg => arg.trim())
-                                    if (args.includes(p1)) {
-                                        return p1 // If p1 is in the args, we just return it
-                                    }
-                                }
-
-                                // console.log("Anonymous function args:", argsMatch, "Function string:", funcStr);
-                            }
-
                             return Alpine.evaluate(el, p1) ? JSON.stringify(Alpine.evaluate(el, p1)) : p1
                         }
 
@@ -430,8 +431,6 @@ function setupCore(G) {
                         // How to get args passed to the function?
                         funcStr = `(...args) => { return ${funcStr} }`
                     }
-
-                    console.log('Magic prop:', name, 'Component:', comp._foui_type, 'Evaluated function string:', funcStr, "Has function:", hasFunc);
 
                     if (!hasFunc) {
                         // If no function found, we just return the value
@@ -446,7 +445,7 @@ function setupCore(G) {
 
                     return result
                 } catch (e) {
-                    // 
+                    // console.warn(`Error evaluating prop ${name} in component ${comp._foui_type}:`, e);
                 }
 
                 return value

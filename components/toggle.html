@@ -1,7 +1,7 @@
 <template 
     x-component.unwrap="toggle" 
     x-data x-init="$api && $api.init()" 
-    :selected="false"
+    :toggled="false"
     :label="''" 
     :description="''"
     :disabled="false"
@@ -18,21 +18,21 @@
         <button 
             type="button" 
             class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:outline-hidden dark:focus:ring-offset-gray-800 disabled:cursor-not-allowed disabled:opacity-50" 
-            :class="{ 'bg-indigo-600': $prop('selected'), 'bg-gray-200 dark:bg-gray-700': !$prop('selected') }"
+            :class="{ 'bg-indigo-600': $prop('toggled'), 'bg-gray-200 dark:bg-gray-700': !$prop('toggled') }"
             :disabled="$prop('disabled')"
             role="switch" 
-            :aria-checked="$prop('selected')" 
+            :aria-checked="$prop('toggled')" 
             aria-labelledby="toggle-label" 
             aria-describedby="toggle-description"
             x-ref="toggleButton"
             @click="$api.toggle($el, $prop('on-change'))"
         >
-            <span class="pointer-events-none relative inline-block size-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out" :class="{ 'translate-x-5': $prop('selected'), 'translate-x-0': !$prop('selected') }">
+            <span class="pointer-events-none relative inline-block size-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out" :class="{ 'translate-x-5': $prop('toggled'), 'translate-x-0': !$prop('toggled') }">
                 <span 
                     class="absolute inset-0 flex size-full items-center justify-center transition-opacity"
                     aria-hidden="true"
-                    x-show="!$prop('selected')"
-                    :class="{ 'opacity-0 duration-100 ease-out': $prop('selected'), 'opacity-100 duration-200 ease-in': !$prop('selected') }"
+                    x-show="!$prop('toggled')"
+                    :class="{ 'opacity-0 duration-100 ease-out': $prop('toggled'), 'opacity-100 duration-200 ease-in': !$prop('toggled') }"
                 >
                     <slot name="unchecked"></slot>
                 </span>
@@ -42,8 +42,8 @@
                 <span 
                     class="absolute inset-0 flex size-full items-center justify-center transition-opacity" 
                     aria-hidden="true"
-                    x-show="$prop('selected')"
-                    :class="{ 'opacity-100 duration-200 ease-in': $prop('selected'), 'opacity-0 duration-100 ease-out': !$prop('selected') }"
+                    x-show="$prop('toggled')"
+                    :class="{ 'opacity-100 duration-200 ease-in': $prop('toggled'), 'opacity-0 duration-100 ease-out': !$prop('toggled') }"
                 >
                     <slot name="checked"></slot>
                 </span>
@@ -55,14 +55,21 @@
         return {
             init() {
                 const el = this.$refs.toggleButton;
-                el.setAttribute('aria-checked', this.$prop('selected') ? 'true' : 'false');
+                el.setAttribute('aria-checked', this.$prop('toggled') ? 'true' : 'false');
                 
                 // Run callback on initialization?
                 // this.toggle(el, this.$prop('on-change'));
             },
             
             toggle(el, callback) {
+                console.log("Callback:", callback, typeof callback);
                 const isChecked = el.getAttribute('aria-checked') === 'true';
+
+                console.log("Toggle state Before:", this.$prop('toggled'));
+
+                this.$prop('toggled', !isChecked);
+
+                console.log("Toggle state:", this.$prop('toggled'));
 
                 if (callback) {
                     callback(!isChecked);
