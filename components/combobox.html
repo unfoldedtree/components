@@ -10,6 +10,9 @@
     :on-filter="`() => {}`"
     :key="''"
     :placeholder="''"
+    :description="''"
+    :error="false"
+    :error-message="''"
     x-data="{ selectedOption: null }"
 >
     <div class="w-full">
@@ -122,12 +125,10 @@
 
             handleClick(option) {
                 this.selectedOption = option;
-                this.$prop('selected-option', option);
                 this.$prop('on-change')(option)
             },
 
             isSelected(option) {
-
                 const hasPropKey = this.$prop('key') && option.hasOwnProperty(this.$prop('key'));
 
                 if (hasPropKey) {

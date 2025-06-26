@@ -1,5 +1,7 @@
 <template x-component.unwrap="input" x-init="$api && $api.init()" :type="'text'" :label="''" :placeholder="''"
-    :description="''" :error="false" :errorMessage="''" :hint="''" :disabled="false" :variant="'default'" :on-change="`() => {}`" :on-input="`() => {}`">
+    :description="''" :error="false" :errorMessage="''" :hint="''" :disabled="false" :variant="'default'" :on-change="`() => {}`" :on-input="`() => {}`"
+    :maxlength="null" :value="''" :autocomplete="''" :required="false" :inputmode="''"
+>
     <div class="w-full">
         <template x-if="$prop('variant') === 'default' || $prop('variant') === 'pill'">
             <div>
@@ -21,6 +23,10 @@
                         @input="$prop('on-input')($event)"
                         @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
                         x-model="$prop('value')"
+                        :required="$prop('required')"
+                        :maxlength="$prop('maxlength')"
+                        :autocomplete="$prop('autocomplete')"
+                        :inputmode="$prop('inputmode')"
                     />
                     <template x-if="$prop('description') && !$prop('error')">
                         <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" :id="`$prop('label')-description`"
@@ -53,6 +59,11 @@
                         :placeholder="$prop('placeholder')" x-ref="input"
                         @input="$prop('on-input')"
                         @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
+                        x-model="$prop('value')"
+                        :required="$prop('required')"
+                        :maxlength="$prop('maxlength')"
+                        :autocomplete="$prop('autocomplete')"
+                        :inputmode="$prop('inputmode')"
                     />
                     <div 
                         class="absolute inset-x-0 bottom-0 border-t border-gray-300 peer-focus:border-t-2 peer-focus:border-indigo-600 dark:border-gray-600 dark:peer-focus:border-indigo-500" 
@@ -96,6 +107,11 @@
                         :placeholder="$prop('placeholder')" x-ref="input"
                         @input="$prop('on-input')"
                         @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
+                        x-model="$prop('value')"
+                        :required="$prop('required')"
+                        :maxlength="$prop('maxlength')"
+                        :autocomplete="$prop('autocomplete')"
+                        :inputmode="$prop('inputmode')"
                     />
 
                     <template x-if="$prop('description') && !$prop('error')">
@@ -131,6 +147,11 @@
                     :placeholder="$prop('placeholder')" x-ref="input"
                     @input="$prop('on-input')"
                     @change="$prop('on-change')" :aria-describedby="`$prop('label')-description`"
+                    x-model="$prop('value')"
+                    :required="$prop('required')"
+                    :maxlength="$prop('maxlength')"
+                    :autocomplete="$prop('autocomplete')"
+                    :inputmode="$prop('inputmode')"
                 />
 
                 <template x-if="$prop('description') && !$prop('error')">

@@ -93,6 +93,10 @@
                     this.$watch('filteredOptions', (newFilteredOptions) => {
                         console.log('Filtered options changed:', newFilteredOptions);
                     });
+
+                    this.$watch('selected', (newSelected) => {
+                        console.log('Selected option changed STONKS:', newSelected);
+                    });
                 },
 
                 onChange(selected) {

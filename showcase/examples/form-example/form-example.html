@@ -15,139 +15,151 @@
     </style>
 </head>
 
-<body x-cloak x-import="input,upload,button,combobox,toggle,table" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
-    <div class="w-full max-w-xl mx-auto p-2 flex gap-y-4 flex flex-col items-start justify-start w-full" x-data="formExample">
-        <p class="whitespace-nowrap">Form w/Validation <span class="text-red-600 font-bold">[Alpine Only Example]</span></p>
-
-        <foui-input 
-            :label="'Name'" 
-            :value="name" 
-            :placeholder="'Max 32 characters'"
-            :description="'This is the what will be displayed to the recipient of the phone call.'" 
-            :on-input="`handleEmailChange`"
-        ></foui-input>
-
-        <foui-input 
-            :label="'Short Name'" 
-            :value="shortName" 
-            :placeholder="'Max 15 characters'"
-            :description="'This is the what will be displayed on carriers that limit to 15 characters.'"
-            :error="shortName" 
-            :errorMessage="'Not a valid email address.'" 
-        ></foui-input>
-
-        <foui-combobox
-            :label="'Call Purpose'"
-            :description="'Select the purpose of the call.'"
-            :options="callPurposes"
-            :selected-option="null"
-            :placeholder="'Select a purpose...'"
-        >
-        </foui-combobox>
-
-        <foui-upload
-            class="mt-4"
-            :label="'Phone Number Upload'"
-            :description="'You can upload a CSV file up to 5MB.'"
-            :accept="'.csv'"
-            :disabled="false"
-            :error="fileError"
-            :error-message="fileErrorMessage"
-            :on-validate="'validateFile'"
-            :on-upload="'processFile'"
-            :on-clear="'clearFile'"
-        >
-            <!-- Div with foui-button to clear file upload and foui-table of upload numbers -->
-            <div slot="file-upload">
-                <div class="w-full">
-                    <div class="flex items-center justify-between mb-3">
-                        <p class="text-sm/6 text-gray-400" x-text="`Phone Numbers To Add: ${phoneNumbersToAdd.length}`"></p>
-
-                        <foui-button
-                            :size="'sm'" 
-                            :on-click="'clearUploadedFileInAPI'"
-                        >
-                            Clear File
-                        </foui-button>
-                    </div>
-
-                    <foui-table
-                        :data="filteredPhoneNumbers"
-                        :columns="columns"
-                        :row-key="'phoneNumber'"
-                        :show-column-labels="false"
-                    >
-
-                        <div class="flex w-full items-center justify-between" slot="column-phoneNumber">
-                            <span class="text-sm/6 text-gray-200" x-text="formatPhoneNumberForDisplay(item)"></span>
+<body x-cloak x-import="input,upload,button,select,toggle,table" class="p-2 flex gap-y-5 flex-col items-start justify-start text-white">
+    <div class="w-full p-2 flex items-start justify-start" x-data="formExample">
+        <div class="w-1/2 mx-auto p-2 flex gap-y-4 flex-col items-start justify-start">
+            <p class="whitespace-nowrap">Form w/Validation <span class="text-red-600 font-bold">[Alpine Only Example]</span></p>
+    
+            <foui-input 
+                :label="'Name'" 
+                :value="name" 
+                :placeholder="'Max 32 characters'"
+                :description="'This is the what will be displayed to the recipient of the phone call.'" 
+                :maxlength="32"
+            ></foui-input>
+    
+            <foui-input 
+                :label="'Short Name'" 
+                :value="shortName" 
+                :placeholder="'Max 15 characters'"
+                :description="'This is the what will be displayed on carriers that limit to 15 characters.'"
+                :maxlength="15"
+            ></foui-input>
+    
+            <foui-select
+                :label="'Call Purpose'"
+                :description="'Select the purpose of the call.'"
+                :options="callPurposes"
+                :on-change="'(value) => { this.callPurpose = value; }'"
+                :selected-option="callPurpose"
+                :placeholder="'Select a purpose...'"
+            >
+            </foui-select>
+    
+            <foui-upload
+                class="mt-4"
+                :label="'Phone Number Upload'"
+                :description="'You can upload a CSV file up to 5MB.'"
+                :accept="'.csv'"
+                :disabled="false"
+                :error="fileError"
+                :error-message="fileErrorMessage"
+                :on-validate="'validateFile'"
+                :on-upload="'processFile'"
+                :on-clear="'clearFile'"
+            >
+                <!-- Div with foui-button to clear file upload and foui-table of upload numbers -->
+                <div slot="file-upload">
+                    <div class="w-full">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-sm/6 text-gray-400" x-text="`Phone Numbers To Add: ${phoneNumbersToAdd.length.toLocaleString()}`"></p>
+    
                             <foui-button
-                                class="ml-2"
-                                :size="'xs'" 
-                                variant="danger"
-                                :on-click="`removePhoneNumber(item)`"
+                                :size="'sm'" 
+                                variant="danger-link"
+                                :on-click="'clearUploadedFileInAPI'"
                             >
-                                Remove
+                                Clear File
                             </foui-button>
                         </div>
-
-                        <div slot="footer">
-                            <div class="flex items-center justify-between px-4 py-2">
+    
+                        <foui-table
+                            :data="filteredPhoneNumbers"
+                            :columns="columns"
+                            :row-key="'phoneNumber'"
+                            :show-column-labels="false"
+                        >
+    
+                            <div class="flex w-full items-center justify-between" slot="column-phoneNumber">
+                                <span class="text-sm/6 text-gray-200" x-text="formatPhoneNumberForDisplay(item)"></span>
                                 <foui-button
-                                    :size="'sm'" 
-                                    :on-click="'previousPage'"
-                                    :disabled="currentPage === 1"
+                                    class="ml-2"
+                                    :size="'xs'" 
+                                    variant="primary-link"
+                                    :on-click="`removePhoneNumber(item)`"
                                 >
-                                    Previous
-                                </foui-button>
-
-                                <span class="text-sm/6 text-gray-400" x-text="`Page ${currentPage} of ${totalPages}`"></span>
-
-                                <foui-button
-                                    :size="'sm'" 
-                                    :on-click="'nextPage'"
-                                    :disabled="currentPage >= totalPages"
-                                >
-                                    Next
+                                    Remove
                                 </foui-button>
                             </div>
-                        </div>
-
-                    </foui-table>
+    
+                            <div slot="footer">
+                                <div class="flex items-center justify-between px-4 py-2">
+                                    <foui-button
+                                        :size="'sm'" 
+                                        :on-click="'previousPage'"
+                                        :disabled="currentPage === 1"
+                                    >
+                                        Previous
+                                    </foui-button>
+    
+                                    <span class="text-sm/6 text-gray-400" x-text="`Page ${currentPage.toLocaleString()} of ${totalPages.toLocaleString()}`"></span>
+    
+                                    <foui-button
+                                        :size="'sm'" 
+                                        :on-click="'nextPage'"
+                                        :disabled="currentPage >= totalPages"
+                                    >
+                                        Next
+                                    </foui-button>
+                                </div>
+                            </div>
+    
+                        </foui-table>
+                    </div>
                 </div>
+            </foui-upload>
+    
+            <!-- Why is on-change evaluating as a string here, but in toggle example it works as a function??? -->
+            <foui-toggle
+                class="mt-4"
+                :label="'Status'" 
+                :description="'Toggle the overall branding state for the content.'" 
+                :toggled="enabled" 
+                :on-change="`(value) => { this.enabled = value; console.log('Toggle changed: ' + value + ', Enabled: ' + this.enabled); }`"
+            >
+                <span slot="unchecked">
+                    <svg class="size-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+                        <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+    
+                <span slot="checked">
+                    <svg class="size-3 text-indigo-600" fill="currentColor" viewBox="0 0 12 12">
+                        <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                    </svg>
+                </span>
+            </foui-toggle>
+    
+            <foui-button 
+                :size="'xl'" 
+                class="ml-auto"
+                :loading="loading"
+                :disabled="loading"
+                :type="'submit'"
+                :on-click="'submitForm'"
+            >
+                Submit
+            </foui-button>
+        </div>
+
+        <template x-if="programs.length">
+            <div >
+                <foui-table
+                    :data="programs"
+                    :row-key="'name'"
+                ></foui-table>
             </div>
-        </foui-upload>
-
-        <!-- Why is on-change evaluating as a string here, but in toggle example it works as a function??? -->
-        <foui-toggle
-            class="mt-4"
-            :label="'Status'" 
-            :description="'Toggle the overall branding state for the content.'" 
-            :toggled="enabled" 
-            :on-change="`(value) => { this.enabled = value; console.log('Toggle changed: ' + value + ', Enabled: ' + this.enabled); }`"
-        >
-            <span slot="unchecked">
-                <svg class="size-3 text-gray-400" fill="none" viewBox="0 0 12 12">
-                    <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </span>
-
-            <span slot="checked">
-                <svg class="size-3 text-indigo-600" fill="currentColor" viewBox="0 0 12 12">
-                    <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
-                </svg>
-            </span>
-        </foui-toggle>
-
-        <foui-button 
-            :size="'xl'" 
-            class="ml-auto"
-            :loading="loading"
-            :disabled="loading"
-            :type="'submit'"
-            :on-click="'submitForm'"
-        >
-            Submit
-        </foui-button>
+        </template>
     </div>
 
     <script>
@@ -158,10 +170,12 @@
                 fileErrorMessage: '',
                 name: '',
                 shortName: '',
+                callPurpose: null,
                 phoneNumbersToAdd: [],
                 enabled: true,
                 currentPage: 1,
                 pageLength: 10,
+                programs: [],
 
                 get totalPages() {
                     // Assuming each page shows 50 phone numbers
@@ -192,15 +206,6 @@
                     //
                 },
 
-                handleEmailChange(event) {
-                    // console.log('Callback value:', event.target.value);
-                    // this.value = event.target.value;
-
-                    // Simulate error condition
-                    // If value is not an email, set error to true
-                    this.emailError = this.email && (!this.email.includes('@') || !this.email.includes('.'));
-                },
-
                 nextPage() {
                     // show next 50 phone numbers
                     if (this.currentPage < this.totalPages) {
@@ -218,17 +223,75 @@
                 submitForm() {
                     this.loading = true;
 
-                    // Simulate form submission
-                    setTimeout(() => {
-                        alert('Form submitted with:', {
-                            name: this.name,
-                            shortName: this.shortName,
-                            enabled: this.enabled,
-                            uploadedFile: this.uploadedFile
-                        });
-
+                    // Validate form fields
+                    if (this.name.length > 32) {
+                        alert('Name cannot be longer than 32 characters.');
                         this.loading = false;
-                    }, 2000);
+                        this.clearForm();
+                        return;
+                    }
+
+                    if (this.shortName.length > 15) {
+                        alert('Short Name cannot be longer than 15 characters.');
+                        this.loading = false;
+                        return;
+                    }
+
+                    // check programs list contains a program with the same name/shortName combination
+                    if (this.programs.some(program => program.name === this.name && program.shortName === this.shortName)) {
+                        alert('A program with the same name and short name already exists.');
+                        this.loading = false;
+                        this.clearForm();
+                        return;
+                    }
+
+                    if (!this.callPurpose) {
+                        alert('Please select a call purpose.');
+                        this.loading = false;
+                        this.clearForm();
+                        return;
+                    }
+
+                    if (this.phoneNumbersToAdd.length === 0) {
+                        alert('Please upload a file with phone numbers.');
+                        this.loading = false;
+                        this.clearForm();
+                        return;
+                    }
+
+                    if (this.phoneNumbersToAdd.some(num => !this.isValidPhoneNumber(num))) {
+                        alert('One or more phone numbers are invalid. Please check the uploaded file.');
+                        this.loading = false;
+                        this.clearForm();
+                        return;
+                    }
+
+                    // Format phone numbers for submission
+                    const formattedNumbers = this.phoneNumbersToAdd.map(num => this.formatPhoneNumberForSubmission(num));
+
+                    this.programs.push({
+                        name: this.name,
+                        shortName: this.shortName,
+                        callPurpose: this.callPurpose,
+                        phoneNumbers: formattedNumbers,
+                        enabled: this.enabled
+                    });
+
+                    this.loading = false;
+                    this.clearForm();
+                },
+
+                clearForm() {
+                    this.name = '';
+                    this.shortName = '';
+                    this.callPurpose = null;
+                    this.phoneNumbersToAdd = [];
+                    this.enabled = true;
+                    this.fileError = false;
+                    this.fileErrorMessage = '';
+                    this.uploadedFile = null;
+                    this.currentPage = 1;
+                    this.clearFile();
                 },
 
                 formatPhoneNumberForSubmission(phoneNumber) {

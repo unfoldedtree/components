@@ -19,7 +19,7 @@
     :multiple="false"
 >
     <div class="col-span-full w-full">
-        <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900 dark:text-white" x-text="$prop('label')"></label>
+        <label class="block text-sm/6 font-medium text-gray-900 dark:text-white" x-text="$prop('label')"></label>
 
         <div 
             class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 dark:border-gray-700"
@@ -37,10 +37,8 @@
                 < /svg>
                 <div class="mt-4 flex text-sm/6 text-gray-600 dark:text-gray-400">
                     <label for="file-upload" class="relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-400">
-                        <span>Upload a file</span>
-                        <input 
-                            id="file-upload" 
-                            name="file-upload" 
+                        <span @click="$refs.fileUpload.click()">Upload a file</span>
+                        <input
                             type="file" 
                             class="sr-only"
                             x-ref="fileUpload"
@@ -133,6 +131,8 @@
                         type: file.type,
                     };
                     this.$api.fileUploaded = true;
+
+                    this.$prop('on-upload')(file);
                 } else {
                     this.$api.fileMeta = null;
                     this.$api.fileUploaded = false;

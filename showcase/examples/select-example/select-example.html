@@ -22,7 +22,9 @@
         <div class="p-2 flex gap-2 flex items-start justify-start w-full max-w-xl min-w-xs">
             <foui-select
                 :options="options" 
-                :selected-option="selected" 
+                :selected-option="selected"
+                :selected-field="'name'"
+                :key="'id'"
                 :label="'Select a user'" 
                 :description="'Choose from the list'" 
                 :placeholder="'Select...'"

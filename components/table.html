@@ -122,6 +122,17 @@
             rowKey(item) {
                 return this.$prop('row-key') && item[this.$prop('row-key')] ? item[this.$prop('row-key')] : item
             },
+
+            getColumns() {
+                const columns = this.$prop('columns') || []
+
+                if (columns === '*') {
+                    return Object.keys(this.$prop('data')[0] || {}).map(key => ({
+                        key: key,
+                        label: key.charAt(0).toUpperCase() + key.slice(1)
+                    }))
+                }
+            },
         }
     </script>
 </template>
