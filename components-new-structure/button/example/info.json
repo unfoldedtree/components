@@ -1,0 +1,9 @@
+{
+    "entry": "button-example",
+    "name": "Button Example",
+    "description": "Button example demonstrates the usage of different button types and their functionalities. It showcases how to create buttons with various styles, sizes, and actions.",
+    "path": "button-example",
+    "excludedDirectories": [],
+    "tabId": "button-example",
+    "componentPath": "/button"
+}

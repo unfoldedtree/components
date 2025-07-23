@@ -1,0 +1,9 @@
+{
+    "entry": "upload-example",
+    "name": "Upload Example",
+    "description": "An example of a file upload component that supports drag-and-drop and progress indication.",
+    "path": "upload-example",
+    "excludedDirectories": [],
+    "tabId": "upload-example",
+    "componentPath": "/upload"
+}

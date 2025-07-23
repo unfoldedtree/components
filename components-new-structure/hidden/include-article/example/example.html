@@ -1,0 +1,12 @@
+<head>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>     
+</head>
+
+<body x-data>
+    Load into the external "div" tag:<br>
+    <div style="background-color: #888;" x-include="../static/article"></div>
+
+    Unwrap the external "div" tag:<br>
+    <div style="background-color: #888;" x-include.unwrap="../static/article"></div>
+</body>

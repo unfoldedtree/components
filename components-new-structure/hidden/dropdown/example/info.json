@@ -1,0 +1,9 @@
+{
+    "entry": "dropdown-example",
+    "name": "Dropdown Example",
+    "description": "This example demonstrates a simple counter application using the First Orion UI framework. It showcases the basic functionality of incrementing and decrementing a counter value.",
+    "path": "dropdown-example",
+    "excludedDirectories": [],
+    "tabId": "dropdown-example",
+    "componentPath": "/dropdown"
+}

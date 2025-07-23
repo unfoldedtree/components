@@ -1,0 +1,9 @@
+{
+    "entry": "combobox-example",
+    "name": "Combobox Example",
+    "description": "An example of a combobox component that allows users to select an option from a dropdown or enter a custom value.",
+    "path": "combobox-example",
+    "excludedDirectories": [],
+    "tabId": "combobox-example",
+    "componentPath": "/combobox"
+}

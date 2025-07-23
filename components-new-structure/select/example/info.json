@@ -1,0 +1,9 @@
+{
+    "entry": "select-example",
+    "name": "Select Example",
+    "description": "Select example demonstrates the usage of the select component. It showcases how to create a dropdown with various options and handle selection changes.",
+    "path": "select-example",
+    "excludedDirectories": [],
+    "tabId": "select-example",
+    "componentPath": "/select"
+}

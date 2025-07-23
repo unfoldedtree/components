@@ -1,0 +1,35 @@
+{
+    "name": "Combobox",
+    "path": "/combobox",
+    "description": "An example of a combobox component that allows users to select an option from a dropdown or enter a custom value.",
+    "props": [
+        {
+            "name": "options",
+            "type": "array",
+            "description": "The options for the combobox dropdown.",
+            "default": "[]"
+        },
+        {
+            "name": "selectedOption",
+            "type": "string",
+            "description": "The currently selected option of the combobox."
+        },
+        {
+            "name": "onChange",
+            "type": "function",
+            "description": "Callback function when the selected option changes."
+        },
+        {
+            "name": "placeholder",
+            "type": "string",
+            "description": "Placeholder text displayed when no option is selected.",
+            "default": ""
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "If true, the combobox will be disabled.",
+            "default": false
+        }
+    ]
+}

@@ -108,7 +108,7 @@
                                         <a 
                                             :href="'#' + tab.tabId"
                                             :id="tab.tabId"
-                                            class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:text-white hover:bg-gray-800"
+                                            class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:bg-gray-50 group text-gray-400 hover:text-white hover:bg-gray-800"
                                             :class="selectedTab?.tabId === tab.tabId ? '!bg-gray-800 !text-white' : ''"
                                             x-text="tab.name"
                                             @click="selectTab(tab)"
@@ -117,6 +117,17 @@
                                 </template>
                             </li>
                         </template>
+
+                        <!-- Button that opens the file at "/scripts/output/test-results/index.html" -->
+                        <li>
+                            <a 
+                                href="/scripts/output/test-results/index.html" 
+                                class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:bg-gray-50 group text-gray-400 hover:text-white hover:bg-gray-800"
+                                target="_blank"
+                            >
+                                <span>Test Results</span>
+                            </a>
+                        </li>
                       </ul>
                     </li>
                   </ul>

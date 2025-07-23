@@ -1,0 +1,49 @@
+<template
+    x-component="accordian" 
+    x-init="$api && $api.init()"  
+    :class="$prop('primary') ? 'text-red-500' : 'text-blue-500'"
+>
+    <div class="w-full">
+        <div class="border" x-data="{ id: 1 }" @click.outside="$api.close(id)">
+            <button @click="$api.toggle(id)"
+                    type="button"
+                    :aria-expanded="open === id"
+                    :aria-controls="`section${id}`"
+                    :id="`accordian${id}`"
+                    class="w-full text-left px-4 py-2 text-white bg-purple-600 transition-colors hover:bg-purple-800 focus:outline-none focus:ring focus:ring-purple-500 focus:ring-opacity-50">
+                <span class="font-semibold">Accordian Item</span>
+            </button>
+    
+            <div x-show="open === id"
+                 x-collapse
+                 x-cloak
+                 :id="`section${id}`"
+                 :aria-labelledby="`accordian${id}`"
+                 role="region"
+                 class="border-t">
+                <div class="p-3 bg-white">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolorem dolorum
+                        exercitationem illo illum, iste itaque molestiae mollitia non nostrum officiis quae, qui quis
+                        quisquam quo reprehenderit tenetur totam voluptatibus?
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        return {
+            init() {
+                console.log('Component initialized!')
+            },
+            toggle(id) {
+                console.log('Toggle accordian');
+                this.open = this.open === id ? null : id
+            },
+            close(id) {
+                this.open = null
+            },
+        }
+    </script>
+</template>

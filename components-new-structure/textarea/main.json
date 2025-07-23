@@ -1,0 +1,54 @@
+{
+    "name": "Textarea",
+    "path": "/textarea",
+    "description": "A simple textarea component that allows you to input multi-line text.",
+    "props": [
+        {
+            "name": "value",
+            "type": "string",
+            "description": "The current value of the textarea.",
+            "default": ""
+        },
+        {
+            "name": "placeholder",
+            "type": "string",
+            "description": "Placeholder text displayed when the textarea is empty.",
+            "default": ""
+        },
+        {
+            "name": "rows",
+            "type": "number",
+            "description": "Number of visible text lines for the textarea.",
+            "default": 3
+        },
+        {
+            "name": "cols",
+            "type": "number",
+            "description": "Number of visible character columns for the textarea.",
+            "default": 20
+        },
+        {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "If true, the textarea will be disabled.",
+            "default": false
+        },
+        {
+            "name": "onChange",
+            "type": "function",
+            "description": "Callback function when the value of the textarea changes."
+        },
+        {
+            "name": "autoResize",
+            "type": "boolean",
+            "description": "If true, the textarea will automatically adjust its height based on the content.",
+            "default": false
+        },
+        {
+            "name": "maxLength",
+            "type": "number",
+            "description": "Maximum number of characters allowed in the textarea.",
+            "default": null
+        }
+    ]
+}

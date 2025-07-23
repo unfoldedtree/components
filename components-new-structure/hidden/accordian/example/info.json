@@ -1,0 +1,9 @@
+{
+    "entry": "accordian-example",
+    "name": "Accordion Example",
+    "description": "This is an example of an accordion component. It allows you to expand and collapse sections of content.",
+    "path": "accordian-example",
+    "excludedDirectories": [],
+    "tabId": "accordian-example",
+    "componentPath": "/accordian"
+}

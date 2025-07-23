@@ -1,0 +1,12 @@
+<head>
+    <script src="../../../dist/fo-ui.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+</head>
+
+<body>
+    <foui-greeting>First Orion UI</foui-greeting>
+
+    <template x-component="greeting">
+        <h1>Hello <slot></slot></h1>
+    </template>
+</body>

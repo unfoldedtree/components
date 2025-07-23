@@ -1,0 +1,9 @@
+{
+    "entry": "textarea-example",
+    "name": "Textarea Example",
+    "description": "Textarea example demonstrates the usage of the textarea component. It showcases how to create a simple textarea that allows you to input multi-line text.",
+    "path": "textarea-example",
+    "excludedDirectories": [],
+    "tabId": "textarea-example",
+    "componentPath": "/textarea"
+}

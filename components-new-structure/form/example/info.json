@@ -1,0 +1,8 @@
+{
+    "entry": "form-example",
+    "name": "Form Example",
+    "description": "Form example demonstrates the usage of the form component. It showcases how to create forms with various input types, validation, and submission handling.",
+    "path": "form-example",
+    "excludedDirectories": [],
+    "tabId": "form-example"
+}

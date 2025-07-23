@@ -1,0 +1,33 @@
+{
+    "name": "Checkbox",
+    "path": "/checkbox",
+    "description": "A simple checkbox component that allows you to select or deselect an option.",
+    "props": [
+        {
+            "name": "checked",
+            "type": "boolean",
+            "description": "If true, the checkbox will be checked.",
+            "default": "false"
+        },
+        {
+            "name": "label",
+            "type": "string",
+            "description": "The label of the checkbox."
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "description": "A description for the checkbox, displayed below the label."
+        },
+        {
+            "name":  "disabled",
+            "type": "boolean",
+            "description": "If true, the checkbox will be disabled."
+        },
+        {
+            "name": "onChange",
+            "type": "function",
+            "description": "Callback function when the checkbox state changes."
+        }
+    ]
+}
