@@ -16,45 +16,9 @@ const index = JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
 // get excludedDirectories array property on the index object
 const excludedDirectories = index.excludedDirectories || [];
 
-let fileTabs = [];
-
-function buildGettingStarted() {
-    const gettingStartingTab = {
-        "name": "Getting Started",
-        "path": "showcase/getting-started",
-        "description": "Get started with First Orion UI by exploring the documentation, examples, and API references. This section provides a comprehensive guide to help you understand the framework and its components.",
-        "tabId": "getting-started",
-        "order": 1
-    }
-
-    fileTabs = [...fileTabs, gettingStartingTab];
-}
-
-function buildComponents() {
-    const componentsPath = path.join(__dirname, '../components-new-structure');
-
-    // get the main.json files from the components dir
-    // I need a custom function to traverse the directory structure that is different from this one
-    // This is due to the restructuring of the components directory
-    const componentsTabs = getNestedStructure(componentsPath, ['.hidden-components']);
-
-    // create parent example tab for components
-    const exampleTab = {
-        "name": "Examples",
-        "path": "components-new-structure",
-        "description": "A collection of examples demonstrating the usage of First Orion UI components.",
-        "tabId": "examples",
-        "order": 2,
-        "children": componentsTabs
-    }
-
-    // add the components tabs to the tabs array
-    fileTabs = [...fileTabs, exampleTab];
-}
-
 // get the info.json files from the showcase dir
 // store then in the tabs array under the name of the directory
-function getNestedStructure(dir, excludedDirs = []) {
+function getNestedStructure(dir, fileName, excludedDirs = []) {
     const tabs = [];
 
     function traverse(currentDir) {
@@ -68,7 +32,7 @@ function getNestedStructure(dir, excludedDirs = []) {
         });
 
         // Check for the target file in the current directory
-        const targetFilePath = path.join(currentDir, "/example/info.json");
+        const targetFilePath = path.join(currentDir, fileName);
         const currentTab = {
             name: path.basename(currentDir),
         };
@@ -79,7 +43,7 @@ function getNestedStructure(dir, excludedDirs = []) {
             Object.assign(currentTab, fileContent);
 
             if (currentTab.componentPath) {
-                const componentPath = path.join("components-new-structure/" + currentTab.componentPath, "main.json");
+                const componentPath = path.join(rootDir, "component-properties/" + currentTab.componentPath + ".json");
 
                 // if the component info file exists, read its contents and add it to the info object as componentData
                 if (fs.existsSync(componentPath)) {
@@ -94,14 +58,12 @@ function getNestedStructure(dir, excludedDirs = []) {
             const subDirPath = path.join(currentDir, subDir);
 
             // Only traverse if the directory contains the target file
-            const subDirFilePath = path.join(subDirPath, "/example/info.json");
-
+            const subDirFilePath = path.join(subDirPath, fileName);
             if (!fs.existsSync(subDirFilePath)) {
                 return;
             }
 
             const childTab = traverse(subDirPath);
-
             if (childTab) {
                 if (!currentTab.children) {
                     currentTab.children = [];
@@ -120,14 +82,13 @@ function getNestedStructure(dir, excludedDirs = []) {
     return tabs[0].children || [];
 }
 
-buildGettingStarted();
-buildComponents();
-
-index.page.tabs = fileTabs.sort((a, b) => {
+const tabs = getNestedStructure(showcaseDir, 'info.json', excludedDirectories).sort((a, b) => {
     const orderA = a.order || 0;
     const orderB = b.order || 0;
     return orderA - orderB;
 });
+
+index.page.tabs = tabs;
 
 // get directory name of current file
 const currentFilePath = path.resolve(__filename);
@@ -136,6 +97,10 @@ const outputDir = path.join(currentDir, '/output');
 const jsonOutputPath = path.join(outputDir, '/output.json');
 
 fs.writeFileSync(jsonOutputPath, JSON.stringify(index, null, 2), 'utf-8');
+
+// add the tabs array to the index object
+// log the index object
+// console.log('Index:', index);
 
 // Function to convert README.md to HTML
 async function convertReadmeToHtml(readmePath) {
@@ -266,3 +231,4 @@ async function convertReadmeToHtml(readmePath) {
 }
 
 convertReadmeToHtml(path.join('README.md'));
+

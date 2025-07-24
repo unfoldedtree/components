@@ -9,14 +9,14 @@
     "tabs": [
       {
         "name": "Getting Started",
-        "path": "getting-started",
+        "path": "showcase/getting-started",
         "description": "Get started with First Orion UI by exploring the documentation, examples, and API references. This section provides a comprehensive guide to help you understand the framework and its components.",
         "tabId": "getting-started",
         "order": 1
       },
       {
         "name": "Examples",
-        "path": "/examples",
+        "path": "components-new-structure",
         "description": "A collection of examples demonstrating the usage of First Orion UI components.",
         "tabId": "examples",
         "order": 2,

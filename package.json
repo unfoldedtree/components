@@ -16,7 +16,7 @@
   },
   "scripts": {
     "clean": "rimraf dist/*",
-    "build": "node scripts/build.cjs npx playwright test",
+    "build": "node scripts/build.cjs",
     "test": "npx playwright test"
   },
   "devDependencies": {

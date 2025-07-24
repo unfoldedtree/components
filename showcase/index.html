@@ -64,17 +64,6 @@
                   <ul role="list" class="flex flex-1 flex-col gap-y-7">
                     <li>
                       <ul role="list" class="-mx-2 space-y-1">
-                        <!-- Button that opens the getting started file at "/scripts/output/getting-started.html" -->
-                        <li>
-                            <a 
-                                href="/scripts/output/getting-started.html" 
-                                class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:bg-gray-50 group text-gray-400 hover:text-white hover:bg-gray-800"
-                                target="_blank"
-                            >
-                                <span>Getting Started</span>
-                            </a>
-                        </li>
-
                         <template x-for="tab in sideBarTabs" :key="tab.tabId">
                             <li class="mb-2">
                                 <!-- If the tab doesn't have a children property, just do a li, it if does have them then a drop down of the child elements -->
@@ -129,10 +118,10 @@
                             </li>
                         </template>
 
-                        <!-- Button that opens the file at "/scripts/output/test-results/index.html" -->
+                        <!-- Button that opens the file at "/showcase/test-results/index.html" -->
                         <li>
                             <a 
-                                href="/scripts/output/test-results/index.html" 
+                                href="/showcase/test-results/index.html" 
                                 class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:bg-gray-50 group text-gray-400 hover:text-white hover:bg-gray-800"
                                 target="_blank"
                             >
@@ -169,7 +158,7 @@
 
                 async init() {
                     try {
-                        const response = await fetch('output.json');
+                        const response = await fetch('/scripts/output/output.json');
                         if (!response.ok) throw new Error('Failed to fetch data');
                         this.data = await response.json();
 
@@ -307,7 +296,9 @@
                         this.buildContentAndPreview(tab);
                     } else if (tab.tabId && tab.path) {
                         // If the tab has a path, fetch the content from the path and append it to the content div
-                        const response = await fetch(`../../showcase/${tab.path}/${tab.tabId}.html`);
+                        // const response = await fetch(`../../showcase/${tab.path}/${tab.tabId}.html`);
+                        // change this to be dyanmic
+                        const response = await fetch(`/${tab.path}/${tab.tabId}.html`);
                         if (!response.ok) throw new Error('Failed to fetch content');
 
                         const text = await response.text();
