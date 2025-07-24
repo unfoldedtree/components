@@ -86,7 +86,7 @@
                                             <ul class="mt-1 px-2" :id="`sub-menu-${tab.tabId}`">
                                                 <template x-for="subTab in tab.children" :key="subTab.tabId">
                                                     <li class="">
-                                                        <a 
+                                                        <a
                                                             :id="subTab.tabId"
                                                             :href="'#' + tab.tabId + '/' + subTab.tabId" 
                                                             class="block rounded-md py-2 pr-2 pl-9 text-sm/6 text-gray-400 hover:text-white hover:bg-gray-800" 
@@ -118,14 +118,36 @@
                             </li>
                         </template>
 
-                        <!-- Button that opens the file at "/showcase/test-results/index.html" -->
+                        <!-- Button that opens the file at "/scripts/output/test-results/index.html" -->
                         <li>
                             <a 
-                                href="/showcase/test-results/index.html" 
-                                class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:bg-gray-50 group text-gray-400 hover:text-white hover:bg-gray-800"
+                                href="/scripts/output/test-results/index.html" 
+                                class="p-2 group flex gap-x-3 rounded-md text-sm/6 font-semibold text-gray-400 hover:bg-gray-50 group text-gray-400 hover:text-white hover:bg-gray-800 flex items-center justify-between"
                                 target="_blank"
                             >
                                 <span>Test Results</span>
+                                <div class="flex items-center justify-center gap-x-3">
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-full px-1.5 py-0.5 text-xs font-medium border border-green-500 dark:text-white text-gray-400 bg-gray-800 dark:bg-gray-700">
+                                        <span x-text="testObj.expected || 0"></span>
+                                        <span class="text-green-500">
+                                            <!-- Checkmark SVG -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </span>
+                                    </span>
+
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-full px-1.5 py-0.5 text-xs font-medium border border-red-500 dark:text-white text-gray-400 bg-gray-800 dark:bg-gray-700">
+                                        <!-- X SVG -->
+                                        <span x-text="testObj.unexpected || 0"></span>
+                                        <span class="text-red-500">
+                                            <!-- X SVG -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                </div>
                             </a>
                         </li>
                       </ul>
@@ -155,12 +177,22 @@
                 sideBarTabs: [],
                 buildContent: '',
                 selectedTab: null,
+                testObj: {},
 
                 async init() {
                     try {
                         const response = await fetch('/scripts/output/output.json');
                         if (!response.ok) throw new Error('Failed to fetch data');
                         this.data = await response.json();
+
+                        const testResultsResponse = await fetch('/scripts/output/test-results/results.json');
+                        if (testResultsResponse.ok) {
+                            const testResults = await testResultsResponse.json();
+                            this.testObj = testResults?.stats || {}
+                        } else {
+                            console.error('Failed to fetch test results');
+                            this.testObj = {};
+                        }
 
                         if (this.data) {
                             // console.log('Data loaded successfully: ', this.data);

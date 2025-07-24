@@ -1,0 +1,645 @@
+{
+  "config": {
+    "configFile": "/Users/williammcmahan/FOProjects/components-library-test/playwright.config.js",
+    "rootDir": "/Users/williammcmahan/FOProjects/components-library-test/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "./scripts/output/test-results"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "./scripts/output/test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/williammcmahan/FOProjects/components-library-test/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/williammcmahan/FOProjects/components-library-test/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/williammcmahan/FOProjects/components-library-test/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/williammcmahan/FOProjects/components-library-test/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/williammcmahan/FOProjects/components-library-test/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/williammcmahan/FOProjects/components-library-test/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "foui-button-tests.spec.ts",
+      "file": "foui-button-tests.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Test Button Event",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7426,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m\n    at Page.<anonymous> (/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:8:30)",
+                    "location": {
+                      "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                      "column": 30,
+                      "line": 8
+                    },
+                    "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m   page\u001b[33m.\u001b[39monce(\u001b[32m'dialog'\u001b[39m\u001b[33m,\u001b[39m dialog \u001b[33m=>\u001b[39m {\n \u001b[90m  7 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`Dialog message: ${dialog.message()}`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoBe(\u001b[32m'Stonks Event'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                        "column": 30,
+                        "line": 8
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m\n\n\u001b[0m \u001b[90m  6 |\u001b[39m   page\u001b[33m.\u001b[39monce(\u001b[32m'dialog'\u001b[39m\u001b[33m,\u001b[39m dialog \u001b[33m=>\u001b[39m {\n \u001b[90m  7 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`Dialog message: ${dialog.message()}`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoBe(\u001b[32m'Stonks Event'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at Page.<anonymous> (/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:8:30)\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                        "column": 141,
+                        "line": 11
+                      },
+                      "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('iframe').contentFrame().locator('div').filter({ hasText: 'Primary Buttons Extra Small' }).getByRole('button').first()\u001b[22m\n\u001b[2m    - locator resolved to <button foui=\"\" size=\"xs\" type=\"button\" variant=\"primary\" :class=\"classList\" x-bind:size=\"'xs'\" on-change=\"() => {}\" x-bind:submit=\"false\" x-bind:rounded=\"false\" x-bind:loading=\"false\" x-bind:disabled=\"false\" @click=\"$prop('on-click')\" x-init=\"$api && $api.init()\" :disabled=\"$prop('disabled')\" x-bind:on-change=\"`() => {}`\" on-click=\"(e) => { alert('Prop Event') }\" x-data=\"{ classList: '', loadingSize: '' }\" :type=\"$prop('submit') ? 'submit' : 'button'\" x-bind:on-click=\"`(e) => { alert('Prop Event') }`…>…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n\n\n\u001b[0m \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 12 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:11:141\u001b[22m"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "Dialog message: Prop Event\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:46.553Z",
+                  "annotations": [],
+                  "attachments": [],
+                  "errorLocation": {
+                    "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                    "column": 30,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f7afcc699a21f84b28ef-8331081b09519ab8e4fc",
+          "file": "foui-button-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Test Button Event",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 3,
+                  "status": "failed",
+                  "duration": 9343,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m\n    at Page.<anonymous> (/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:8:30)",
+                    "location": {
+                      "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                      "column": 30,
+                      "line": 8
+                    },
+                    "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m   page\u001b[33m.\u001b[39monce(\u001b[32m'dialog'\u001b[39m\u001b[33m,\u001b[39m dialog \u001b[33m=>\u001b[39m {\n \u001b[90m  7 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`Dialog message: ${dialog.message()}`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoBe(\u001b[32m'Stonks Event'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                        "column": 30,
+                        "line": 8
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m\n\n\u001b[0m \u001b[90m  6 |\u001b[39m   page\u001b[33m.\u001b[39monce(\u001b[32m'dialog'\u001b[39m\u001b[33m,\u001b[39m dialog \u001b[33m=>\u001b[39m {\n \u001b[90m  7 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`Dialog message: ${dialog.message()}`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoBe(\u001b[32m'Stonks Event'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at Page.<anonymous> (/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:8:30)\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                        "column": 141,
+                        "line": 11
+                      },
+                      "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('iframe').contentFrame().locator('div').filter({ hasText: 'Primary Buttons Extra Small' }).getByRole('button').first()\u001b[22m\n\u001b[2m    - locator resolved to <button foui=\"\" size=\"xs\" type=\"button\" variant=\"primary\" :class=\"classList\" x-bind:size=\"'xs'\" on-change=\"() => {}\" x-bind:submit=\"false\" x-bind:rounded=\"false\" x-bind:loading=\"false\" x-bind:disabled=\"false\" @click=\"$prop('on-click')\" x-init=\"$api && $api.init()\" :disabled=\"$prop('disabled')\" x-bind:on-change=\"`() => {}`\" on-click=\"(e) => { alert('Prop Event') }\" x-data=\"{ classList: '', loadingSize: '' }\" :type=\"$prop('submit') ? 'submit' : 'button'\" x-bind:on-click=\"`(e) => { alert('Prop Event') }`…>…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n\n\n\u001b[0m \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 12 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:11:141\u001b[22m"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "Dialog message: Prop Event\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:51.731Z",
+                  "annotations": [],
+                  "attachments": [],
+                  "errorLocation": {
+                    "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                    "column": 30,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f7afcc699a21f84b28ef-e9464a8e662213d6580d",
+          "file": "foui-button-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Test Button Event",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 8230,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m\n    at Page.<anonymous> (/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:8:30)",
+                    "location": {
+                      "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                      "column": 30,
+                      "line": 8
+                    },
+                    "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m   page\u001b[33m.\u001b[39monce(\u001b[32m'dialog'\u001b[39m\u001b[33m,\u001b[39m dialog \u001b[33m=>\u001b[39m {\n \u001b[90m  7 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`Dialog message: ${dialog.message()}`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoBe(\u001b[32m'Stonks Event'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                        "column": 30,
+                        "line": 8
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mStonks\u001b[27m Event\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mProp\u001b[27m Event\"\u001b[39m\n\n\u001b[0m \u001b[90m  6 |\u001b[39m   page\u001b[33m.\u001b[39monce(\u001b[32m'dialog'\u001b[39m\u001b[33m,\u001b[39m dialog \u001b[33m=>\u001b[39m {\n \u001b[90m  7 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`Dialog message: ${dialog.message()}`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m     expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoBe(\u001b[32m'Stonks Event'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at Page.<anonymous> (/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:8:30)\u001b[22m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                        "column": 141,
+                        "line": 11
+                      },
+                      "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('iframe').contentFrame().locator('div').filter({ hasText: 'Primary Buttons Extra Small' }).getByRole('button').first()\u001b[22m\n\u001b[2m    - locator resolved to <button foui=\"\" size=\"xs\" type=\"button\" variant=\"primary\" :class=\"classList\" x-bind:size=\"'xs'\" on-change=\"() => {}\" x-bind:submit=\"false\" x-bind:rounded=\"false\" x-bind:loading=\"false\" x-bind:disabled=\"false\" @click=\"$prop('on-click')\" x-init=\"$api && $api.init()\" :disabled=\"$prop('disabled')\" x-bind:on-change=\"`() => {}`\" on-click=\"(e) => { alert('Prop Event') }\" x-data=\"{ classList: '', loadingSize: '' }\" :type=\"$prop('submit') ? 'submit' : 'button'\" x-bind:on-click=\"`(e) => { alert('Prop Event') }`…>…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n\n\n\u001b[0m \u001b[90m  9 |\u001b[39m     dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 11 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'iframe'\u001b[39m)\u001b[33m.\u001b[39mcontentFrame()\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'Primary Buttons Extra Small'\u001b[39m })\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 12 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts:11:141\u001b[22m"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "Dialog message: Prop Event\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:59.550Z",
+                  "annotations": [],
+                  "attachments": [],
+                  "errorLocation": {
+                    "file": "/Users/williammcmahan/FOProjects/components-library-test/tests/foui-button-tests.spec.ts",
+                    "column": 30,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f7afcc699a21f84b28ef-e18bea8a66c4ef898e35",
+          "file": "foui-button-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "foui-combobox-tests.spec.ts",
+      "file": "foui-combobox-tests.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Test Combobox Input Selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4850,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:46.726Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6292aebf4fcab7b77c96-ddc5f1b261291824d0d4",
+          "file": "foui-combobox-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Test Combobox Input Selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 5866,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:52.316Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6292aebf4fcab7b77c96-3ab0e496e7407b080471",
+          "file": "foui-combobox-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Test Combobox Input Selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 5402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:36:00.890Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6292aebf4fcab7b77c96-39506a59b5f21dbe32f2",
+          "file": "foui-combobox-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "foui-input-tests.spec.ts",
+      "file": "foui-input-tests.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Test Input Error Message",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 4472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:46.802Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e74dfb326cf26575e42-f13513a7ed9019ad8bf0",
+          "file": "foui-input-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Test Input Model Binding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 3516,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:46.885Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e74dfb326cf26575e42-779c9373c44a2a8b93e2",
+          "file": "foui-input-tests.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "Test Input Error Message",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3821,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:52.597Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e74dfb326cf26575e42-9ef15f8555edc1c515d7",
+          "file": "foui-input-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Test Input Model Binding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2314,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:35:56.172Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e74dfb326cf26575e42-0ffbf17416cfe2049e72",
+          "file": "foui-input-tests.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "Test Input Error Message",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3391,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:36:00.948Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e74dfb326cf26575e42-0fb5dfb8590ea710f86e",
+          "file": "foui-input-tests.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Test Input Model Binding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 1467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-07-24T19:36:04.364Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e74dfb326cf26575e42-ee7ee82deb51dcad10b5",
+          "file": "foui-input-tests.spec.ts",
+          "line": 17,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-07-24T19:35:45.045Z",
+    "duration": 24550.087,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

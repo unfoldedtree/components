@@ -5,7 +5,7 @@ test('Test Button Event', async ({ page }) => {
 
   page.once('dialog', dialog => {
     console.log(`Dialog message: ${dialog.message()}`);
-    expect(dialog.message()).toBe('Prop Event');
+    expect(dialog.message()).toBe('Stonks Event');
     dialog.accept();
   });
   await page.locator('iframe').contentFrame().locator('div').filter({ hasText: 'Primary Buttons Extra Small' }).getByRole('button').first().click();
