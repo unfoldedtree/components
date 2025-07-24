@@ -160,7 +160,7 @@ Of course, we don't want to embed common components in every page. The `x-import
   <script src="https://unpkg.com/alpinejs" defer></script>
   <script>
     $foui.config.importMap = {
-      "*": "./components/${component}.html",
+      "*": "./components/${component}/index.html",
     };
   </script>
   <style>
@@ -188,7 +188,7 @@ The components could be loaded from anywhere, like
 ```html
 <script>
   $foui.config.importMap = {
-    "*": "https://unpkg.com/@firstorion/ui/examples/components/${component}.html",
+    "*": "https://unpkg.com/@firstorion/ui/examples/components/${component}/index.html",
   };
 </script>
 ```
@@ -206,7 +206,7 @@ Here is a more complete example:
 
   <script>
     $foui.config.importMap = {
-      "*": "./components/${component}.html",
+      "*": "./components/${component}/index.html",
     };
   </script>
   <style>
@@ -322,7 +322,7 @@ Set the `autoImport` config to `true`, First Orion UI will automatically try to 
 
   <script>
     $foui.config.importMap = {
-      "*": "./components/${component}.html",
+      "*": "./components/${component}/index.html",
     };
     $foui.config.autoImport = true;
   </script>

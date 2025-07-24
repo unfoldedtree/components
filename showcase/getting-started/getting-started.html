@@ -129,7 +129,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/alpinejs&quot;</span> <span class="hljs-attr">defer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
     $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
-      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}.html&quot;</span>,
+      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}/index.html&quot;</span>,
     };
   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
@@ -153,7 +153,7 @@
 <p class="text-base mb-4">The components could be loaded from anywhere, like</p>
 <pre><code class="text-sm font-mono hljs !p-2 rounded my-4"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
   $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
-    <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui/examples/components/${component}.html&quot;</span>,
+    <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;https://unpkg.com/@firstorion/ui/examples/components/${component}/index.html&quot;</span>,
   };
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
@@ -169,7 +169,7 @@ Here is a more complete example:</p>
 
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
     $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
-      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}.html&quot;</span>,
+      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}/index.html&quot;</span>,
     };
   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
@@ -275,7 +275,7 @@ Here is a more complete example:</p>
 
   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
     $foui.<span class="hljs-property">config</span>.<span class="hljs-property">importMap</span> = {
-      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}.html&quot;</span>,
+      <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-string">&quot;./components/${component}/index.html&quot;</span>,
     };
     $foui.<span class="hljs-property">config</span>.<span class="hljs-property">autoImport</span> = <span class="hljs-literal">true</span>;
   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>

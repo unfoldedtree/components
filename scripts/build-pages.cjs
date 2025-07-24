@@ -31,7 +31,7 @@ function buildGettingStarted() {
 }
 
 function buildComponents() {
-    const componentsPath = path.join(__dirname, '../components-new-structure');
+    const componentsPath = path.join(__dirname, '../components');
 
     // get the main.json files from the components dir
     // I need a custom function to traverse the directory structure that is different from this one
@@ -41,7 +41,7 @@ function buildComponents() {
     // create parent example tab for components
     const exampleTab = {
         "name": "Examples",
-        "path": "components-new-structure",
+        "path": "components",
         "description": "A collection of examples demonstrating the usage of First Orion UI components.",
         "tabId": "examples",
         "order": 2,
@@ -79,7 +79,7 @@ function getNestedStructure(dir, excludedDirs = []) {
             Object.assign(currentTab, fileContent);
 
             if (currentTab.componentPath) {
-                const componentPath = path.join("components-new-structure/" + currentTab.componentPath, "main.json");
+                const componentPath = path.join("components/" + currentTab.componentPath, "main.json");
 
                 // if the component info file exists, read its contents and add it to the info object as componentData
                 if (fs.existsSync(componentPath)) {

@@ -1,0 +1,9 @@
+{
+    "entry": "counter-api-of",
+    "name": "Counter Example - Basic",
+    "description": "This example demonstrates a simple counter application using the First Orion UI framework. It showcases the basic functionality of incrementing and decrementing a counter value.",
+    "path": "counter-basic",
+    "excludedDirectories": [],
+    "tabId": "counter-basic",
+    "componentPath": "/counter"
+}

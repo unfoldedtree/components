@@ -386,8 +386,11 @@
 
                     const componentDiv = document.createElement('div');
 
+                    console.log('Tab: ', tab);
+
                     // Fetch the component from the path at the root of the project
-                    const componentResponse = await fetch(`../../showcase/examples/${tab.path}/${tab.entry}.html`);
+                    // const componentResponse = await fetch(`../../showcase/examples/${tab.path}/${tab.entry}.html`);
+                    const componentResponse = await fetch(`/components/${tab.path}/example/example.html`);
                     if (!componentResponse.ok) throw new Error('Failed to fetch component');
 
                     const componentText = await componentResponse.text();
@@ -421,7 +424,7 @@
 
                     // Generate a preview of the component
                     const iframe = document.createElement('iframe');
-                    iframe.src = `../../showcase/examples/${tab.path}/${tab.entry}.html`;
+                    iframe.src = `/components/${tab.path}/example/example.html`;
                     iframe.setAttribute('seamless', '');
                     iframe.width = '100%';
                     iframe.height = '100%';
